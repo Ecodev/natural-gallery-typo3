@@ -1,0 +1,25 @@
+################################
+# CSS inclusion
+################################
+
+# CSS
+#page.includeCSS.jquery_fullcalendar = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/fullcalendar/fullcalendar.css
+
+
+################################
+# JavaScript
+################################
+
+# JavaScript Lib
+#page.includeJSlibs.jquery = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/jquery-ui-1.8.12.custom/js/jquery-1.5.1.min.js
+#page.includeJSlibs.jquery_ui = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/jquery-ui-1.8.12.custom/js/jquery-ui-1.8.12.custom.min.js
+
+# jQuery FullCalendar
+#page.includeJS.jquery_fullcalendar = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/fullcalendar/fullcalendar.js
+
+################################
+# CSS Styles
+################################
+plugin.tx_calendardisplay._CSS_DEFAULT_STYLE (
+
+)

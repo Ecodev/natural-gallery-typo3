@@ -1,0 +1,36 @@
+{namespace gallery=Tx_InfiniteScrollGallery_ViewHelpers}
+<f:layout name="Default" />
+<f:section name="main">
+
+<!-- ###totalImages:{totalImages}### -->
+<script type="text/javascript">
+	// Array containing images not displayed by defaut on this page
+	infinitesSrollGallery.stockImages = <gallery:stockImage images="{stockImages}" 
+												maxWidth="{data.tx_infinitescrollgallery_imagemaximumwidth}" 
+												maxHeight="{data.tx_infinitescrollgallery_imagemaximumheight}" 
+												/>
+
+</script>
+
+<f:if condition="{images}">
+	<f:then>
+		<f:form.hidden name="totalImages" class="tx-infinitescrollgallery-totalImages" value="{totalImages}" />
+		<f:for each="{images}" as="image">
+			<li class="tx-infinitscrollgallery-thumbnail">
+				<a href="{f:uri.image(src:'fileadmin/user_upload/resources/{image.file_name}', 
+						maxWidth: '{data.tx_infinitescrollgallery_imagemaximumwidth}',  
+						maxHeight: '{data.tx_infinitescrollgallery_imagemaximumheight}')}">
+					{f:image(src: 'fileadmin/user_upload/resources/{image.file_name}', 
+							alt: '{image.title}', 
+							title: '{image.title}', 
+							maxWidth: '{data.tx_infinitescrollgallery_thumbnailmaximumwidth}',  
+							maxHeight: '{data.tx_infinitescrollgallery_thumbnailmaximumheight}')}
+				</a>
+			</li>
+		</f:for>
+	</f:then>
+	<f:else>
+		<f:translate key="tx_infinitescrollgallery_listAjax_msg_no_image"></f:translate>
+	</f:else>
+</f:if>
+</f:section>

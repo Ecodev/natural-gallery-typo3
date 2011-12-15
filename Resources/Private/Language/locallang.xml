@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for the Infinite Scroll Gallery extension in the FRONTEND</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tx_infinitescrollgallery_domain_model_gallery">Gallery</label>
+			<label index="tx_infinitescrollgallery_domain_model_gallery.title">Title</label>
+			<label index="tx_infinitescrollgallery_domain_model_gallery.description">Description</label>
+			<label index="tx_infinitescrollgallery_listAjax_msg_no_image">No image matching this search</label>
+			<label index="tx_infinitescrollgallery_dropdown_tags">Please Select</label>
+			<label index="filter_by">Filter by</label>
+			<label index="filter_by_tag">tag</label>
+		</languageKey>
+		<languageKey index="fr" type="array">
+			<label index="tx_infinitescrollgallery_domain_model_gallery">Galerie</label>
+			<label index="tx_infinitescrollgallery_domain_model_gallery.title">Titre</label>
+			<label index="tx_infinitescrollgallery_domain_model_gallery.description">Description</label>
+			<label index="tx_infinitescrollgallery_listAjax_msg_no_image">Pas d'image correspondant à la recherche</label>
+			<label index="tx_infinitescrollgallery_dropdown_tags">Choisissez</label>
+			<label index="filter_by">Filtrer par</label>
+			<label index="filter_by_tag">tag</label>
+		</languageKey>
+	</data>
+</T3locallang>
