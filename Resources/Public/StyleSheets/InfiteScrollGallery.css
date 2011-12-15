@@ -28,3 +28,12 @@ li.tx-infinitscrollgallery-thumbnail {
 #tx-infinitescrollgallery-label-tag {
 	padding-right: 5px;
 }
+
+#tx-infinitescrollgallery-recordnumber {
+	float: right;
+	margin-left: 20px;
+}
+
+.tx-infinitescrollgallery-hidden {
+	display: none;
+}

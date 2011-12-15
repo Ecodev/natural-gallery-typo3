@@ -11,9 +11,9 @@
 	<gallery:script>
 
 		// Array containing images not displayed by defaut on this page
-		infinitesSrollGallery.stockImages = <gallery:stockImage images="{stockImages}" 
-													maxWidth="{data.tx_infinitescrollgallery_imagemaximumwidth}" 
-													maxHeight="{data.tx_infinitescrollgallery_imagemaximumheight}" 
+		infinitesSrollGallery.stockImages = <gallery:stockImage images="{stockImages}"
+													maxWidth="{data.tx_infinitescrollgallery_imagemaximumwidth}"
+													maxHeight="{data.tx_infinitescrollgallery_imagemaximumheight}"
 													/>
 	</gallery:script>
 	<gallery:style>
@@ -32,21 +32,21 @@
 			<f:form.hidden name="language" id="tx-infinitescrollgallery-language" value="{language}" />
 			<span style="margin-right: 10px"><gallery:translate key="filter_by" />:</span>
 			<label id="tx-infinitescrollgallery-label-tag" for="tx-infinitescrollgallery-tag"><gallery:translate key="filter_by_tag" /></label>
-			
-			<gallery:form.select name="tag" 
-					id="tx-infinitescrollgallery-tag" 
-					options="{tags}" 
+
+			<gallery:form.select name="tag"
+					id="tx-infinitescrollgallery-tag"
+					options="{tags}"
 					emptyOption="{f:translate(key: 'tx_infinitescrollgallery_dropdown_tags')}"
-					optionValueField="uid" 
-					optionLabelField="name" 
+					optionValueField="uid"
+					optionLabelField="name"
 					/>
-				
-			<input type="search" 
-					id="tx-infinitescrollgallery-search" 
-					placeholder="Rechercher..." 
-					value="" style="min-width: 13em;" 
-					class="search placeholder" 
-					name="tx_infinitescrollgallery_pi1[search]" 
+
+			<input type="search"
+					id="tx-infinitescrollgallery-search"
+					placeholder="Rechercher..."
+					value="" style="min-width: 13em;"
+					class="search placeholder"
+					name="tx_infinitescrollgallery_pi1[search]"
 					/>
 		</fieldset>
 	</f:form>
@@ -55,13 +55,13 @@
 			<ul>
 				<f:for each="{images}" as="image">
 					<li class="tx-infinitscrollgallery-thumbnail">
-						<a href="{f:uri.image(src:'fileadmin/user_upload/resources/{image.file_name}', 
-							maxWidth: '{data.tx_infinitescrollgallery_imagemaximumwidth}',  
+						<a href="{f:uri.image(src:'fileadmin/user_upload/resources/{image.file_name}',
+							maxWidth: '{data.tx_infinitescrollgallery_imagemaximumwidth}',
 							maxHeight: '{data.tx_infinitescrollgallery_imagemaximumheight}')}">
-							{f:image(src: 'fileadmin/user_upload/resources/{image.file_name}', 
-								alt: '{image.title}', 
-								title: '{image.title}', 
-								maxWidth: '{data.tx_infinitescrollgallery_thumbnailmaximumwidth}',  
+							{f:image(src: 'fileadmin/user_upload/resources/{image.file_name}',
+								alt: '{image.title}',
+								title: '{image.title}',
+								maxWidth: '{data.tx_infinitescrollgallery_thumbnailmaximumwidth}',
 								maxHeight: '{data.tx_infinitescrollgallery_thumbnailmaximumheight}')}
 						</a>
 					</li>
@@ -69,8 +69,8 @@
 			</ul>
 		</div>
 		<div class="tx-infinitescrollgallery-footer" style="clear: both">
-			<div id="tx-infinitescrollgallery-recordnumber" style="float: right; margin-left: 20px">
-				<span id="tx-infinitescrollgallery-numberOfVisibleImages">{numberOfVisibleImages}</span> / 
+			<div id="tx-infinitescrollgallery-recordnumber" <f:if condition="{numberOfVisibleImages} == {totalImages}">class="tx-infinitescrollgallery-hidden"</f:if>>
+				<span id="tx-infinitescrollgallery-numberOfVisibleImages">{numberOfVisibleImages}</span> /
 				<span id="tx-infinitescrollgallery-totalImages">{totalImages}</span>
 			</div>
 			<div class="tx-infinitescrollgallery-next" style="text-align: center">
