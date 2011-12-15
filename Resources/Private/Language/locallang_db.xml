@@ -17,6 +17,8 @@
 			<label index="tx_infinitescrollgallery_defaulttagfilter">Default Tag Filter</label>
 			<label index="tx_infinitescrollgallery_tagcategory">Tag category Id</label>
 			<label index="tx_infinitescrollgallery_tagpid">Tag Pid</label>
+
+			<label index="tx_dam">DAM</label>
 		</languageKey>
 	</data>
 </T3locallang>

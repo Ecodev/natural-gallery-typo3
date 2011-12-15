@@ -13,6 +13,8 @@
 			<label index="tx_infinitescrollgallery_dropdown_tags">all</label>
 			<label index="filter_by">Filter by</label>
 			<label index="filter_by_tag">tag</label>
+			<label index="pi1_title">Infinite Scroll Gallery</label>
+			<label index="pi1_plus_wiz_description">Display a gallery that shows image as you scroll.</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="tx_infinitescrollgallery_domain_model_gallery">Galerie</label>

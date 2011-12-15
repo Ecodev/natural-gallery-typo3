@@ -109,7 +109,7 @@ $tempColumns = array(
 			'type' => 'input',
 			'size' => '40',
 			'max' => '256',
-			'default' => '2',
+			'default' => '0',
 		)
 	),
 	'tx_infinitescrollgallery_tagpid' => array(
@@ -119,11 +119,38 @@ $tempColumns = array(
 			'type' => 'input',
 			'size' => '40',
 			'max' => '256',
-			'default' => '34',
+			'default' => '0',
 		)
 	),
 );
 t3lib_extMgm::addTCAcolumns('tt_content', $tempColumns, 1);
 
 $TCA['tt_content']['types']['list']['subtypes_addlist']['infinitescrollgallery_pi1'] = 'tx_infinitescrollgallery_limit, tx_infinitescrollgallery_thumbnailmaximumwidth, tx_infinitescrollgallery_thumbnailmaximumheight, tx_infinitescrollgallery_imagemaximumwidth, tx_infinitescrollgallery_imagemaximumheight, tx_infinitescrollgallery_defaulttagfilter, tx_infinitescrollgallery_tagcategory, tx_infinitescrollgallery_tagpid';
+
+
+// temporary lines: prevent in case tx_dam is not loaded
+if (!isset($TCA['tx_dam'])) {
+	$TCA['tx_dam'] = array(
+		'ctrl' => array(
+			'title' => 'LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang_db.xml:tx_dam',
+			'label' => 'title',
+			'tstamp' => 'tstamp',
+			'crdate' => 'crdate',
+			'cruser_id' => 'cruser_id',
+			'type' => 'media_type',
+			#		'sortby' => 'sorting',
+			'default_sortby' => 'ORDER BY title',
+			'delete' => 'deleted',
+
+			'enablecolumns' => array(
+				'disabled' => 'hidden',
+			),
+			#'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/tx_dam.php',
+		),
+	);
+}
+
+if (TYPO3_MODE == "BE") {
+	$TBE_MODULES_EXT["xMOD_db_new_content_el"]["addElClasses"]["tx_infinitescrollgallery_pi1_wizicon"] = t3lib_extMgm::extPath($_EXTKEY) . 'Classes/Backend/Wizicon.php';
+}
 ?>
