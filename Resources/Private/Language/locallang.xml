@@ -10,7 +10,7 @@
 			<label index="tx_infinitescrollgallery_domain_model_gallery.title">Title</label>
 			<label index="tx_infinitescrollgallery_domain_model_gallery.description">Description</label>
 			<label index="tx_infinitescrollgallery_listAjax_msg_no_image">No image matching this search</label>
-			<label index="tx_infinitescrollgallery_dropdown_tags">Please Select</label>
+			<label index="tx_infinitescrollgallery_dropdown_tags">all</label>
 			<label index="filter_by">Filter by</label>
 			<label index="filter_by_tag">tag</label>
 		</languageKey>
@@ -19,7 +19,7 @@
 			<label index="tx_infinitescrollgallery_domain_model_gallery.title">Titre</label>
 			<label index="tx_infinitescrollgallery_domain_model_gallery.description">Description</label>
 			<label index="tx_infinitescrollgallery_listAjax_msg_no_image">Pas d'image correspondant à la recherche</label>
-			<label index="tx_infinitescrollgallery_dropdown_tags">Choisissez</label>
+			<label index="tx_infinitescrollgallery_dropdown_tags">tous</label>
 			<label index="filter_by">Filtrer par</label>
 			<label index="filter_by_tag">tag</label>
 		</languageKey>
