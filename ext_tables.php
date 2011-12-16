@@ -9,35 +9,6 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 	'Infinite Scroll Gallery'
 );
 
-t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Infinite Scroll Gallery');
-
-
-t3lib_extMgm::addLLrefForTCAdescr('tx_infinitescrollgallery_domain_model_gallery', 'EXT:infinite_scroll_gallery/Resources/Private/Language/locallang_csh_tx_infinitescrollgallery_domain_model_gallery.xml');
-t3lib_extMgm::allowTableOnStandardPages('tx_infinitescrollgallery_domain_model_gallery');
-$TCA['tx_infinitescrollgallery_domain_model_gallery'] = array(
-	'ctrl' => array(
-		'title'	=> 'LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang_db.xml:tx_infinitescrollgallery_domain_model_gallery',
-		'label' => 'title',
-		'tstamp' => 'tstamp',
-		'crdate' => 'crdate',
-		'cruser_id' => 'cruser_id',
-		'dividers2tabs' => TRUE,
-		'languageField' => 'sys_language_uid',
-		'transOrigPointerField' => 'l10n_parent',
-		'transOrigDiffSourceField' => 'l10n_diffsource',
-		'delete' => 'deleted',
-		'enablecolumns' => array(
-			'disabled' => 'hidden',
-			'starttime' => 'starttime',
-			'endtime' => 'endtime',
-		),
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/Gallery.php',
-		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_infinitescrollgallery_domain_model_gallery.gif'
-	),
-);
-
-
-
 // Add new columns to tt_content
 t3lib_div::loadTCA('tt_content');
 

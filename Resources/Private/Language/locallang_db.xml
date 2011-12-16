@@ -6,9 +6,6 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="tx_infinitescrollgallery_domain_model_gallery">Gallery</label>
-			<label index="tx_infinitescrollgallery_domain_model_gallery.title">Title</label>
-			<label index="tx_infinitescrollgallery_domain_model_gallery.description">Description</label>
 			<label index="tx_infinitescrollgallery_limit">Number of images display by default</label>
 			<label index="tx_infinitescrollgallery_thumbnailmaximumwidth">Maximum Width of the thumbnails</label>
 			<label index="tx_infinitescrollgallery_thumbnailmaximumheight">Maximum Height of the thumbnails</label>

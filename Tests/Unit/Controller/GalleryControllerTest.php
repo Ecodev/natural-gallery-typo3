@@ -4,7 +4,7 @@
  *  Copyright notice
  *
  *  (c) 2011 Fabien Udriot <fabien.udriot@ecodev.ch>, Ecodev
- *  			
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -38,12 +38,12 @@
  */
 class Tx_Infinite_scroll_gallery_Controller_GalleryControllerTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
 	/**
-	 * @var Tx_InfiniteScrollGallery_Domain_Model_Gallery
+	 * @var stdClass
 	 */
 	protected $fixture;
 
 	public function setUp() {
-		$this->fixture = new Tx_InfiniteScrollGallery_Domain_Model_Gallery();
+		$this->fixture = new stdClass();
 	}
 
 	public function tearDown() {
