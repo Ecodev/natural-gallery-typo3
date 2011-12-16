@@ -39,18 +39,22 @@ class Tx_InfiniteScrollGallery_Domain_Repository_TagRepository {
 	 * @return array
 	 */
 	public function findAll($contentObjectData = array()) {
-		
+
 		/* @var $localCObj tslib_cObj */
 		$localCObj = t3lib_div::makeInstance('tslib_cObj');
-		$sortBy = 'name ASC';
-		$orderBy = '';
+
+		$clause = '1 = 1 ' . $localCObj->enableFields('tx_tagpack_tags');
 		if ($contentObjectData['tx_infinitescrollgallery_tagcategory'] > 0) {
 			$clause .= 'category =  ' . $contentObjectData['tx_infinitescrollgallery_tagcategory'] . ' ';
 		}
 		if ($contentObjectData['tx_infinitescrollgallery_tagpid'] > 0) {
 			$clause .= 'AND pid =  ' . $contentObjectData['tx_infinitescrollgallery_tagpid'] . ' ';
 		}
-		$tags = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', 'tx_tagpack_tags', $clause, $sortBy, $orderBy, $limit);
+
+		$sortBy = 'name ASC';
+		$orderBy = '';
+
+		$tags = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', 'tx_tagpack_tags', $clause, $sortBy, $orderBy);
 		foreach ($tags as $tag) {
 			$outputTags[$tag['uid']] = $tag['name'];
 		}

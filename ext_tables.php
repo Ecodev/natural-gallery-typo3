@@ -49,7 +49,7 @@ $tempColumns = array(
 			'type' => 'input',
 			'size' => '40',
 			'max' => '256',
-			'default' => '10',
+			'default' => '20',
 		)
 	),
 	'tx_infinitescrollgallery_thumbnailmaximumwidth' => array(
@@ -59,7 +59,7 @@ $tempColumns = array(
 			'type' => 'input',
 			'size' => '40',
 			'max' => '256',
-			'default' => '100',
+			'default' => '180',
 		)
 	),
 	'tx_infinitescrollgallery_thumbnailmaximumheight' => array(
@@ -69,7 +69,7 @@ $tempColumns = array(
 			'type' => 'input',
 			'size' => '40',
 			'max' => '256',
-			'default' => '100',
+			'default' => '150',
 		)
 	),
 	'tx_infinitescrollgallery_imagemaximumwidth' => array(
@@ -89,7 +89,7 @@ $tempColumns = array(
 			'type' => 'input',
 			'size' => '40',
 			'max' => '256',
-			'default' => '700',
+			'default' => '600',
 		)
 	),
 	'tx_infinitescrollgallery_defaulttagfilter' => array(
