@@ -1,2 +1,0 @@
-# No content yet
-# @todo: constant editor variable to give the page id containing the plugin and decide whether to load jQuery
