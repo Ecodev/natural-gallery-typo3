@@ -81,6 +81,8 @@ class Tx_InfiniteScrollGallery_Domain_Repository_ImageRepository {
 		
 		/* @var $GLOBALS t3lib_DB */
 		$images = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', 'tx_dam', $clause, $groupBy, $sortBy, $limit);
+		#$request = $GLOBALS['TYPO3_DB']->SELECTquery('*', 'tx_dam', $clause, $groupBy, $sortBy, $limit);
+		#t3lib_utility_Debug::debug($request,'debug');
 		return $images;
 	}
 	
@@ -127,8 +129,7 @@ class Tx_InfiniteScrollGallery_Domain_Repository_ImageRepository {
 		
 		if (!empty($tags)) {
 			foreach ($tags as $_tag) {
-				$clause .= ' AND uid IN (SELECT uid_foreign FROM tx_tagpack_tags_relations_mm WHERE tablenames = "tx_dam" AND uid_local = ' . $_tag . ') ';	
-				
+				$clause .= ' AND uid IN (SELECT uid_foreign FROM tx_tagpack_tags_relations_mm WHERE tablenames = "tx_dam" AND uid_local = ' . $_tag . ') ';			
 			}
 		}
 		

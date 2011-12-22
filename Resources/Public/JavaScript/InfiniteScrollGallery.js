@@ -104,6 +104,11 @@ $(document).ready(function() {
 
 				// load new set of images
 				$('#tx-infinitescrollgallery-offset').val(offset);
+				
+				// Fix potential bug if placeholder is not supported
+				if ($('#tx-infinitescrollgallery-search').attr('value') == $('#tx-infinitescrollgallery-search').attr('placeholder')) {
+					$('#tx-infinitescrollgallery-search').attr('value', '');
+				}
 				$('#tx-infinitescrollgallery-form').submit()
 			}
 		}
@@ -126,6 +131,7 @@ $(document).ready(function() {
 				// UI update
 				$('#tx-infinitescrollgallery-search, #tx-infinitescrollgallery-tag').attr('disabled', 'disabled');
 				$(".tx-infinitescrollgallery-loading").show();
+
 			}
 			return doSubmit;
 		},
