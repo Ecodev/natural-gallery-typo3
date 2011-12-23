@@ -12,12 +12,14 @@
 			<label index="filter_by_tag">tag</label>
 			<label index="pi1_title">Infinite Scroll Gallery</label>
 			<label index="pi1_plus_wiz_description">Display a gallery that shows image as you scroll.</label>
+			<label index="search">Search...</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="tx_infinitescrollgallery_listAjax_msg_no_image">Pas d'image correspondant à la recherche</label>
 			<label index="tx_infinitescrollgallery_dropdown_tags">tous</label>
 			<label index="filter_by">Filtrer par</label>
 			<label index="filter_by_tag">tag</label>
+			<label index="search">Rechercher...</label>
 		</languageKey>
 	</data>
 </T3locallang>

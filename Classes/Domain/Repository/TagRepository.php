@@ -45,16 +45,18 @@ class Tx_InfiniteScrollGallery_Domain_Repository_TagRepository {
 
 		$clause = '1 = 1 ' . $localCObj->enableFields('tx_tagpack_tags');
 		if ($contentObjectData['tx_infinitescrollgallery_tagcategory'] > 0) {
-			$clause .= 'category =  ' . $contentObjectData['tx_infinitescrollgallery_tagcategory'] . ' ';
+			$clause .= ' AND category =  ' . $contentObjectData['tx_infinitescrollgallery_tagcategory'] . ' ';
 		}
 		if ($contentObjectData['tx_infinitescrollgallery_tagpid'] > 0) {
-			$clause .= 'AND pid =  ' . $contentObjectData['tx_infinitescrollgallery_tagpid'] . ' ';
+			$clause .= ' AND pid =  ' . $contentObjectData['tx_infinitescrollgallery_tagpid'] . ' ';
 		}
 
 		$sortBy = 'name ASC';
 		$orderBy = '';
 
 		$tags = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', 'tx_tagpack_tags', $clause, $sortBy, $orderBy);
+		#$request = $GLOBALS['TYPO3_DB']->SELECTquery('*', 'tx_tagpack_tags', $clause, $sortBy, $orderBy);
+		#t3lib_utility_Debug::debug($request,'debug');
 		foreach ($tags as $tag) {
 			$outputTags[$tag['uid']] = $tag['name'];
 		}
