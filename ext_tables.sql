@@ -2,6 +2,7 @@
 # Additional fields for table 'tt_content'
 #
 CREATE TABLE tt_content (
+	tx_infinitescrollgallery_enablemoreloading int(11) DEFAULT '0' NOT NULL,
 	tx_infinitescrollgallery_limit int(11) DEFAULT '0' NOT NULL,
 	tx_infinitescrollgallery_thumbnailmaximumwidth int(11) DEFAULT '0' NOT NULL,
 	tx_infinitescrollgallery_imagemaximumwidth int(11) DEFAULT '0' NOT NULL,
