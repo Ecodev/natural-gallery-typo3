@@ -73,6 +73,7 @@ class Tx_InfiniteScrollGallery_Controller_GalleryController extends Tx_Extbase_M
 		else {
 			$this->contentObjectData = $this->configurationManager->getcontentObject()->data;
 		}
+		//t3lib_utility_Debug::debug($this->contentObjectData, '$this->contentObjectData');
 	}
 
 	/**
@@ -98,6 +99,7 @@ class Tx_InfiniteScrollGallery_Controller_GalleryController extends Tx_Extbase_M
 		$totalImages = $this->imageRepository->countImages($this->request, $limit, $this->contentObjectData);
 		$this->view->assign('totalImages', $totalImages);
 		$this->view->assign('data', $this->contentObjectData);
+		$this->view->assign('orderby', $this->contentObjectData['tx_infinitescrollgallery_orderby']);
 		$this->view->assign('enableMoreLoading', $this->contentObjectData['tx_infinitescrollgallery_enablemoreloading']);
 		$this->view->assign('language', $language);
 		$this->view->assign('tags', $this->tagRepository->findAll($this->contentObjectData));

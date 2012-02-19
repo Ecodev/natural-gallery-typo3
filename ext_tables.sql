@@ -3,6 +3,7 @@
 #
 CREATE TABLE tt_content (
 	tx_infinitescrollgallery_enablemoreloading int(11) DEFAULT '0' NOT NULL,
+
 	tx_infinitescrollgallery_limit int(11) DEFAULT '0' NOT NULL,
 	tx_infinitescrollgallery_thumbnailmaximumwidth int(11) DEFAULT '0' NOT NULL,
 	tx_infinitescrollgallery_imagemaximumwidth int(11) DEFAULT '0' NOT NULL,
@@ -22,5 +23,7 @@ CREATE TABLE tt_content (
 
 	# Insert maximum height for images
 	tx_infinitescrollgallery_imagemaximumheight int(11) DEFAULT '0' NOT NULL,
+
+	tx_infinitescrollgallery_orderby varchar(255) DEFAULT '0' NOT NULL,
 
 );

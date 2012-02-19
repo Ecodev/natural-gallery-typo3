@@ -100,10 +100,32 @@ $tempColumns = array(
 			'default' => '0',
 		)
 	),
+	'tx_infinitescrollgallery_orderby' => array (
+          'exclude' => 0,
+          'label' => 'LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang_db.xml:tx_infinitescrollgallery_orderby',
+		'config' => array (
+                'default' => 'tx_dam.crdate DESC',
+                'type' => 'select',
+                'items' => array (
+
+					array ('LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang_db.xml:tx_infinitescrollgallery_tx_dam.tstampasc', 'tx_dam.tstamp ASC'),
+					array ('LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang_db.xml:tx_infinitescrollgallery_tx_dam.tstampdesc', 'tx_dam.tstamp DESC'),
+					array ('LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang_db.xml:tx_infinitescrollgallery_tx_dam.crdateasc', 'tx_dam.crdate ASC'),
+                    array ('LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang_db.xml:tx_infinitescrollgallery_tx_dam.crdatedesc', 'tx_dam.crdate DESC'),
+					array ('LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang_db.xml:tx_infinitescrollgallery_tx_dam.sortingasc', 'tx_dam.sorting ASC'),
+					array ('LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang_db.xml:tx_infinitescrollgallery_tx_dam.sortingdesc', 'tx_dam.sorting DESC'),
+					array ('LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang_db.xml:tx_infinitescrollgallery_tx_dam.titleasc', 'tx_dam.title ASC'),
+					array ('LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang_db.xml:tx_infinitescrollgallery_tx_dam.titledesc', 'tx_dam.title DESC'),
+                ),
+                'size' => 1,
+                'minitems' => 1,
+                'maxitems' => 1,
+         )
+     ),
 );
 t3lib_extMgm::addTCAcolumns('tt_content', $tempColumns, 1);
 
-$TCA['tt_content']['types']['list']['subtypes_addlist']['infinitescrollgallery_pi1'] = 'tx_infinitescrollgallery_enablemoreloading, tx_infinitescrollgallery_limit, tx_infinitescrollgallery_thumbnailmaximumwidth, tx_infinitescrollgallery_thumbnailmaximumheight, tx_infinitescrollgallery_imagemaximumwidth, tx_infinitescrollgallery_imagemaximumheight, tx_infinitescrollgallery_defaulttagfilter, tx_infinitescrollgallery_tagcategory, tx_infinitescrollgallery_tagpid';
+$TCA['tt_content']['types']['list']['subtypes_addlist']['infinitescrollgallery_pi1'] = 'tx_infinitescrollgallery_enablemoreloading, tx_infinitescrollgallery_limit, tx_infinitescrollgallery_thumbnailmaximumwidth, tx_infinitescrollgallery_thumbnailmaximumheight, tx_infinitescrollgallery_imagemaximumwidth, tx_infinitescrollgallery_imagemaximumheight, tx_infinitescrollgallery_defaulttagfilter, tx_infinitescrollgallery_tagcategory, tx_infinitescrollgallery_tagpid, tx_infinitescrollgallery_orderby';
 
 
 // temporary lines: prevent in case tx_dam is not loaded

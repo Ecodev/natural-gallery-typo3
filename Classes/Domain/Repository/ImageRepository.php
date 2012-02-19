@@ -44,7 +44,7 @@ class Tx_InfiniteScrollGallery_Domain_Repository_ImageRepository {
 	public function findAll(Tx_Extbase_MVC_Web_Request $request, $limit, $contentObjectData = array()) {
 
 		$clause = $this->getClause();
-		$sortBy = 'tx_dam.crdate DESC';
+		$orderBy = $contentObjectData['tx_infinitescrollgallery_orderby'];
 		$groupBy = '';
 
 		$tag = $request->hasArgument('tag') ? $request->getArgument('tag') : 0;
@@ -53,7 +53,7 @@ class Tx_InfiniteScrollGallery_Domain_Repository_ImageRepository {
 		$searchString = $request->hasArgument('search') ? $request->getArgument('search') : '';
 		$clause = $this->getClause($tag, $searchString);
 		/* @var $GLOBALS t3lib_DB */
-		$images = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', 'tx_dam', $clause, $groupBy, $sortBy, $limit);
+		$images = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', 'tx_dam', $clause, $groupBy, $orderBy, $limit);
 		return $images;
 	}
 
@@ -68,7 +68,7 @@ class Tx_InfiniteScrollGallery_Domain_Repository_ImageRepository {
 	public function findStock(Tx_Extbase_MVC_Web_Request $request, $limit, $contentObjectData = array()) {
 
 		$clause = $this->getClause();
-		$sortBy = 'tx_dam.crdate DESC';
+		$orderBy = $contentObjectData['tx_infinitescrollgallery_orderby'];
 		$groupBy = '';
 
 		$tag = $request->hasArgument('tag') ? $request->getArgument('tag') : 0;
@@ -80,8 +80,8 @@ class Tx_InfiniteScrollGallery_Domain_Repository_ImageRepository {
 		$clause = $this->getClause($tag, $searchString);
 
 		/* @var $GLOBALS t3lib_DB */
-		$images = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', 'tx_dam', $clause, $groupBy, $sortBy, $limit);
-		#$request = $GLOBALS['TYPO3_DB']->SELECTquery('*', 'tx_dam', $clause, $groupBy, $sortBy, $limit);
+		$images = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', 'tx_dam', $clause, $groupBy, $orderBy, $limit);
+		#$request = $GLOBALS['TYPO3_DB']->SELECTquery('*', 'tx_dam', $clause, $groupBy, $orderBy, $limit);
 		#t3lib_utility_Debug::debug($request,'debug');
 		return $images;
 	}

@@ -15,6 +15,15 @@
 			<label index="tx_infinitescrollgallery_defaulttagfilter">Apply default tag filter to list of images (comma separated values)</label>
 			<label index="tx_infinitescrollgallery_tagcategory">Drop down menu: filter elements by category Id (numeric value)</label>
 			<label index="tx_infinitescrollgallery_tagpid">Drop down menu: filter elements by Pid (numeric value)</label>
+			<label index="tx_infinitescrollgallery_orderby">Order by</label>
+			<label index="tx_infinitescrollgallery_tx_dam.crdateasc">Creation date ascending</label>
+			<label index="tx_infinitescrollgallery_tx_dam.crdatedesc">Creation date descending</label>
+			<label index="tx_infinitescrollgallery_tx_dam.tstampasc">Modification date ascending</label>
+			<label index="tx_infinitescrollgallery_tx_dam.tstampdesc">Modification date descending</label>
+			<label index="tx_infinitescrollgallery_tx_dam.sortingasc">Image number ascending</label>
+			<label index="tx_infinitescrollgallery_tx_dam.sortingdesc">Image number descending</label>
+			<label index="tx_infinitescrollgallery_tx_dam.titleasc">Title ascending</label>
+			<label index="tx_infinitescrollgallery_tx_dam.titledesc">Title descending</label>
 			<label index="tx_dam">DAM</label>
 		</languageKey>
 	</data>
