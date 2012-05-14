@@ -148,7 +148,7 @@ $(document).ready(function() {
 
 				// reset the lock
 				infinitesSrollGallery.ajaxReady = true;
-				$('#tx-infinitescrollgallery-search, #tx-infinitescrollgallery-tag').attr('disabled', '');
+				$('#tx-infinitescrollgallery-search, #tx-infinitescrollgallery-tag').removeAttr('disabled');
 				$(".yoxview").yoxview(slideShowConfiguration);
 
 				// Page Browser UI
