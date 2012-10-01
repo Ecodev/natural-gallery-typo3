@@ -7,6 +7,8 @@
 	<data type="array">
 		<languageKey index="default" type="array">
 			<label index="tx_infinitescrollgallery_enablemoreloading">Load more images dynamically (by Ajax)</label>
+                        <label index="tx_infinitescrollgallery_enablevideo">Enable video support (requires ffmpeg and EXT:jwplayer)</label>
+                        <label index="tx_infinitescrollgallery_showfilters">Show filters</label>
 			<label index="tx_infinitescrollgallery_limit">Number of images display by default</label>
 			<label index="tx_infinitescrollgallery_thumbnailmaximumwidth">Maximum width of the thumbnails</label>
 			<label index="tx_infinitescrollgallery_thumbnailmaximumheight">Maximum height of the thumbnails</label>

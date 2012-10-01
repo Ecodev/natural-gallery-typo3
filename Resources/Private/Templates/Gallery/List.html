@@ -12,9 +12,8 @@
 
 		// Array containing images not displayed by defaut on this page
 		infinitesSrollGallery.stockImages = <gallery:stockImage images="{stockImages}"
-													maxWidth="{data.tx_infinitescrollgallery_imagemaximumwidth}"
-													maxHeight="{data.tx_infinitescrollgallery_imagemaximumheight}"
-													/>
+                                                                        maxWidth="{data.tx_infinitescrollgallery_imagemaximumwidth}"
+                                                                        maxHeight="{data.tx_infinitescrollgallery_imagemaximumheight}" />
 		//enable/disable scroll
 		infinitesSrollGallery.enableMoreLoading = {enableMoreLoading}
 
@@ -26,6 +25,14 @@
 			height: {data.tx_infinitescrollgallery_thumbnailmaximumheight}px;
 		}
 	</gallery:style>
+        <f:if condition="{showFilters}">
+            <f:then />
+            <f:else>
+            <gallery:style>
+                #tx-infinitescrollgallery-form {display: none;}
+            </gallery:style>
+            </f:else>
+        </f:if>
 	<f:form id="tx-infinitescrollgallery-form" method="GET">
 		 <fieldset>
 		 	<legend></legend>
@@ -58,17 +65,42 @@
 		<div class="yoxview">
 			<ul>
 				<f:for each="{images}" as="image">
-					<li class="tx-infinitscrollgallery-thumbnail">
-						<a href="{f:uri.image(src:'fileadmin/user_upload/resources/{image.file_name}',
-							maxWidth: '{data.tx_infinitescrollgallery_imagemaximumwidth}',
-							maxHeight: '{data.tx_infinitescrollgallery_imagemaximumheight}')}">
-							{f:image(src: 'fileadmin/user_upload/resources/{image.file_name}',
-								alt: '{image.title}',
-								title: '{image.title}',
-								maxWidth: '{data.tx_infinitescrollgallery_thumbnailmaximumwidth}',
-								maxHeight: '{data.tx_infinitescrollgallery_thumbnailmaximumheight}')}
-						</a>
-					</li>
+                                    <f:if condition="{0:image.file_mime_type} == {0:'video/mp4'}">
+                                        <f:then>
+                                            <script type="text/javascript">
+                                                        infinitesSrollGallery.videoPreview[{image.uid}] = {gallery:videoThumbnail(
+                                                            path: '/fileadmin/user_upload/resources/{image.file_name}',
+                                                            maxWidth: '{data.tx_infinitescrollgallery_thumbnailmaximumwidth}',
+                                                            maxHeight: '{data.tx_infinitescrollgallery_thumbnailmaximumheight}',
+                                                            interval: 10,
+                                                            startTime: 15,
+                                                            numberFrames: 5
+                                                        )};
+                                            </script>
+                                            <li class="tx-infinitscrollgallery-thumbnail tx-infinitscrollgallery-thumbnail-video" id="video{image.uid}">
+                                                <a href="{baseUri}fileadmin/user_upload/resources/{image.file_name}">
+                                                    {f:image(src: 'typo3conf/ext/infinite_scroll_gallery/Resources/Public/Images/film_reel.png',
+                                                        alt: '{image.title}',
+                                                        title: '{image.title}',
+                                                        maxWidth: '{data.tx_infinitescrollgallery_thumbnailmaximumwidth}',
+                                                        maxHeight: '{data.tx_infinitescrollgallery_thumbnailmaximumheight}')}
+                                                </a>
+                                            </li>
+                                        </f:then>
+                                        <f:else>
+                                            <li class="tx-infinitscrollgallery-thumbnail">
+                                                    <a href="{f:uri.image(src:'fileadmin/user_upload/resources/{image.file_name}',
+                                                            maxWidth: '{data.tx_infinitescrollgallery_imagemaximumwidth}',
+                                                            maxHeight: '{data.tx_infinitescrollgallery_imagemaximumheight}')}">
+                                                            {f:image(src: 'fileadmin/user_upload/resources/{image.file_name}',
+                                                                    alt: '{image.title}',
+                                                                    title: '{image.title}',
+                                                                    maxWidth: '{data.tx_infinitescrollgallery_thumbnailmaximumwidth}',
+                                                                    maxHeight: '{data.tx_infinitescrollgallery_thumbnailmaximumheight}')}
+                                                    </a>
+                                            </li>
+                                        </f:else>
+                                    </f:if>
 				</f:for>
 			</ul>
 		</div>

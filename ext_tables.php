@@ -20,6 +20,20 @@ $tempColumns = array(
                'type' => "check",
           )
      ),
+        'tx_infinitescrollgallery_enablevideo' => array (
+            'exclude' => 0,
+            'label' => 'LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang_db.xml:tx_infinitescrollgallery_enablevideo',
+            'config' => Array(
+                'type' => 'check',
+            )
+        ),
+        'tx_infinitescrollgallery_showfilters' => array (
+            'exclude' => 0,
+            'label' => 'LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang_db.xml:tx_infinitescrollgallery_showfilters',
+            'config' => Array(
+                'type' => 'check',
+            )
+        ),
 	'tx_infinitescrollgallery_limit' => array(
 		'exclude' => 0,
 		'label' => 'LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang_db.xml:tx_infinitescrollgallery_limit',
@@ -125,7 +139,7 @@ $tempColumns = array(
 );
 t3lib_extMgm::addTCAcolumns('tt_content', $tempColumns, 1);
 
-$TCA['tt_content']['types']['list']['subtypes_addlist']['infinitescrollgallery_pi1'] = 'tx_infinitescrollgallery_enablemoreloading, tx_infinitescrollgallery_limit, tx_infinitescrollgallery_thumbnailmaximumwidth, tx_infinitescrollgallery_thumbnailmaximumheight, tx_infinitescrollgallery_imagemaximumwidth, tx_infinitescrollgallery_imagemaximumheight, tx_infinitescrollgallery_defaulttagfilter, tx_infinitescrollgallery_tagcategory, tx_infinitescrollgallery_tagpid, tx_infinitescrollgallery_orderby';
+$TCA['tt_content']['types']['list']['subtypes_addlist']['infinitescrollgallery_pi1'] = 'tx_infinitescrollgallery_enablemoreloading, tx_infinitescrollgallery_enablevideo, tx_infinitescrollgallery_showfilters,   tx_infinitescrollgallery_limit, tx_infinitescrollgallery_thumbnailmaximumwidth, tx_infinitescrollgallery_thumbnailmaximumheight, tx_infinitescrollgallery_imagemaximumwidth, tx_infinitescrollgallery_imagemaximumheight, tx_infinitescrollgallery_defaulttagfilter, tx_infinitescrollgallery_tagcategory, tx_infinitescrollgallery_tagpid, tx_infinitescrollgallery_orderby';
 
 
 // temporary lines: prevent in case tx_dam is not loaded

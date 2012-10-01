@@ -12,10 +12,10 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Infinite Scroll Gallery',
-	'description' => 'Display photos and fetch them as the User is scrolling down.',
+	'description' => 'Display photos/videos and fetch them as the User is scrolling down.',
 	'category' => 'plugin',
-	'author' => 'Fabien Udriot',
-	'author_email' => 'fabien.udriot@ecodev.ch',
+	'author' => 'Fabien Udriot, Sylvain Tissot',
+	'author_email' => 'fabien.udriot@ecodev.ch, sylvain.tissot@ecodev.ch',
 	'author_company' => 'Ecodev',
 	'shy' => '',
 	'priority' => '',
@@ -27,13 +27,14 @@ $EM_CONF[$_EXTKEY] = array(
 	'modify_tables' => '',
 	'clearCacheOnLoad' => 0,
 	'lockType' => '',
-	'version' => '1.0.0',
+	'version' => '1.1.0',
 	'constraints' => array(
 		'depends' => array(
 			'typo3' => '4.5.0-0.0.0',
 			'cms' => '',
 			'extbase' => '',
 			'fluid' => '',
+                        'jwplayer' => '',
 		),
 		'conflicts' => array(
 		),

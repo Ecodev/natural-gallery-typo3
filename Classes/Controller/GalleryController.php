@@ -109,6 +109,8 @@ class Tx_InfiniteScrollGallery_Controller_GalleryController extends Tx_Extbase_M
 		$this->view->assign('recordUid', $this->contentObjectData['uid']);
 		$this->view->assign('limit', $limit);
 		$this->view->assign('numberOfVisibleImages', $limit > $totalImages ? $totalImages : $limit);
+                $this->view->assign('baseUri', $this->request->getBaseURI());
+                $this->view->assign('showFilters', $this->contentObjectData['tx_infinitescrollgallery_showfilters']);
 	}
 
 	/**
@@ -129,6 +131,7 @@ class Tx_InfiniteScrollGallery_Controller_GalleryController extends Tx_Extbase_M
 		$this->view->assign('stockImages', $this->imageRepository->findStock($this->request, $stockLimit, $this->contentObjectData));
 		$totalImages = $this->imageRepository->countImages($this->request, $limit, $this->contentObjectData);
 		$this->view->assign('totalImages', $totalImages);
+                $this->view->assign('baseUri', $this->request->getBaseURI());
 	}
 }
 

@@ -3,6 +3,8 @@
 #
 CREATE TABLE tt_content (
 	tx_infinitescrollgallery_enablemoreloading int(11) DEFAULT '0' NOT NULL,
+        tx_infinitescrollgallery_enablevideo int(11) DEFAULT '0' NOT NULL,
+        tx_infinitescrollgallery_showfilters int(11) DEFAULT '1' NOT NULL,
 
 	tx_infinitescrollgallery_limit int(11) DEFAULT '0' NOT NULL,
 	tx_infinitescrollgallery_thumbnailmaximumwidth int(11) DEFAULT '0' NOT NULL,

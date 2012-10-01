@@ -51,7 +51,8 @@ class Tx_InfiniteScrollGallery_Domain_Repository_ImageRepository {
 		$defaultTagFilter = $contentObjectData['tx_infinitescrollgallery_defaulttagfilter'];
 		$tag = $tag . ',' . $defaultTagFilter; // merge default tag with tag given as parameter
 		$searchString = $request->hasArgument('search') ? $request->getArgument('search') : '';
-		$clause = $this->getClause($tag, $searchString);
+                $enableVideo = $contentObjectData['tx_infinitescrollgallery_enablevideo'];
+                $clause = $this->getClause($tag, $searchString, $enableVideo);
 		/* @var $GLOBALS t3lib_DB */
 		$images = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', 'tx_dam', $clause, $groupBy, $orderBy, $limit);
 		return $images;
@@ -75,10 +76,8 @@ class Tx_InfiniteScrollGallery_Domain_Repository_ImageRepository {
 		$defaultTagFilter = $contentObjectData['tx_infinitescrollgallery_defaulttagfilter'];
 		$tag = $tag . ',' . $defaultTagFilter; // merge default tag with tag given as parameter
 		$searchString = $request->hasArgument('search') ? $request->getArgument('search') : '';
-
-		//$defaultTagFilter = $contentObjectData['tx_infinitescrollgallery_defaulttagfilter'];
-		$clause = $this->getClause($tag, $searchString);
-
+                $enableVideo = $contentObjectData['tx_infinitescrollgallery_enablevideo'];
+		$clause = $this->getClause($tag, $searchString, $enableVideo);
 		/* @var $GLOBALS t3lib_DB */
 		$images = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', 'tx_dam', $clause, $groupBy, $orderBy, $limit);
 		#$request = $GLOBALS['TYPO3_DB']->SELECTquery('*', 'tx_dam', $clause, $groupBy, $orderBy, $limit);
@@ -100,8 +99,8 @@ class Tx_InfiniteScrollGallery_Domain_Repository_ImageRepository {
 		$tag = $request->hasArgument('tag') ? $request->getArgument('tag') : 0;
 		$defaultTagFilter = $contentObjectData['tx_infinitescrollgallery_defaulttagfilter'];
 		$tag = $tag . ',' . $defaultTagFilter; // merge default tag with tag given as parameter
-
-		$clause = $this->getClause($tag, $searchString);
+                $enableVideo = $contentObjectData['tx_infinitescrollgallery_enablevideo'];
+		$clause = $this->getClause($tag, $searchString, $enableVideo);
 		$record = $GLOBALS['TYPO3_DB']->exec_SELECTgetSingleRow('count(*) AS totalOfImages', 'tx_dam', $clause);
 
 		return $record['totalOfImages'];
@@ -112,14 +111,20 @@ class Tx_InfiniteScrollGallery_Domain_Repository_ImageRepository {
 	 *
 	 * @param string $tag a comma separated tags id to be potentially searched (e.g 1,2,3)
 	 * @param string $searchString a search string to be potentially searched
+         * @param boolean $enableVideo select video files in addition to pictures
 	 * @return string the clause part
 	 */
-	protected function getClause($tag = 0, $searchString = '') {
+	protected function getClause($tag = 0, $searchString = '', $enableVideo=false) {
 
 		/* @var $localCObj tslib_cObj */
 		static $defaultTag = 0;
 		$localCObj = t3lib_div::makeInstance('tslib_cObj');
-		$clause = 'media_type = 2 ' . $localCObj->enableFields('tx_dam');
+		$clause = '(media_type = 2';
+                if ($enableVideo) {
+                    $clause .= " OR file_mime_type REGEXP '^video'";
+                }
+                $clause .= ') ';
+                $clause .= $localCObj->enableFields('tx_dam');
 		if ($searchString !== '') {
 			$clause .= ' AND (title LIKE "%' . $searchString . '%" OR description LIKE "%' . $searchString . '%" OR author LIKE "%' . $searchString . '%" OR date_production LIKE "%' . $searchString . '%" OR comment LIKE "%' . $searchString . '%")';
 		}

@@ -6,6 +6,10 @@
 	text-align: center;
 }
 
+.tx-infinitscrollgallery-thumbnail-video a img {
+	box-shadow: none !important;
+}
+
 .tx-infinitscrollgallery-thumbnail a img {
 	box-shadow: 3px 3px 5px #999;
 	text-align: center;
@@ -13,6 +17,7 @@
 
 li.tx-infinitscrollgallery-thumbnail {
 	list-style: none;
+        position: relative;
 }
 
 .tx-infinitescrollgallery-loading {

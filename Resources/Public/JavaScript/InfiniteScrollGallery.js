@@ -4,7 +4,8 @@
 ///////////// RUNTIME VARIABLES /////////////
 var infinitesSrollGallery = {
 	ajaxReady : true,
-	numberOfScroll : 0
+	numberOfScroll : 0,
+        videoPreview : new Array()
 }
 
 $(document).ready(function() {
@@ -13,6 +14,7 @@ $(document).ready(function() {
 	// Set plugin configuration
 	var slideShowConfiguration = {
 		lang : $('#tx-infinitescrollgallery-language').val() ? $('#tx-infinitescrollgallery-language').val() : 'en',
+		flashVideoPlayerPath: '/typo3conf/ext/jwplayer/Resources/Public/Player/player.swf',
 		onEnd : function() {
 			$.yoxview.close();
 		},
@@ -45,6 +47,25 @@ $(document).ready(function() {
 		}
 	}
 
+        ///////////// VIDEO PREVIEW ////////////
+        infinitesSrollGallery.switchThumbnail = function(thumb, uid, pos) {
+            var info= infinitesSrollGallery.videoPreview[uid];
+            thumb.css('z-index',2);
+            var ele = thumb.clone().css({'z-index': 1, position: 'absolute', left: '0px', top: '0px', display: 'block'}).attr('src', info['thumbs'][pos % info['thumbs'].length]);
+            thumb.after(ele).fadeOut(500, function() {
+                $(this).remove();
+            });
+            setTimeout(function(){infinitesSrollGallery.switchThumbnail(ele, uid, pos+1)}, 1000);
+        }
+        $('li.tx-infinitscrollgallery-thumbnail-video').each(function() {
+            var uid = $(this).attr('id').substr(5);
+            infinitesSrollGallery.switchThumbnail($('img',this).eq(0), uid, 0);
+            // append yoxview parameters to links
+            $('a', this).attr('href', $('a', this).attr('href')+'?image='+infinitesSrollGallery.videoPreview[uid]['still']
+                                                                +'&width='+infinitesSrollGallery.videoPreview[uid]['width']
+                                                                +'&height='+infinitesSrollGallery.videoPreview[uid]['height']);
+        });
+        
 	// Launch the gallery
 	$(".yoxview").yoxview(slideShowConfiguration);
 

@@ -1,2 +1,4 @@
 # cat=basic/limits/; type=boolean; label=Load jQuery: Depending whether jQuery is already loaded globally, one may want to skip it.
 loadJquery = 0
+# cat=basic/limits/; type=text; label=JWPlayer Path: Absolute URL of the player.swf to load when playing a video.
+jwplayerPath = /typo3conf/ext/jwplayer/Resources/Public/Player/player.swf
