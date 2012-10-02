@@ -71,7 +71,7 @@ class Tx_InfiniteScrollGallery_ViewHelpers_VideoThumbnailViewHelper extends Tx_F
 			// cache: search for existing thumbnails before generating new ones
 			if (!file_exists($tmpDir.'/'.$timestamp.'-01.jpg')) {
 				$cmd = "ffmpeg -i '$path' -r ".(1/$interval)." -vframes $numberFrames -ss $startTime -s ".$maxWidth."x".$maxHeight." -f image2";
-				$cmd .= " -vf 'movie=$imageDir/film_reel.png, scale={$maxWidth}:{$maxHeight} [watermark]; [in][watermark] overlay=0:0 [out]'";
+				$cmd .= " -vf 'movie=$imageDir/film_reel.gif, scale={$maxWidth}:{$maxHeight} [watermark]; [in][watermark] overlay=0:0 [out]'";
 				$cmd .= " '$tmpDir/{$timestamp}-%02d.jpg'";
 				exec($cmd);
 			}
