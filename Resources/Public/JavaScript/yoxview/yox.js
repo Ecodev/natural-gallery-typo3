@@ -215,7 +215,7 @@
             youtube: /^http:\/\/(?:www\.)?youtube.com\//
         },
         flash: /^(.*\.(swf))(\?[^\?]+)?/i,
-        flashvideo: /^(.*\.(flv|f4v|f4p|f4a|f4b|aac))(\?[^\?]+)?/i,
+        flashvideo: /^(.*\.(flv|f4v|m4v|mp4|f4p|f4a|f4b|aac))(\?[^\?]+)?/i,
         image: /^[^\?#]+\.(?:jpg|jpeg|gif|png)$/i,
         url: /^([^#\?]*)?(?:\?([^\?#]*))?(?:#([A-Za-z]{1}[A-Za-z\d-_\:\.]+))?$/, // [0] - whole url, [1] - path, [2] - query (sans '?'), [3] - anchor
         video: {
