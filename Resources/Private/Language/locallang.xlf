@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2012-10-17T17:55:17Z"
+	      product-name="local lang">
+		<header/>
+		<body>
+			<trans-unit id="tx_infinitescrollgallery_listAjax_msg_no_image">
+				<source>No image matching this search</source>
+			</trans-unit>
+			<trans-unit id="tx_infinitescrollgallery_dropdown_tags">
+				<source>all</source>
+			</trans-unit>
+			<trans-unit id="filter_by">
+				<source>Filter by</source>
+			</trans-unit>
+			<trans-unit id="filter_by_tag">
+				<source>tag</source>
+			</trans-unit>
+			<trans-unit id="pi1_title">
+				<source>Infinite Scroll Gallery</source>
+			</trans-unit>
+			<trans-unit id="pi1_plus_wiz_description">
+				<source>Display a gallery that shows image as you scroll.</source>
+			</trans-unit>
+			<trans-unit id="search">
+				<source>Search...</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

@@ -70,8 +70,8 @@ class Tx_InfiniteScrollGallery_ViewHelpers_ScriptViewHelper extends Tx_Fluid_Cor
 		if (substr($filename, 0, 4) == 'EXT:') { // extension
 			list($extKey, $local) = explode('/', substr($filename, 4), 2);
 			$filename = '';
-			if (strcmp($extKey, '') && t3lib_extMgm::isLoaded($extKey) && strcmp($local, '')) {
-				$filename = t3lib_extMgm::siteRelPath($extKey) . $local;
+			if (strcmp($extKey, '') && \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded($extKey) && strcmp($local, '')) {
+				$filename = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath($extKey) . $local;
 			}
 		}
 		return htmlspecialchars($filename);

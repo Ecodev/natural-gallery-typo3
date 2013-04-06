@@ -41,7 +41,7 @@ class Tx_InfiniteScrollGallery_Domain_Repository_TagRepository {
 	public function findAll($contentObjectData = array()) {
 
 		/* @var $localCObj tslib_cObj */
-		$localCObj = t3lib_div::makeInstance('tslib_cObj');
+		$localCObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tslib_cObj');
 
 		$clause = '1 = 1 ' . $localCObj->enableFields('tx_tagpack_tags');
 		if ($contentObjectData['tx_infinitescrollgallery_tagcategory'] > 0) {

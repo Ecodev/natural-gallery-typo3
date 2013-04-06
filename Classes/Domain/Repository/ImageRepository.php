@@ -118,7 +118,7 @@ class Tx_InfiniteScrollGallery_Domain_Repository_ImageRepository {
 
 		/* @var $localCObj tslib_cObj */
 		static $defaultTag = 0;
-		$localCObj = t3lib_div::makeInstance('tslib_cObj');
+		$localCObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tslib_cObj');
 		$clause = '(media_type = 2';
                 if ($enableVideo) {
                     $clause .= " OR file_mime_type REGEXP '^video'";

@@ -34,10 +34,10 @@ plugin.tx_infinitescrollgallery._CSS_DEFAULT_STYLE (
 # AJAX
 ################################
 
-ajax83790 = PAGE
-ajax83790 {
+ajax1363971892 = PAGE
+ajax1363971892 {
 	# You don't need to change this typeNum
-	typeNum = 83790
+	typeNum = 1363971892
 	10 = COA_INT
     10 {
         10 = USER_INT

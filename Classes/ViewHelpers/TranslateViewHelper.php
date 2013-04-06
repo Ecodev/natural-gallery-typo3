@@ -36,20 +36,20 @@ class Tx_InfiniteScrollGallery_ViewHelpers_TranslateViewHelper extends Tx_Fluid_
 	 */
 	public function initialize() {
 		if (!is_object($GLOBALS['TSFE']->language)) {
-			
+
 			// TypoScript configuration
 			$configuration = $GLOBALS['TSFE']->tmpl->setup['config.'];
-			
+
 			$language = $configuration['language'] == '' ? 'default' : $configuration['language'];
-			
+
 			// Initialize language object
-			$GLOBALS['TSFE']->language = t3lib_div::makeInstance('Language');
+			$GLOBALS['TSFE']->language = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Language');
 			$GLOBALS['TSFE']->language->lang = $language;
 			$GLOBALS['TSFE']->language->charSet = 'utf-8';
-			$GLOBALS['TSFE']->language->includeLLFile('EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xml'); 
-		} 
+			$GLOBALS['TSFE']->language->includeLLFile('EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf');
+		}
 	}
-	
+
 	/**
 	 * Translate a key
 	 *
@@ -57,21 +57,21 @@ class Tx_InfiniteScrollGallery_ViewHelpers_TranslateViewHelper extends Tx_Fluid_
 	 * @return string
 	 */
 	public function render($key) {
-		
+
 		// TypoScript configuration
 		$configuration = $GLOBALS['TSFE']->tmpl->setup['config.'];
-		
+
 		$language = $configuration['language'] == '' ? 'default' : $configuration['language'];
-		
+
 		$alternativeLabels = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_infinitescrollgallery.'];
-		
+
 		if(!empty($alternativeLabels['_LOCALLANG.'][$language . '.'][$key])) {
-			$label = $alternativeLabels['_LOCALLANG.'][$language . '.'][$key]; 	
+			$label = $alternativeLabels['_LOCALLANG.'][$language . '.'][$key];
 		}
 		else {
 			$label = $GLOBALS['TSFE']->language->getLL($key);
 		}
-		
+
 		#plugin.tx_infinitescrollgallery._LOCALLANG.default.filter_by_tag = asdf
 		return  $label;
 	}

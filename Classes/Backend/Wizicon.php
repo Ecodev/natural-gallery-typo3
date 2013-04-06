@@ -36,7 +36,7 @@ class tx_infinitescrollgallery_pi1_wizicon {
 		$LL = $this->includeLocalLang();
 
 		$wizardItems['plugins_tx_infinitescrollgallery_pi1'] = array(
-			'icon' => t3lib_extMgm::extRelPath('infinite_scroll_gallery') . 'ext_icon.gif',
+			'icon' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('infinite_scroll_gallery') . 'ext_icon.gif',
 			'title' => $LANG->getLLL('pi1_title', $LL),
 			'description' => $LANG->getLLL('pi1_plus_wiz_description', $LL),
 			'params' => '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=infinitescrollgallery_pi1'
@@ -51,15 +51,12 @@ class tx_infinitescrollgallery_pi1_wizicon {
 	 * @return	The array with language labels
 	 */
 	function includeLocalLang() {
-		global $LANG;
-
-		$LOCAL_LANG = $LANG->includeLLFile('EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xml', FALSE);
+		$llFile = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('infinite_scroll_gallery') . 'Resources/Private/Language/locallang.xlf';
+		/** @var $localLangParser \TYPO3\CMS\Core\Localization\Parser\LocallangXmlParser */
+		$localLangParser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Core\Localization\Parser\LocallangXmlParser');
+		$LOCAL_LANG = $localLangParser->getParsedData($llFile, $GLOBALS['LANG']->lang);
 		return $LOCAL_LANG;
 	}
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/infinite_scroll_gallery/pi1/class.tx_rssdisplay_pi1_wizicon.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/infinite_scroll_gallery/pi1/class.tx_rssdisplay_pi1_wizicon.php']);
 }
 
 ?>

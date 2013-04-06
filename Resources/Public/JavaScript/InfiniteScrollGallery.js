@@ -65,7 +65,7 @@ $(document).ready(function() {
                                                                 +'&width='+infinitesSrollGallery.videoPreview[uid]['width']
                                                                 +'&height='+infinitesSrollGallery.videoPreview[uid]['height']);
         });
-        
+
 	// Launch the gallery
 	$(".yoxview").yoxview(slideShowConfiguration);
 
@@ -143,7 +143,7 @@ $(document).ready(function() {
 	var formConfiguration = {
 		url : 'index.php', // override default value
 		data : {
-			type : 83790 // default parameter
+			type : 1363971892 // default parameter
 		},
 		beforeSubmit : function(arr, form, options) {
 			doSubmit = false;

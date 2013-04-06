@@ -41,19 +41,19 @@ class Tx_InfiniteScrollGallery_ViewHelpers_StockImageViewHelper extends Tx_Fluid
 	public function render($images, $maxWidth, $maxHeight) {
 
 		// CObj
-		$localCObj = t3lib_div::makeInstance('tslib_cObj');
+		$localCObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tslib_cObj');
 		#$localCObj->start(array(), '');
-		
+
 		$output = array();
 		foreach ($images as $image) {
-			
+
 			// Generating thumbnails
 			$configThumbnail = array();
 			$configThumbnail['file'] = 'fileadmin/user_upload/resources/' . $image['file_name'];
-			$configThumbnail['file.']['maxW'] = $maxWidth; 
-			$configThumbnail['file.']['maxH'] = $maxHeight; 
+			$configThumbnail['file.']['maxW'] = $maxWidth;
+			$configThumbnail['file.']['maxH'] = $maxHeight;
 			$htmlThumbnail = $localCObj->IMG_RESOURCE($configThumbnail);
-			
+
 			$output[] = array(
 				'media' => array(
 					'src' => $localCObj->IMG_RESOURCE($configThumbnail),
