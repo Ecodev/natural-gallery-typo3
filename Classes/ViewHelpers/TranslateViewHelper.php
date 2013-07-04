@@ -1,4 +1,5 @@
 <?php
+namespace TYPO3\CMS\InfiniteScrollGallery\ViewHelpers;
 
 /* * *************************************************************
  *  Copyright notice
@@ -27,12 +28,12 @@
  * View helper for translating
  *
  * = Examples =
+ * @todo remove me!
  */
-class Tx_InfiniteScrollGallery_ViewHelpers_TranslateViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class TranslateViewHelper extends \Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
 	 * Initialize
-	 *
 	 */
 	public function initialize() {
 		if (!is_object($GLOBALS['TSFE']->language)) {

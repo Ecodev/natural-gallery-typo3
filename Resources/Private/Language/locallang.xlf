@@ -4,6 +4,83 @@
 	      product-name="local lang">
 		<header/>
 		<body>
+			<trans-unit id="flux.infiniteScrollGalleryWidget">
+				<source>Infinite Scroll Gallery</source>
+			</trans-unit>
+			<trans-unit id="flux.infiniteScrollGalleryWidget.description">
+				<source>Display a gallery widget expending as you scroll</source>
+			</trans-unit>
+			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.categories">
+				<source>Categories of images displayed (comma separated values)</source>
+			</trans-unit>
+			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.enableMoreLoading">
+				<source>Load more images dynamically as you scroll</source>
+			</trans-unit>
+			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.showFilters">
+				<source>Show filters</source>
+			</trans-unit>
+			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.limit">
+				<source>Number of images displayed by batch</source>
+			</trans-unit>
+			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.thumbnailMaximumWidth">
+				<source>Maximum width of thumbnail image</source>
+			</trans-unit>
+			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.thumbnailMaximumHeight">
+				<source>Maximum height of thumbnail image</source>
+			</trans-unit>
+			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.enlargedImageMaximumWidth">
+				<source>Maximum width of enlarged image</source>
+			</trans-unit>
+			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.enlargedImageMaximumHeight">
+				<source>Maximum height of enlarged image</source>
+			</trans-unit>
+			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.orderBy">
+				<source>Order by</source>
+			</trans-unit>
+			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.direction">
+				<source>Direction</source>
+			</trans-unit>
+
+			<trans-unit id="sheets.general">
+				<source>General</source>
+			</trans-unit>
+			<trans-unit id="fields.categories">
+				<source>Categories of images displayed (comma separated values)</source>
+			</trans-unit>
+			<trans-unit id="fields.enableMoreLoading">
+				<source>Load more images dynamically as you scroll</source>
+			</trans-unit>
+			<trans-unit id="fields.showFilters">
+				<source>Show filters</source>
+			</trans-unit>
+			<trans-unit id="fields.limit">
+				<source>Number of images displayed by batch</source>
+			</trans-unit>
+			<trans-unit id="fields.thumbnailMaximumWidth">
+				<source>Maximum width of thumbnail image</source>
+			</trans-unit>
+			<trans-unit id="fields.thumbnailMaximumHeight">
+				<source>Maximum height of thumbnail image</source>
+			</trans-unit>
+			<trans-unit id="fields.enlargedImageMaximumWidth">
+				<source>Maximum width of enlarged image</source>
+			</trans-unit>
+			<trans-unit id="fields.enlargedImageMaximumHeight">
+				<source>Maximum height of enlarged image</source>
+			</trans-unit>
+			<trans-unit id="fields.orderBy">
+				<source>Order by</source>
+			</trans-unit>
+			<trans-unit id="fields.direction">
+				<source>Direction</source>
+			</trans-unit>
+			<trans-unit id="fields.direction.ascendant">
+				<source>Ascendant</source>
+			</trans-unit>
+			<trans-unit id="fields.direction.descendant">
+				<source>Descendant</source>
+			</trans-unit>
+
 			<trans-unit id="tx_infinitescrollgallery_listAjax_msg_no_image">
 				<source>No image matching this search</source>
 			</trans-unit>
@@ -13,14 +90,8 @@
 			<trans-unit id="filter_by">
 				<source>Filter by</source>
 			</trans-unit>
-			<trans-unit id="filter_by_tag">
-				<source>tag</source>
-			</trans-unit>
-			<trans-unit id="pi1_title">
-				<source>Infinite Scroll Gallery</source>
-			</trans-unit>
-			<trans-unit id="pi1_plus_wiz_description">
-				<source>Display a gallery that shows image as you scroll.</source>
+			<trans-unit id="select_category">
+				<source>Select a category</source>
 			</trans-unit>
 			<trans-unit id="search">
 				<source>Search...</source>

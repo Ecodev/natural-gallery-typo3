@@ -5,7 +5,7 @@
 var infinitesSrollGallery = {
 	ajaxReady : true,
 	numberOfScroll : 0,
-        videoPreview : new Array()
+        videoPreview : []
 }
 
 $(document).ready(function() {

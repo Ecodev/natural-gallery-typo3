@@ -53,12 +53,7 @@ class GalleryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	/**
 	 * @var array
 	 */
-	protected $contentObjectData = array();
-
-	/**
-	 * @var \TYPO3\CMS\Dbal\Database\DatabaseConnection
-	 */
-	protected $databaseHandler;
+	protected $settings = array();
 
 	/**
 	 * @param \TYPO3\CMS\Media\Domain\Repository\ImageRepository $imageRepository
@@ -82,17 +77,11 @@ class GalleryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 * Initializes default settings for all actions.
 	 */
 	public function initializeAction() {
+
 		// TypoScript configuration
 		$this->frontendConfiguration = $GLOBALS['TSFE']->tmpl->setup['config.'];
 		$this->configuration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['infinite_scroll_gallery']);
-		$this->databaseHandler = $GLOBALS['TYPO3_DB'];
 
-		// this value can be overridden by a parameter for Ajax purposes
-		if ($this->request->hasArgument('recordUid')) {
-			$this->contentObjectData = $this->databaseHandler->exec_SELECTgetSingleRow('*', 'tt_content', 'uid = ' . (int)$this->request->getArgument('recordUid'));
-		} else {
-			$this->contentObjectData = $this->configurationManager->getcontentObject()->data;
-		}
 	}
 
 	/**
@@ -102,55 +91,47 @@ class GalleryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 */
 	public function listAction() {
 
-		$limit = $this->contentObjectData['tx_infinitescrollgallery_limit'] ? (int)$this->contentObjectData['tx_infinitescrollgallery_limit'] : 10;
-		$stockLimit = $limit . ' , ' . 10000000; //fix maximum limit
-
-		// search for language configuration
-		$language = '';
-		if (!empty($this->frontendConfiguration['language'])) {
-			$language = $this->frontendConfiguration['language'];
-		} elseif ($this->frontendConfiguration['sys_language_uid']) {
-
-			// @todo remove me?
-			$languageInfo = $this->databaseHandler->exec_SELECTgetSingleRow('*', 'sys_language', 'uid = ' . intval($this->frontendConfiguration['sys_language_uid']));
-
-			if (!empty($languageInfo)) {
-				$language = $languageInfo['title'];
-			}
-		}
+		$stockLimit = $this->settings['limit'] . ' , ' . 10000000; //fix maximum limit
 
 		/** @var $order \TYPO3\CMS\Media\QueryElement\Order */
 		$order = $this->objectManager->get('TYPO3\CMS\Media\QueryElement\Order');
-		$parts = explode(' ', $this->contentObjectData['tx_infinitescrollgallery_orderby']);
+		$parts = explode(' ', $this->settings['orderBy']);
 		$order->addOrdering($parts[0], $parts[1]);
 
-		/** @var $filter \TYPO3\CMS\Media\QueryElement\Filter */
-		$filter = $this->objectManager->get('TYPO3\CMS\Media\QueryElement\Filter');
+		/** @var $matcher \TYPO3\CMS\Media\QueryElement\Matcher */
+		$matcher = $this->objectManager->get('TYPO3\CMS\Media\QueryElement\Matcher');
 
-		$categories = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->contentObjectData['tx_infinitescrollgallery_defaulttagfilter']);
-		$categoryObjects = array();
+		$categories = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['categories']);
+
+		// Ugly trick to get a first empty value in form.select View Helper
+		/** @var \TYPO3\CMS\Media\Domain\Model\Category $category */
+		$category = $this->objectManager->get('TYPO3\CMS\Media\Domain\Model\Category');
+		$category->setTitle(
+			\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('select_category', 'infinite_scroll_gallery')
+		);
+
+		$categoryObjects[] = $category;
 		foreach ($categories as $category) {
-			$filter->addCategory($category);
-			$categoryObjects[] = $this->categoryRepository->findByUid($category);
+			$matcher->addCategory($category);
+			$category = $this->categoryRepository->findByUid($category);
+			$matcher->addCategory($category);
+			$categoryObjects[] = $category;
 		}
 
-		$totalImages = $this->imageRepository->countFiltered($filter);
+		$totalImages = $this->imageRepository->countBy($matcher);
 		$this->view->assign('totalImages', $totalImages);
-		$this->view->assign('data', $this->contentObjectData);
-		$this->view->assign('orderby', $this->contentObjectData['tx_infinitescrollgallery_orderby']);
-		$this->view->assign('enableMoreLoading', $this->contentObjectData['tx_infinitescrollgallery_enablemoreloading']);
-		$this->view->assign('language', $language);
+		$this->view->assign('settings', $this->settings);
+		$this->view->assign('language',
+			empty($this->frontendConfiguration['language']) ? 'en' : $this->frontendConfiguration['language']
+		);
 
-		$this->view->assign('tags', $categoryObjects);
+		$this->view->assign('categories', $categoryObjects);
 		$this->view->assign('loadJquery', $this->configuration['loadJquery']);
 
-		$this->view->assign('images', $this->imageRepository->findFiltered($filter, $order, $limit));
-		$this->view->assign('stockImages', $this->imageRepository->findFiltered($filter, $order, $stockLimit));
-		$this->view->assign('recordUid', $this->contentObjectData['uid']);
-		$this->view->assign('limit', $limit);
-		$this->view->assign('numberOfVisibleImages', $limit > $totalImages ? $totalImages : $limit);
+		$this->view->assign('images', $this->imageRepository->findBy($matcher, $order, $this->settings['limit']));
+		$this->view->assign('stockImages', $this->imageRepository->findBy($matcher, $order, $stockLimit));
+		$this->view->assign('numberOfVisibleImages', $this->settings['limit'] > $totalImages ? $totalImages : $this->settings['limit']);
 		$this->view->assign('baseUri', $this->request->getBaseURI());
-		$this->view->assign('showFilters', $this->contentObjectData['tx_infinitescrollgallery_showfilters']);
 	}
 
 	/**
@@ -159,17 +140,17 @@ class GalleryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 * @return void
 	 */
 	public function listAjaxAction() {
-		$limit = $this->contentObjectData['tx_infinitescrollgallery_limit'] ? (int)$this->contentObjectData['tx_infinitescrollgallery_limit'] : 10;
+		$limit = $this->settings['limit'] ? (int)$this->settings['limit'] : 10;
 
 		$offset = (int)$this->request->getArgument('offset');
 		$stockLimit = ($offset + $limit) . ' , ' . 10000000; //fix maximum limit
 		$limit = $offset . ' , ' . $limit;
 
-		$this->view->assign('data', $this->contentObjectData);
+		$this->view->assign('data', $this->settings);
 		$this->view->assign('loadJquery', $this->configuration['loadJquery']);
-		$this->view->assign('images', $this->imageRepository->findAll($this->request, $limit, $this->contentObjectData));
-		$this->view->assign('stockImages', $this->imageRepository->findStock($this->request, $stockLimit, $this->contentObjectData));
-		$totalImages = $this->imageRepository->countImages($this->request, $limit, $this->contentObjectData);
+		$this->view->assign('images', $this->imageRepository->findAll($this->request, $limit, $this->settings));
+		$this->view->assign('stockImages', $this->imageRepository->findStock($this->request, $stockLimit, $this->settings));
+		$totalImages = $this->imageRepository->countImages($this->request, $limit, $this->settings);
 		$this->view->assign('totalImages', $totalImages);
 		$this->view->assign('baseUri', $this->request->getBaseURI());
 	}
