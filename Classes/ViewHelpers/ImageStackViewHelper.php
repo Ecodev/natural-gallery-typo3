@@ -29,19 +29,37 @@ namespace TYPO3\CMS\InfiniteScrollGallery\ViewHelpers;
  *
  * = Examples =
  */
-class StockImageViewHelper extends \Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class ImageStackViewHelper extends \Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
-	 * Generate a JSON array of images suiting xoyview
+	 * Generate a JSON array of images suitable for xoyview
 	 *
-	 * @param array $images containing images
-	 * @param int $maxWidth
-	 * @param int $maxHeight
+	 * @param array $images
+	 * @param array $settings
 	 * @return string
 	 */
-	public function render($images, $maxWidth, $maxHeight) {
+	public function render($images, $settings) {
 
-		return '[]';
+		/** @var \TYPO3\CMS\Media\Service\ThumbnailSpecification $thumbnailSpecification */
+		$thumbnailSpecification = $this->objectManager->get('TYPO3\CMS\Media\Service\ThumbnailSpecification');
+		$thumbnailSpecification->setOutputType(\TYPO3\CMS\Media\Service\Thumbnail::OUTPUT_URI)
+			->setConfiguration(
+				array(
+					'width' => $settings['enlargedImageMaximumWidth'],
+					'height' => $settings['enlargedImageMaximumHeight']
+				)
+			);
+
+		/** @var \TYPO3\CMS\Media\Domain\Model\Image $image */
+		foreach ($images as $image) {
+			$output[] = array(
+				'media' => array(
+					'src' => '/' . $image->getThumbnail($thumbnailSpecification),
+					'title' => $image->getTitle(),
+				),
+			);
+		}
+		return json_encode($output);
 		// CObj
 //		$localCObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tslib_cObj');
 //		#$localCObj->start(array(), '');
@@ -63,7 +81,6 @@ class StockImageViewHelper extends \Tx_Fluid_Core_ViewHelper_AbstractViewHelper 
 //				),
 //			);
 //		}
-		return json_encode($output);
 	}
 }
 ?>

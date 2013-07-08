@@ -1,3 +1,6 @@
+###############################################################
+# Extbase configuration
+###############################################################
 plugin.tx_infinitescrollgallery {
 	view {
 		templateRootPath = {$plugin.tx_infinitescrollgallery.view.templateRootPath}

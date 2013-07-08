@@ -12,7 +12,7 @@
 	<script type="text/javascript">
 
 		// Array containing images not displayed by defaut on this page
-		infinitesSrollGallery.stockImages = {gallery:stockImage(images: '{stockImages}', maxWidth: '{settings.imageMaximumWidth}', maxHeight: '{settings.imageMaximumHeight}')}
+		infinitesSrollGallery.stockImages = {gallery:imageStack(images: '{stockImages}', settings: '{settings}')};
 
 		//enable/disable scroll
 		infinitesSrollGallery.enableMoreLoading = '{settings.enableMoreLoading}';
@@ -53,7 +53,8 @@
                     <li class="tx-infinitscrollgallery-thumbnail">
 	                    <m:thumbnail object="{image}"
 	                                 configuration="{width: '{settings.thumbnailMaximumWidth}', height: '{settings.thumbnailMaximumHeight}'}"
-	                                 wrap="true"/>
+	                                 configurationWrap="{width: '{settings.enlargedImageMaximumWidth}', height: '{settings.enlargedImageMaximumHeight}'}"
+	                                 output="imageWrapped"/>
                     </li>
 				</f:for>
 			</ul>

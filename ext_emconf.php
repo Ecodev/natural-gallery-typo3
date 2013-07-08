@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Infinite Scroll Gallery',
-	'description' => 'Display photos/videos and fetch them as the User is scrolling down.',
+	'description' => 'Display images as you scroll. Images can also be displayed within a slideshow.',
 	'category' => 'plugin',
 	'author' => 'Fabien Udriot, Sylvain Tissot',
 	'author_email' => 'fabien.udriot@ecodev.ch, sylvain.tissot@ecodev.ch',
@@ -30,7 +30,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'version' => '1.2.0',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '6.1.1-0.0.0',
+			'typo3' => '6.1.1-6.1.99',
 			'cms' => '',
 			'extbase' => '',
 			'fluid' => '',
