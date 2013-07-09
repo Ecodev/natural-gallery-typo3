@@ -29,7 +29,7 @@ namespace TYPO3\CMS\InfiniteScrollGallery\ViewHelpers;
  *
  * = Examples =
  */
-class ImageStackViewHelper extends \Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class ImageStackViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 * Generate a JSON array of images suitable for xoyview

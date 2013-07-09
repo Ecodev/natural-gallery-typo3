@@ -25,29 +25,26 @@ namespace TYPO3\CMS\InfiniteScrollGallery\ViewHelpers;
  * ************************************************************* */
 
 /**
- * View helper for inline style.
+ * View helper for frontend configuration
  */
-class DynamicStyleViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class FrontendConfigurationViewHelper extends \Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
-	 * Generate a JSON array of images suiting xoyview
+	 * Return a key
 	 *
-	 * @param array $settings containing images
+	 * @param string $key
+	 * @param string $default value if $key is not found
 	 * @return string
 	 */
-	public function render(array $settings) {
+	public function render($key, $default = '') {
+		$result = $default;
+		$frontendConfiguration = $GLOBALS['TSFE']->tmpl->setup['config.'];
 
-		# Defines width and height values dynamically
-		$styles = <<<EOF
-<style type="text/css">
-.tx-infinitscrollgallery-thumbnail {
-	width: {$settings['thumbnailMaximumWidth']}px;
-	height: {$settings['thumbnailMaximumHeight']}px;
-}
-</style>
-EOF;
+		if (!empty($frontendConfiguration[$key])) {
+			$result = $frontendConfiguration[$key];
+		}
 
-		return $styles;
+		return $result;
 	}
 }
 ?>

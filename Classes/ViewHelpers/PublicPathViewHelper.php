@@ -25,29 +25,26 @@ namespace TYPO3\CMS\InfiniteScrollGallery\ViewHelpers;
  * ************************************************************* */
 
 /**
- * View helper for inline style.
+ * View helper which return the public path of a resource.
  */
-class DynamicStyleViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class PublicPathViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
-	 * Generate a JSON array of images suiting xoyview
+	 * @var string
+	 */
+	protected $extensionKey = 'infinite_scroll_gallery';
+
+	/**
+	 * Return the public path of a resource
 	 *
-	 * @param array $settings containing images
+	 * @param string $resource
 	 * @return string
 	 */
-	public function render(array $settings) {
-
-		# Defines width and height values dynamically
-		$styles = <<<EOF
-<style type="text/css">
-.tx-infinitscrollgallery-thumbnail {
-	width: {$settings['thumbnailMaximumWidth']}px;
-	height: {$settings['thumbnailMaximumHeight']}px;
-}
-</style>
-EOF;
-
-		return $styles;
+	public function render($resource) {
+		return sprintf('%sResources/Public/%s',
+			\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($this->extensionKey),
+			$resource
+		);
 	}
 }
 ?>
