@@ -1,4 +1,7 @@
 <T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
 	<ROOT>
 		<type>array</type>
 		<el>
@@ -116,14 +119,12 @@
 						<type>select</type>
 						<items type="array">
 							<numIndex index="1" type="array">
-								<numIndex index="0">
-									LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:fields.direction.descendant
+								<numIndex index="0">LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:fields.direction.descendant
 								</numIndex>
 								<numIndex index="1">DESC</numIndex>
 							</numIndex>
 							<numIndex index="2" type="array">
-								<numIndex index="0">
-									LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:fields.direction.ascendant
+								<numIndex index="0">LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:fields.direction.ascendant
 								</numIndex>
 								<numIndex index="1">ASC</numIndex>
 							</numIndex>

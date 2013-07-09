@@ -2,9 +2,6 @@
 {namespace m=TYPO3\CMS\Media\ViewHelpers}
 <f:layout name="Default" />
 <f:section name="main">
-	<f:if condition="{loadJquery}">
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-	</f:if>
 	<script type="text/javascript" src="{f:uri.resource(path: 'JavaScript/JQuery/jquery.form.js')}"></script>
 	<script type="text/javascript" src="{f:uri.resource(path: 'JavaScript/yoxview/yoxview-init.js')}"></script>
 	<script type="text/javascript" src="{f:uri.resource(path: 'JavaScript/InfiniteScrollGallery.js')}"></script>
@@ -12,7 +9,7 @@
 	<script type="text/javascript">
 
 		// Array containing images not displayed by defaut on this page
-		infinitesSrollGallery.stockImages = {gallery:imageStack(images: '{stockImages}', settings: '{settings}')};
+		infinitesSrollGallery.imageStack = {gallery:imageStack(images: '{imageStack}', settings: '{settings}')};
 
 		//enable/disable scroll
 		infinitesSrollGallery.enableMoreLoading = '{settings.enableMoreLoading}';
@@ -27,21 +24,23 @@
 				<legend></legend>
 				<f:form.hidden name="limit" id="tx-infinitescrollgallery-limit" value="{settings.limit}"/>
 				<f:form.hidden name="offset" id="tx-infinitescrollgallery-offset" value="0"/>
-				<f:form.hidden name="language" id="tx-infinitescrollgallery-language" value="{language}"/>
+				<f:form.hidden name="contentElement" id="tx-infinitescrollgallery-recordUid" value="{data.uid}"/>
+				<f:form.hidden name="language" id="tx-infinitescrollgallery-language"
+				               value="{gallery:frontendConfiguration(key: 'language', default: 'en')}"/>
 				<span style="margin-right: 10px"><f:translate key="filter_by"/></span>
 
-				<f:form.select name="tag"
-				               id="tx-infinitescrollgallery-tag"
+				<f:form.select name="category"
+				               id="tx-infinitescrollgallery-category"
 				               options="{categories}"
 				               optionValueField="uid"
 				               optionLabelField="title"/>
 
 				<input type="search"
-				       id="tx-infinitescrollgallery-search"
+				       id="tx-infinitescrollgallery-searchTerm"
 				       placeholder="{f:translate(key:'search')}"
 				       style="min-width: 13em;"
 				       class="search placeholder"
-				       name="tx_infinitescrollgallery_pi1[search]"/>
+				       name="tx_infinitescrollgallery_pi1[searchTerm]"/>
 			</fieldset>
 		</f:form>
 
@@ -69,7 +68,9 @@
 				<!-- <a href="#">next &gt;</a> -->
 			</div>
 		</div>
-		<div class="tx-infinitescrollgallery-loading"><f:image src="EXT:infinite_scroll_gallery/Resources/Public/Images/ajax-loader.gif" alt="loadding" width="200" /></div>
+		<div class="tx-infinitescrollgallery-loading">
+			<img src="{gallery:publicPath(resource: 'Images/ajax-loader.gif')}" alt="loadding"/>
+		</div>
 	</div>
 
 </f:section>

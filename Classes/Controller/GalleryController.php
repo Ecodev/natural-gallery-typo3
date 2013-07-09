@@ -31,14 +31,22 @@ namespace TYPO3\CMS\InfiniteScrollGallery\Controller;
 class GalleryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 	/**
-	 * @var \TYPO3\CMS\Media\Domain\Repository\CategoryRepository $categoryRepository
+	 * @var \TYPO3\CMS\Media\Domain\Repository\CategoryRepository
+	 * @inject
 	 */
 	protected $categoryRepository;
 
 	/**
-	 * @var \TYPO3\CMS\Media\Domain\Repository\ImageRepository $imageRepository
+	 * @var \TYPO3\CMS\Media\Domain\Repository\ImageRepository
+	 * @inject
 	 */
 	protected $imageRepository;
+
+	/**
+	 * @var \TYPO3\CMS\Extbase\Service\FlexFormService
+	 * @inject
+	 */
+	protected $flexFormService;
 
 	/**
 	 * @var array
@@ -55,52 +63,61 @@ class GalleryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 */
 	protected $settings = array();
 
-	/**
-	 * @param \TYPO3\CMS\Media\Domain\Repository\ImageRepository $imageRepository
-	 * @return void
-	 */
-	public function injectImageRepository(\TYPO3\CMS\Media\Domain\Repository\ImageRepository $imageRepository) {
-		/** @var $imageRepository \TYPO3\CMS\Media\Domain\Repository\ImageRepository */
-		$this->imageRepository = $imageRepository;
-	}
-
-	/**
-	 * @param \TYPO3\CMS\Media\Domain\Repository\CategoryRepository $categoryRepository
-	 * @return void
-	 */
-	public function injectCategoryRepository(\TYPO3\CMS\Media\Domain\Repository\CategoryRepository $categoryRepository) {
-		/** @var $categoryRepository \TYPO3\CMS\Media\Domain\Repository\CategoryRepository */
-		$this->categoryRepository = $categoryRepository;
-	}
-
-	/**
-	 * Initializes default settings for all actions.
-	 */
-	public function initializeAction() {
-
-		// TypoScript configuration
-		$this->frontendConfiguration = $GLOBALS['TSFE']->tmpl->setup['config.'];
-		$this->configuration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['infinite_scroll_gallery']);
-
-	}
-
-	/**
-	 * action list
-	 *
+ 	/**
 	 * @return void
 	 */
 	public function listAction() {
+		$orderObject = $this->getOrderObject();
+		$matcher = $this->getMatcherObject();
 
-		$stockLimit = $this->settings['limit'] . ' , ' . 10000000; //fix maximum limit
+		$totalImages = $this->imageRepository->countBy($matcher);
+		$this->view->assign('totalImages', $totalImages);
 
-		/** @var $order \TYPO3\CMS\Media\QueryElement\Order */
-		$order = $this->objectManager->get('TYPO3\CMS\Media\QueryElement\Order');
-		$parts = explode(' ', $this->settings['orderBy']);
-		$order->addOrdering($parts[0], $parts[1]);
+		$this->view->assign('settings', $this->settings);
+		$this->view->assign('data', $this->configurationManager->getcontentObject()->data);
+		$this->view->assign('categories', $this->getCategoriesObjects());
+		$this->view->assign('images', $this->imageRepository->findBy($matcher, $orderObject, $this->settings['limit']));
+		$this->view->assign('imageStack', $this->imageRepository->findBy($matcher, $orderObject, 10000000, $this->settings['limit']));
+		$this->view->assign('numberOfVisibleImages', $this->settings['limit'] > $totalImages ? $totalImages : $this->settings['limit']);
+	}
 
-		/** @var $matcher \TYPO3\CMS\Media\QueryElement\Matcher */
-		$matcher = $this->objectManager->get('TYPO3\CMS\Media\QueryElement\Matcher');
+	/**
+	 * Get a list that is suitable for an Ajax
+	 *
+	 * @param int $contentElement
+	 * @return void
+	 */
+	public function listAjaxAction($contentElement) {
 
+		/** @var $contentRepository \TYPO3\CMS\InfiniteScrollGallery\Domain\Repository\ContentRepository */
+		$contentRepository = $this->objectManager->get('TYPO3\CMS\InfiniteScrollGallery\Domain\Repository\ContentRepository');
+		$contentElement = $contentRepository->findByUid($contentElement);
+
+
+		$flexFormSettings = $this->flexFormService->convertFlexFormContentToArray($contentElement['pi_flexform']);
+		$this->settings = $flexFormSettings['settings'];
+
+		$limit = $this->settings['limit'] ? (int)$this->settings['limit'] : 10;
+
+		$orderObject = $this->getOrderObject();
+		$matcher = $this->getMatcherObject();
+
+		$offset = (int)$this->request->getArgument('offset');
+		$offsetImageStack = ($offset + $limit); //fix maximum limit
+
+		$this->view->assign('settings', $this->settings);
+		$this->view->assign('images', $this->imageRepository->findBy($matcher, $orderObject, $this->settings['limit'], $offset));
+		$this->view->assign('imageStack', $this->imageRepository->findBy($matcher, $orderObject, 10000000, $offsetImageStack));
+		$this->view->assign('totalImages', $this->imageRepository->countBy($matcher));
+
+	}
+
+	/**
+	 * Get category objects
+	 *
+	 * @return \TYPO3\CMS\Media\Domain\Model\Category[]
+	 */
+	protected function getCategoriesObjects() {
 		$categories = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['categories']);
 
 		// Ugly trick to get a first empty value in form.select View Helper
@@ -112,47 +129,51 @@ class GalleryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
 		$categoryObjects[] = $category;
 		foreach ($categories as $category) {
-			$matcher->addCategory($category);
-			$category = $this->categoryRepository->findByUid($category);
-			$matcher->addCategory($category);
-			$categoryObjects[] = $category;
+			$categoryObjects[] = $this->categoryRepository->findByUid($category);
 		}
-
-		$totalImages = $this->imageRepository->countBy($matcher);
-		$this->view->assign('totalImages', $totalImages);
-		$this->view->assign('settings', $this->settings);
-		$this->view->assign('language',
-			empty($this->frontendConfiguration['language']) ? 'en' : $this->frontendConfiguration['language']
-		);
-
-		$this->view->assign('categories', $categoryObjects);
-		$this->view->assign('loadJquery', $this->configuration['loadJquery']);
-
-		$this->view->assign('images', $this->imageRepository->findBy($matcher, $order, $this->settings['limit']));
-		$this->view->assign('stockImages', $this->imageRepository->findBy($matcher, $order, $stockLimit));
-		$this->view->assign('numberOfVisibleImages', $this->settings['limit'] > $totalImages ? $totalImages : $this->settings['limit']);
-		$this->view->assign('baseUri', $this->request->getBaseURI());
+		return $categoryObjects;
 	}
 
 	/**
-	 * Get a list that is suitable for an Ajax
+	 * Get an order object
 	 *
-	 * @return void
+	 * @return \TYPO3\CMS\Media\QueryElement\Order
 	 */
-	public function listAjaxAction() {
-		$limit = $this->settings['limit'] ? (int)$this->settings['limit'] : 10;
+	protected function getOrderObject() {
+		/** @var $order \TYPO3\CMS\Media\QueryElement\Order */
+		$order = $this->objectManager->get('TYPO3\CMS\Media\QueryElement\Order');
+		$parts = explode(' ', $this->settings['orderBy']);
+		$order->addOrdering($parts[0], $parts[1]);
 
-		$offset = (int)$this->request->getArgument('offset');
-		$stockLimit = ($offset + $limit) . ' , ' . 10000000; //fix maximum limit
-		$limit = $offset . ' , ' . $limit;
+		return $order;
+	}
 
-		$this->view->assign('data', $this->settings);
-		$this->view->assign('loadJquery', $this->configuration['loadJquery']);
-		$this->view->assign('images', $this->imageRepository->findAll($this->request, $limit, $this->settings));
-		$this->view->assign('stockImages', $this->imageRepository->findStock($this->request, $stockLimit, $this->settings));
-		$totalImages = $this->imageRepository->countImages($this->request, $limit, $this->settings);
-		$this->view->assign('totalImages', $totalImages);
-		$this->view->assign('baseUri', $this->request->getBaseURI());
+	/**
+	 * Get an matcher object
+	 *
+	 * @return \TYPO3\CMS\Media\QueryElement\Matcher
+	 */
+	protected function getMatcherObject() {
+		/** @var $matcher \TYPO3\CMS\Media\QueryElement\Matcher */
+		$matcher = $this->objectManager->get('TYPO3\CMS\Media\QueryElement\Matcher');
+
+		// Get categories from argument if existing. Otherwise from settings.
+		if ($this->request->hasArgument('category')) {
+			$categories[] = $this->request->getArgument('category');
+		} else {
+			$categories = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['categories']);
+		}
+
+		foreach ($categories as $category) {
+			$matcher->addCategory($category);
+		}
+
+		// Add possible search term
+		if ($this->request->hasArgument('searchTerm') && $this->request->getArgument('searchTerm') != '') {
+			$matcher->setSearchTerm($this->request->getArgument('searchTerm'));
+		}
+
+		return $matcher;
 	}
 }
 

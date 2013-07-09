@@ -1,27 +1,25 @@
-/*
-* Common Listner
-*/
 ///////////// RUNTIME VARIABLES /////////////
 var infinitesSrollGallery = {
-	ajaxReady : true,
-	numberOfScroll : 0,
-        videoPreview : []
-}
+	ajaxReady: true,
+	numberOfScroll: 0
+};
 
+/**
+ * Attach event when document is ready!
+ */
 $(document).ready(function() {
 
 	///////////// GALLERY /////////////
 	// Set plugin configuration
 	var slideShowConfiguration = {
-		lang : $('#tx-infinitescrollgallery-language').val() ? $('#tx-infinitescrollgallery-language').val() : 'en',
-		flashVideoPlayerPath: '/typo3conf/ext/jwplayer/Resources/Public/Player/player.swf',
+		lang : $('#tx-infinitescrollgallery-language').val(),
 		onEnd : function() {
 			$.yoxview.close();
 		},
-		images: infinitesSrollGallery.stockImages,
+		images: infinitesSrollGallery.imageStack,
 		onSelect: function(imageIndex, image) {
 
-			// "enableMoreLoading" is a setting coming from the BE bloking / enabling dynamic loading of thumbnail
+			// "enableMoreLoading" is a setting coming from the BE blocking / enabling dynamic loading of thumbnail
 			if (infinitesSrollGallery.enableMoreLoading){
 				var images = $('.yoxview ul li');
 
@@ -30,14 +28,14 @@ $(document).ready(function() {
 				var totalImages = parseInt($("#tx-infinitescrollgallery-totalImages").html());
 				var moreImagesToLoad =  numberOfVisibleImages < totalImages;
 
-				// Determines if the last images of the slideshow is selected
+				// Determines if the last images of the slide show is selected
 				var isLastThumbnailImage = (images.length - imageIndex) <= 1;
 
 				// Load some more images when gallery is at the end
 				if (isLastThumbnailImage && infinitesSrollGallery.ajaxReady && moreImagesToLoad) {
 					infinitesSrollGallery.numberOfScroll ++;
 					var limit = $('#tx-infinitescrollgallery-limit').val();
-					offset = parseInt(limit * infinitesSrollGallery.numberOfScroll);
+					var offset = parseInt(limit * infinitesSrollGallery.numberOfScroll);
 
 					// load new batch of images
 					$('#tx-infinitescrollgallery-offset').val(offset);
@@ -47,35 +45,18 @@ $(document).ready(function() {
 		}
 	}
 
-        ///////////// VIDEO PREVIEW ////////////
-        infinitesSrollGallery.switchThumbnail = function(thumb, uid, pos) {
-            var info= infinitesSrollGallery.videoPreview[uid];
-            thumb.css('z-index',2);
-            var ele = thumb.clone().css({'z-index': 1, position: 'absolute', left: '0px', top: '0px', display: 'block'}).attr('src', info['thumbs'][pos % info['thumbs'].length]);
-            thumb.after(ele).fadeOut(500, function() {
-                $(this).remove();
-            });
-            setTimeout(function(){infinitesSrollGallery.switchThumbnail(ele, uid, pos+1)}, 1000);
-        }
-        $('li.tx-infinitscrollgallery-thumbnail-video').each(function() {
-            var uid = $(this).attr('id').substr(5);
-            infinitesSrollGallery.switchThumbnail($('img',this).eq(0), uid, 0);
-            // append yoxview parameters to links
-            $('a', this).attr('href', $('a', this).attr('href')+'?image='+infinitesSrollGallery.videoPreview[uid]['still']
-                                                                +'&width='+infinitesSrollGallery.videoPreview[uid]['width']
-                                                                +'&height='+infinitesSrollGallery.videoPreview[uid]['height']);
-        });
-
 	// Launch the gallery
 	$(".yoxview").yoxview(slideShowConfiguration);
 
 	///////////// FORM /////////////
 
-	// Attach event to the drop down menu
-	$('#tx-infinitescrollgallery-tag').change(function(event) {
+	/**
+	 * Attach event to the drop down menu
+	 */
+	$('#tx-infinitescrollgallery-category').change(function(event) {
 
 		// unbind registered events on images (prevent a double select image bug)
-		$.yoxview.unload()
+		$.yoxview.unload();
 
 		// Reset variable
 		infinitesSrollGallery.numberOfScroll = 0;
@@ -87,23 +68,28 @@ $(document).ready(function() {
 		$('#tx-infinitescrollgallery-recordnumber').hide();
 	});
 
-	// Attach event to the search field
-	$('#tx-infinitescrollgallery-search').keydown(function(event) {
+
+	/**
+	 * Attach event to the search field
+	 */
+	$('#tx-infinitescrollgallery-searchTerm').keydown(function(event) {
 
 		// True when key 'enter' hit
 		if (event.keyCode == 13) {
 
 			// unbind registered events on images (prevent a double select image bug)
-			$.yoxview.unload()
+			$.yoxview.unload();
 
 			// Reset variable
 			infinitesSrollGallery.numberOfScroll = 0;
 			$('#tx-infinitescrollgallery-offset').val(0);
-
+			$('#tx-infinitescrollgallery-form').submit();
 
 			// Empty image stack before loading
 			$('.yoxview ul').html('');
 			$('#tx-infinitescrollgallery-recordnumber').hide();
+
+			event.preventDefault();
 		}
 	});
 
@@ -120,19 +106,19 @@ $(document).ready(function() {
 			if (infinitesSrollGallery.ajaxReady && moreImagesToLoad) {
 
 				// unbind registered events on images (prevent a double select image bug)
-				$.yoxview.unload()
+				$.yoxview.unload();
 
 				infinitesSrollGallery.numberOfScroll ++;
 				$('.tx-infinitescrollgallery-next a').hide();
 				var limit = $('#tx-infinitescrollgallery-limit').val();
-				offset = parseInt(limit * infinitesSrollGallery.numberOfScroll);
+				var offset = parseInt(limit * infinitesSrollGallery.numberOfScroll);
 
 				// load new set of images
 				$('#tx-infinitescrollgallery-offset').val(offset);
 
 				// Fix potential bug if placeholder is not supported
-				if ($('#tx-infinitescrollgallery-search').attr('value') == $('#tx-infinitescrollgallery-search').attr('placeholder')) {
-					$('#tx-infinitescrollgallery-search').attr('value', '');
+				if ($('#tx-infinitescrollgallery-searchTerm').attr('value') == $('#tx-infinitescrollgallery-searchTerm').attr('placeholder')) {
+					$('#tx-infinitescrollgallery-searchTerm').attr('value', '');
 				}
 				$('#tx-infinitescrollgallery-form').submit()
 			}
@@ -141,7 +127,7 @@ $(document).ready(function() {
 
 	// Initialize form configuration Object
 	var formConfiguration = {
-		url : 'index.php', // override default value
+		url : '/index.php', // override default value
 		data : {
 			type : 1363971892 // default parameter
 		},
@@ -154,7 +140,7 @@ $(document).ready(function() {
 				doSubmit = true;
 
 				// UI update
-				$('#tx-infinitescrollgallery-search, #tx-infinitescrollgallery-tag').attr('disabled', 'disabled');
+				$('#tx-infinitescrollgallery-searchTerm, #tx-infinitescrollgallery-category').attr('disabled', 'disabled');
 				$(".tx-infinitescrollgallery-loading").show();
 
 			}
@@ -165,11 +151,11 @@ $(document).ready(function() {
 
 				// Add new batch of images into its right place
 				$(".yoxview ul").append(result);
-				slideShowConfiguration.images = infinitesSrollGallery.stockImages;
+				slideShowConfiguration.images = infinitesSrollGallery.imageStack;
 
 				// reset the lock
 				infinitesSrollGallery.ajaxReady = true;
-				$('#tx-infinitescrollgallery-search, #tx-infinitescrollgallery-tag').removeAttr('disabled');
+				$('#tx-infinitescrollgallery-searchTerm, #tx-infinitescrollgallery-category').removeAttr('disabled');
 				$(".yoxview").yoxview(slideShowConfiguration);
 
 				// Page Browser UI
