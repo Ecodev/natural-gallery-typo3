@@ -1,2 +1,0 @@
-# cat=basic/limits/; type=boolean; label=Load jQuery: Depending whether jQuery is already loaded globally, one may want to skip it.
-loadJquery = 0
