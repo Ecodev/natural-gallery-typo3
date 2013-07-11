@@ -40,8 +40,8 @@ class ImageStackViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractView
 	 */
 	public function render($images, $settings) {
 
-		/** @var \TYPO3\CMS\Media\Service\Thumbnail $thumbnailService */
-		$thumbnailService = $this->objectManager->get('TYPO3\CMS\Media\Service\Thumbnail');
+		/** @var \TYPO3\CMS\Media\Service\ThumbnailService $thumbnailService */
+		$thumbnailService = $this->objectManager->get('TYPO3\CMS\Media\Service\ThumbnailService');
 		$thumbnailService->setOutputType(\TYPO3\CMS\Media\Service\ThumbnailInterface::OUTPUT_URI)
 			->setConfiguration(
 				array(
@@ -54,7 +54,7 @@ class ImageStackViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractView
 		foreach ($images as $image) {
 			$output[] = array(
 				'media' => array(
-					'src' => '/' . $image->getThumbnail($thumbnailSpecification),
+					'src' => '/' . $image->getThumbnail($thumbnailService),
 					'title' => $image->getTitle(),
 				),
 			);
