@@ -40,9 +40,9 @@ class ImageStackViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractView
 	 */
 	public function render($images, $settings) {
 
-		/** @var \TYPO3\CMS\Media\Service\ThumbnailSpecification $thumbnailSpecification */
-		$thumbnailSpecification = $this->objectManager->get('TYPO3\CMS\Media\Service\ThumbnailSpecification');
-		$thumbnailSpecification->setOutputType(\TYPO3\CMS\Media\Service\Thumbnail::OUTPUT_URI)
+		/** @var \TYPO3\CMS\Media\Service\Thumbnail $thumbnailService */
+		$thumbnailService = $this->objectManager->get('TYPO3\CMS\Media\Service\Thumbnail');
+		$thumbnailService->setOutputType(\TYPO3\CMS\Media\Service\ThumbnailInterface::OUTPUT_URI)
 			->setConfiguration(
 				array(
 					'width' => $settings['enlargedImageMaximumWidth'],
@@ -60,27 +60,6 @@ class ImageStackViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractView
 			);
 		}
 		return json_encode($output);
-		// CObj
-//		$localCObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tslib_cObj');
-//		#$localCObj->start(array(), '');
-//
-//		$output = array();
-//		foreach ($images as $image) {
-//
-//			// Generating thumbnails
-//			$configThumbnail = array();
-//			$configThumbnail['file'] = 'fileadmin/user_upload/resources/' . $image['file_name'];
-//			$configThumbnail['file.']['maxW'] = $maxWidth;
-//			$configThumbnail['file.']['maxH'] = $maxHeight;
-//			$htmlThumbnail = $localCObj->IMG_RESOURCE($configThumbnail);
-//
-//			$output[] = array(
-//				'media' => array(
-//					'src' => $localCObj->IMG_RESOURCE($configThumbnail),
-//					'title' => $image['title'],
-//				),
-//			);
-//		}
 	}
 }
 ?>
