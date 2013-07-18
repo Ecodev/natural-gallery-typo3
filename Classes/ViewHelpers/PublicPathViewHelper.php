@@ -42,7 +42,7 @@ class PublicPathViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractView
 	 */
 	public function render($resource) {
 		return sprintf('%sResources/Public/%s',
-			\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($this->extensionKey),
+			str_replace(PATH_site, '', \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($this->extensionKey)),
 			$resource
 		);
 	}
