@@ -93,7 +93,6 @@ class GalleryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 		$contentRepository = $this->objectManager->get('TYPO3\CMS\InfiniteScrollGallery\Domain\Repository\ContentRepository');
 		$contentElement = $contentRepository->findByUid($contentElement);
 
-
 		$flexFormSettings = $this->flexFormService->convertFlexFormContentToArray($contentElement['pi_flexform']);
 		$this->settings = $flexFormSettings['settings'];
 
@@ -158,8 +157,8 @@ class GalleryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 		$matcher = $this->objectManager->get('TYPO3\CMS\Media\QueryElement\Matcher');
 
 		// Get categories from argument if existing. Otherwise from settings.
-		if ($this->request->hasArgument('category')) {
-			$categories[] = $this->request->getArgument('category');
+		if ($this->request->hasArgument('category') && (int) $this->request->getArgument('category') > 0) {
+			$categories[] = (int) $this->request->getArgument('category');
 		} else {
 			$categories = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['categories']);
 		}
