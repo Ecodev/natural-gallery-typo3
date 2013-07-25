@@ -7,7 +7,7 @@ conf.py:
   copyright: 2013 to now
   project: Infinite Scroll Gallery
   version: 1.2
-  release: 1.2.0
+  release: 1.2.2
 
   #render README.rst, not Documentation/Index.rst
   master_doc: README
