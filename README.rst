@@ -4,7 +4,7 @@ Infinite Scroll Gallery
 
 Display images as you scroll. Images are displayed within a slideshow when enlarged.
 Under the hood it uses the Media API and relies on categories to filter images on the FE.
-Demo can bee seen on the `Bootstrap Package`_.
+Demo can bee seen on the `Bootstrap Distribution`_.
 
 .. image:: https://raw.github.com/Ecodev/infinite_scroll_gallery/master/Documentation/Introduction-01.png
 
