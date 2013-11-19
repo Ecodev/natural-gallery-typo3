@@ -21,6 +21,7 @@
 
 		<f:form id="tx-infinitescrollgallery-form" method="GET" class="form-inline">
 			<fieldset>
+				<f:form.hidden id="tx-infinitescrollgallery-url" value="{f:uri.page()}"/>
 				<f:form.hidden name="limit" id="tx-infinitescrollgallery-limit" value="{settings.limit}"/>
 				<f:form.hidden name="offset" id="tx-infinitescrollgallery-offset" value="0"/>
 				<f:form.hidden name="contentElement" id="tx-infinitescrollgallery-recordUid" value="{data.uid}"/>

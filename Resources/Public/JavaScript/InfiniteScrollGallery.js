@@ -127,9 +127,9 @@ $(document).ready(function() {
 
 	// Initialize form configuration Object
 	var formConfiguration = {
-		url : '/index.php', // override default value
+		url : $('#tx-infinitescrollgallery-url').val(), // override default action of the form.
 		data : {
-			type : 1363971892 // default parameter
+			type : 1363971892 // custom type for infinite scroll gallery.
 		},
 		beforeSubmit : function(arr, form, options) {
 			doSubmit = false;
