@@ -16,6 +16,7 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSi
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForm/flexform.xml');
 
+t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Infinite Scroll Gallery');
 
 //$TCA['tt_content']['types']['list']['subtypes_addlist']['infinitescrollgallery_pi1'] =
 //'tx_infinitescrollgallery_enablemoreloading, tx_infinitescrollgallery_enablevideo, tx_infinitescrollgallery_showfilters,   tx_infinitescrollgallery_limit, tx_infinitescrollgallery_thumbnailmaximumwidth, tx_infinitescrollgallery_thumbnailmaximumheight, tx_infinitescrollgallery_imagemaximumwidth, tx_infinitescrollgallery_imagemaximumheight, tx_infinitescrollgallery_defaulttagfilter, tx_infinitescrollgallery_tagcategory, tx_infinitescrollgallery_tagpid, tx_infinitescrollgallery_orderby';

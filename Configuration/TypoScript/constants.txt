@@ -1,0 +1,6 @@
+plugin.tx_infinitescrollgallery {
+	persistence {
+		# cat=plugin.tx_infinitescrollgallery/file; type=string; label = My variable
+		myVar = myValue
+	}
+}
