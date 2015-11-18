@@ -12,39 +12,24 @@ $EM_CONF[$_EXTKEY] = array (
   'title' => 'Infinite Scroll Gallery',
   'description' => 'Display images as you scroll. Images can also be displayed within a slideshow.',
   'category' => 'plugin',
-  'author' => 'Fabien Udriot, Sylvain Tissot',
+  'author' => 'Fabien Udriot, Sylvain Tissot, Samuel Baptista',
   'author_email' => 'fabien.udriot@ecodev.ch, sylvain.tissot@ecodev.ch',
   'author_company' => 'Ecodev',
-  'shy' => '',
-  'priority' => '',
-  'module' => '',
   'state' => 'beta',
-  'internal' => '',
-  'uploadfolder' => '0',
-  'createDirs' => '',
-  'modify_tables' => '',
-  'clearCacheOnLoad' => 0,
-  'lockType' => '',
   'version' => '1.2.2',
-  'constraints' => 
+  'constraints' =>
   array (
-    'depends' => 
+    'depends' =>
     array (
-      'typo3' => '6.1.1-6.1.99',
-      'media' => '1.0.0-1.0.99',
-      'cms' => '',
-      'extbase' => '',
-      'fluid' => '',
+      'typo3' => '7.6.0-7.99.99',
+      'vidi' => '',
+//      'media' => '',
     ),
-    'conflicts' => 
+    'conflicts' =>
     array (
     ),
-    'suggests' => 
+    'suggests' =>
     array (
     ),
   ),
-  'user' => 'fab1en',
-  'comment' => 'Full change log https://github.com/Ecodev/infinite_scroll_gallery/compare/1.2.0...1.2.2',
 );
-
-?>

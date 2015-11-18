@@ -1,65 +1,58 @@
 <?php
-namespace TYPO3\CMS\InfiniteScrollGallery\ViewHelpers;
+namespace Fab\InfiniteScrollGallery\ViewHelpers;
 
-/* * *************************************************************
- *  Copyright notice
+/**
+ * This file is part of the TYPO3 CMS project.
  *
- *  (c) 2011 Fabien Udriot
- *  All rights reserved
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- * ************************************************************* */
+ * The TYPO3 project - inspiring people to share!
+ */
+
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * View helper for rendering script
  *
  * = Examples =
  */
-class ImageStackViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class ImageStackViewHelper extends AbstractViewHelper
+{
 
-	/**
-	 * Generate a JSON array of images suitable for xoyview
-	 *
-	 * @param array $images
-	 * @param array $settings
-	 * @return string
-	 */
-	public function render($images, $settings) {
+    /**
+     * Generate a JSON array of images suitable for xoyview
+     *
+     * @param array $images
+     * @param array $settings
+     * @return string
+     */
+    public function render($images, $settings)
+    {
 
-		/** @var \TYPO3\CMS\Media\Service\ThumbnailService $thumbnailService */
-		$thumbnailService = $this->objectManager->get('TYPO3\CMS\Media\Service\ThumbnailService');
-		$thumbnailService->setOutputType(\TYPO3\CMS\Media\Service\ThumbnailInterface::OUTPUT_URI)
-			->setConfiguration(
-				array(
-					'width' => $settings['enlargedImageMaximumWidth'],
-					'height' => $settings['enlargedImageMaximumHeight']
-				)
-			);
+        /** @var \Fab\Media\Service\ThumbnailService $thumbnailService */
+        $thumbnailService = $this->objectManager->get('Fab\Media\Service\ThumbnailService');
+        $thumbnailService->setOutputType(\Fab\Media\Service\ThumbnailInterface::OUTPUT_URI)
+            ->setConfiguration(
+                array(
+                    'width' => $settings['enlargedImageMaximumWidth'],
+                    'height' => $settings['enlargedImageMaximumHeight']
+                )
+            );
 
-		/** @var \TYPO3\CMS\Media\Domain\Model\Image $image */
-		foreach ($images as $image) {
-			$output[] = array(
-				'media' => array(
-					'src' => '/' . $image->getThumbnail($thumbnailService),
-					'title' => $image->getTitle(),
-				),
-			);
-		}
-		return json_encode($output);
-	}
+        /** @var \Fab\Media\Domain\Model\Image $image */
+        foreach ($images as $image) {
+            $output[] = array(
+                'media' => array(
+                    'src' => '/' . $image->getThumbnail($thumbnailService),
+                    'title' => $image->getTitle(),
+                ),
+            );
+        }
+        return json_encode($output);
+    }
 }
-?>

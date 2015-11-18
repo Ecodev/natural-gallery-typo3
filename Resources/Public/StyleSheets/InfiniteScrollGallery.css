@@ -1,44 +1,44 @@
 /* set style to thumbnail of image*/
 .tx-infinitscrollgallery-thumbnail {
-	border: 0px solid #CCCCCC;
-	float: left;
-	margin: 10px;
-	text-align: center;
+    border: 0 solid #CCCCCC;
+    /*float: left;*/
+    margin: 10px;
+    /*text-align: center;*/
 }
 
 .tx-infinitscrollgallery-thumbnail-video a img {
-	box-shadow: none !important;
+    box-shadow: none !important;
 }
 
 .tx-infinitscrollgallery-thumbnail a img {
-	box-shadow: 3px 3px 5px #999;
-	text-align: center;
+    box-shadow: 3px 3px 5px #999;
+    text-align: center;
 }
 
 li.tx-infinitscrollgallery-thumbnail {
-	list-style: none;
-        position: relative;
+    /*list-style: none;*/
+    /*position: relative;*/
 }
 
 .tx-infinitescrollgallery-loading {
-	text-align: center;
-	display: none;
+    text-align: center;
+    display: none;
 }
 
 #tx-infinitescrollgallery-form {
-	padding-top: 10px;
-	vertical-align: middle;
+    padding-top: 10px;
+    vertical-align: middle;
 }
 
 #tx-infinitescrollgallery-label-tag {
-	padding-right: 5px;
+    padding-right: 5px;
 }
 
 #tx-infinitescrollgallery-recordnumber {
-	float: right;
-	margin-left: 20px;
+    float: right;
+    margin-left: 20px;
 }
 
 .tx-infinitescrollgallery-hidden {
-	display: none;
+    display: none;
 }

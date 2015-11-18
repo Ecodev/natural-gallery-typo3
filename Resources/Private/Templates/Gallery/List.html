@@ -1,21 +1,21 @@
-{namespace gallery=TYPO3\CMS\InfiniteScrollGallery\ViewHelpers}
-{namespace m=TYPO3\CMS\Media\ViewHelpers}
+{namespace gallery=Fab\InfiniteScrollGallery\ViewHelpers}
+{namespace m=Fab\Media\ViewHelpers}
 <f:layout name="Default" />
 <f:section name="main">
-	<script type="text/javascript" src="{f:uri.resource(path: 'JavaScript/JQuery/jquery.form.js')}"></script>
-	<script type="text/javascript" src="{f:uri.resource(path: 'JavaScript/yoxview/yoxview-init.js')}"></script>
 	<script type="text/javascript" src="{f:uri.resource(path: 'JavaScript/InfiniteScrollGallery.js')}"></script>
 	<link rel="stylesheet" href="{f:uri.resource(path: 'StyleSheets/InfiniteScrollGallery.css')}"/>
 	<script type="text/javascript">
 
 		// Array containing images not displayed by defaut on this page
-		infinitesSrollGallery.imageStack = {gallery:imageStack(images: '{imageStack}', settings: '{settings}')};
+		//<f:comment>
+		//infinitesSrollGallery.imageStack = {gallery:imageStack(images: '{imageStack}', settings: '{settings}')};
+		//</f:comment>
 
 		//enable/disable scroll
 		infinitesSrollGallery.enableMoreLoading = '{settings.enableMoreLoading}';
 	</script>
 
-	<gallery:dynamicStyle settings="{settings}" />
+	<f:comment><gallery:dynamicStyle settings="{settings}" /></f:comment>
 
 	<f:if condition="{settings.showFilters}">
 
@@ -45,32 +45,30 @@
 		</f:form>
 
 	</f:if>
-		<div class="tx-infinitescrollgallery-main">
-		<div class="yoxview">
-			<ul>
-				<f:for each="{images}" as="image">
-                    <li class="tx-infinitscrollgallery-thumbnail">
-	                    <m:thumbnail object="{image}"
-	                                 configuration="{width: '{settings.thumbnailMaximumWidth}', height: '{settings.thumbnailMaximumHeight}'}"
-	                                 configurationWrap="{width: '{settings.enlargedImageMaximumWidth}', height: '{settings.enlargedImageMaximumHeight}'}"
-	                                 output="imageWrapped"/>
-                    </li>
-				</f:for>
-			</ul>
-		</div>
 
-		<div class="tx-infinitescrollgallery-footer" style="clear: both">
-			<div id="tx-infinitescrollgallery-recordnumber" <f:if condition="{numberOfVisibleImages} == {totalImages}">class="tx-infinitescrollgallery-hidden"</f:if>>
-				<span id="tx-infinitescrollgallery-numberOfVisibleImages">{numberOfVisibleImages}</span> /
-				<span id="tx-infinitescrollgallery-totalImages">{totalImages}</span>
-			</div>
-			<div class="tx-infinitescrollgallery-next" style="text-align: center">
-				<!-- <a href="#">next &gt;</a> -->
-			</div>
+	<div class="tx-infinitescrollgallery-main">
+	<div class="yoxview">
+		<ul>
+			<f:for each="{images}" as="image">
+                <li class="tx-infinitscrollgallery-thumbnail">
+	                {image.identifier}
+	                <f:comment><--m:file.thumbnail file="{image}" output="imageWrapped"/></f:comment>
+                </li>
+			</f:for>
+		</ul>
+	</div>
+
+	<div class="tx-infinitescrollgallery-footer" style="clear: both">
+		<div id="tx-infinitescrollgallery-recordnumber" <f:if condition="{numberOfVisibleImages} == {totalNumberOfImages}">class="tx-infinitescrollgallery-hidden"</f:if>>
+			<span id="tx-infinitescrollgallery-numberOfVisibleImages">{numberOfVisibleImages}</span> /
+			<span id="tx-infinitescrollgallery-totalImages">{totalNumberOfImages}</span>
 		</div>
-		<div class="tx-infinitescrollgallery-loading">
-			<img src="{gallery:publicPath(resource: 'Images/ajax-loader.gif')}" alt="loadding"/>
+		<div class="tx-infinitescrollgallery-next" style="text-align: center">
+			<!-- <a href="#">next &gt;</a> -->
 		</div>
+	</div>
+	<div class="tx-infinitescrollgallery-loading">
+		<img src="{gallery:publicPath(resource: 'Images/ajax-loader.gif')}" alt="loadding"/>
 	</div>
 
 </f:section>

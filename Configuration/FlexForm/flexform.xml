@@ -12,7 +12,7 @@
 					</label>
 					<config>
 						<type>input</type>
-						<eval>required,trim</eval>
+						<eval>trim</eval>
 					</config>
 				</TCEforms>
 			</settings.categories>

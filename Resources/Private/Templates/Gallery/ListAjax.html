@@ -1,9 +1,9 @@
-{namespace gallery=TYPO3\CMS\InfiniteScrollGallery\ViewHelpers}
-{namespace m=TYPO3\CMS\Media\ViewHelpers}
+{namespace gallery=Fab\InfiniteScrollGallery\ViewHelpers}
+{namespace m=Fab\Media\ViewHelpers}
 <f:layout name="Default" />
 <f:section name="main">
 
-<!-- ###totalImages:{totalImages}### -->
+<!-- ###totalImages:{totalNumberOfImages}### -->
 <script type="text/javascript">
 	// Array containing images not displayed by defaut on this page
 	infinitesSrollGallery.imageStack = {gallery:imageStack(images: '{imageStack}', settings: '{settings}')};
@@ -11,7 +11,7 @@
 
 <f:if condition="{images}">
 	<f:then>
-		<f:form.hidden name="totalImages" class="tx-infinitescrollgallery-totalImages" value="{totalImages}" />
+		<f:form.hidden name="totalImages" class="tx-infinitescrollgallery-totalImages" value="{totalNumberOfImages}" />
 		<f:for each="{images}" as="image">
             <li class="tx-infinitscrollgallery-thumbnail">
 	            <m:thumbnail object="{image}"
