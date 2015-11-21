@@ -23,7 +23,7 @@ $EM_CONF[$_EXTKEY] = array (
     array (
       'typo3' => '7.6.0-7.99.99',
       'vidi' => '',
-//      'media' => '',
+      'media' => '',
     ),
     'conflicts' =>
     array (

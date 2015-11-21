@@ -51,8 +51,7 @@
 		<ul>
 			<f:for each="{images}" as="image">
                 <li class="tx-infinitscrollgallery-thumbnail">
-	                {image.identifier}
-	                <f:comment><--m:file.thumbnail file="{image}" output="imageWrapped"/></f:comment>
+	                <m:file.thumbnail file="{image}" output="imageWrapped"/>
                 </li>
 			</f:for>
 		</ul>
