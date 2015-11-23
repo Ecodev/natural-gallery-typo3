@@ -9,13 +9,20 @@
 	<gallery:loadAssets/>
 	<script type="text/javascript">
 
-		// Array containing images not displayed by defaut on this page
-		//<f:comment>
-		//infinitesSrollGallery.imageStack = {gallery:imageStack(images: '{imageStack}', settings: '{settings}')};
-		//</f:comment>
+		// Declare namespace.
+		window.infinitesSrollGallery = window.infinitesSrollGallery || {};
 
-		//enable/disable scroll
+		// Run time variables
+		var infinitesSrollGallery = {
+			numberOfScroll: 0
+		};
+
+		// Enable/disable scroll
 		//infinitesSrollGallery.enableMoreLoading = '{settings.enableMoreLoading}';
+		// Array containing images not displayed by defaut on this page
+
+		//infinitesSrollGallery.imageStack = {-gallery:imageStack(images: '{imageStack}', settings: '{settings}')};
+
 	</script>
 
 	<f:comment>
@@ -25,47 +32,44 @@
 	<f:if condition="{settings.showFilters}">
 
 		<f:form id="tx-infinitescrollgallery-form" method="GET" class="form-inline">
-			<fieldset>
-				<f:form.hidden id="tx-infinitescrollgallery-url" value="{f:uri.page()}"/>
-				<f:form.hidden name="limit" id="tx-infinitescrollgallery-limit" value="{settings.limit}"/>
-				<f:form.hidden name="offset" id="tx-infinitescrollgallery-offset" value="0"/>
-				<f:form.hidden name="contentElement" id="tx-infinitescrollgallery-recordUid" value="{data.uid}"/>
-				<f:form.hidden name="language" id="tx-infinitescrollgallery-language"
-				               value="{gallery:frontendConfiguration(key: 'language', default: 'en')}"/>
-				<span style="margin-right: 10px"><f:translate key="filter_by"/></span>
+			<f:form.hidden id="tx-infinitescrollgallery-url" value="{f:uri.page()}"/>
+			<f:form.hidden name="limit" id="tx-infinitescrollgallery-limit" value="{settings.limit}"/>
+			<f:form.hidden name="offset" id="tx-infinitescrollgallery-offset" value="0"/>
+			<f:form.hidden name="contentElement" id="tx-infinitescrollgallery-recordUid" value="{data.uid}"/>
+			<f:form.hidden name="language" id="tx-infinitescrollgallery-language"
+			               value="{gallery:frontendConfiguration(key: 'language', default: 'en')}"/>
 
+			<div class="form-group">
+				<label id="tx-infinitescrollgallery-category">
+					<f:translate key="filter_by"/>
+				</label>
 				<f:form.select name="category"
 				               id="tx-infinitescrollgallery-category"
 				               options="{categories}"
 				               optionValueField="uid"
 				               optionLabelField="title"/>
+			</div>
 
-				<input type="search"
-				       id="tx-infinitescrollgallery-searchTerm"
-				       placeholder="{f:translate(key:'search')}"
-				       class="search placeholder"
-				       name="tx_infinitescrollgallery_pi1[searchTerm]"/>
-			</fieldset>
+			<input type="search"
+			       id="tx-infinitescrollgallery-searchTerm"
+			       placeholder="{f:translate(key:'search')}"
+			       class="search placeholder"
+			       name="tx_infinitescrollgallery_pi1[searchTerm]"/>
 		</f:form>
 
 	</f:if>
 
 	<div class="tx-infinitescrollgallery-main">
-		<div class="yoxview">
-			<ul>
-				<f:for each="{images}" as="image">
-					<li class="tx-infinitscrollgallery-thumbnail">
-						<m:file.thumbnail file="{image}" output="imageWrapped"/>
-					</li>
-				</f:for>
-			</ul>
-		</div>
+		<ul>
+			<f:for each="{images}" as="image">
+				<li class="tx-infinitscrollgallery-thumbnail">
+					<m:file.thumbnail file="{image}" output="imageWrapped"/>
+				</li>
+			</f:for>
+		</ul>
 
 		<div class="tx-infinitescrollgallery-footer" style="clear: both">
-			<div id="tx-infinitescrollgallery-recordnumber"
-			<f:if condition="{numberOfVisibleImages} == {totalNumberOfImages}">class="tx-infinitescrollgallery-hidden"
-			</f:if>
-			>
+			<div id="tx-infinitescrollgallery-recordnumber" <f:if condition="{numberOfVisibleImages} == {totalNumberOfImages}">class="tx-infinitescrollgallery-hidden"</f:if>>
 			<span id="tx-infinitescrollgallery-numberOfVisibleImages">{numberOfVisibleImages}</span> /
 			<span id="tx-infinitescrollgallery-totalImages">{totalNumberOfImages}</span>
 		</div>
