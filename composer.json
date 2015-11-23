@@ -11,5 +11,13 @@
   "support": {
     "issues": "https://github.com/fabarea/infinite_scroll_gallery/issues"
   },
+  "extra": {
+    "installer-name": "infinite_scroll_gallery"
+  },
+  "autoload": {
+    "psr-4": {
+      "Fab\\InfiniteScrollGallery\\": "Classes/"
+    }
+  },
   "version": "2.0.0-dev"
 }
