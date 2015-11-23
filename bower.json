@@ -3,5 +3,6 @@
   "version": "1.0.0",
   "ignore": [],
   "dependencies": {
+    "photoswipe": "~4.1.0"
   }
 }
