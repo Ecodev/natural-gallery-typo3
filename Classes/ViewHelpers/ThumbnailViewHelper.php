@@ -15,50 +15,41 @@ namespace Fab\InfiniteScrollGallery\ViewHelpers;
  */
 
 use Fab\Vidi\Domain\Model\Content;
+use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\ProcessedFile;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
- * View helper
+ * View helper.
  */
-class ImageStackViewHelper extends AbstractViewHelper
+class ThumbnailViewHelper extends AbstractViewHelper
 {
 
     /**
+     * @param Content $image
      * @return string
      */
-    public function render()
+    public function render(Content $image)
     {
 
-        $images = $this->templateVariableContainer->get('images');
+        $file = ResourceFactory::getInstance()->getFileObject($image->getUid());
+        $processedFile = $this->createProcessedFile($file);
 
+        // @todo incomplete implementation...
+        $thumbnail = $processedFile->getPublicUrl(true);
 
-        $items = [];
-        foreach ($images as $image) {
-
-            $processedFile = $this->createProcessedFile($image);
-
-            $item = [
-                'thumbnail' => $processedFile->getPublicUrl(true)
-                // @todo continue
-            ];
-
-            $items[] = $item;
-        }
-        return json_encode($items);
+        return $thumbnail;
     }
 
     /**
-     * @param Content $image
+     * @param File $file
      * @return ProcessedFile
      * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
      * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception\InvalidVariableException
      */
-    public function createProcessedFile(Content $image)
+    public function createProcessedFile(File $file)
     {
-
-        $file = ResourceFactory::getInstance()->getFileObject($image->getUid());
 
         $configuration = [];
         if ($this->getSettings()['thumbnailMaximumWidth'] > $file->getProperty('width')) {

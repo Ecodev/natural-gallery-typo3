@@ -1,7 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
       xmlns:f="http://typo3.org/ns/fluid/ViewHelpers"
-      xmlns:gallery="http://typo3.org/ns/Fab/InfiniteScrollGallery/ViewHelpers"
-      xmlns:m="http://typo3.org/ns/Fab/Media/ViewHelpers">
+      xmlns:gallery="http://typo3.org/ns/Fab/InfiniteScrollGallery/ViewHelpers">
 
 <f:layout name="Default"/>
 <f:section name="main">
@@ -21,7 +20,7 @@
 		//infinitesSrollGallery.enableMoreLoading = '{settings.enableMoreLoading}';
 		// Array containing images not displayed by defaut on this page
 
-		//infinitesSrollGallery.imageStack = {-gallery:imageStack(images: '{imageStack}', settings: '{settings}')};
+		infinitesSrollGallery.images = {gallery:imageStack()};
 
 	</script>
 
@@ -65,7 +64,7 @@
 		<ul>
 			<f:for each="{images}" as="image">
 				<li class="tx-infinitscrollgallery-thumbnail">
-					<m:file.thumbnail file="{image}" output="imageWrapped"/>
+					<gallery:thumbnail image="{image}"/>
 				</li>
 			</f:for>
 		</ul>
