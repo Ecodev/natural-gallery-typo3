@@ -79,35 +79,6 @@ class GalleryController extends ActionController
 //        $this->view->assign('imageStack', $this->imageRepository->findBy($matcher, $orderObject, 10000000, $this->settings['limit']));
     }
 
-    /**
-     * Get a list that is suitable for an Ajax
-     *
-     * @param int $contentElement
-     * @return void
-     */
-    public function listAjaxAction($contentElement)
-    {
-        /** @var $contentRepository \Fab\InfiniteScrollGallery\Domain\Repository\ContentRepository */
-        $contentRepository = $this->objectManager->get('Fab\InfiniteScrollGallery\Domain\Repository\ContentRepository');
-        $contentElement = $contentRepository->findByUid($contentElement);
-
-        $flexFormSettings = $this->flexFormService->convertFlexFormContentToArray($contentElement['pi_flexform']);
-        $this->settings = $flexFormSettings['settings'];
-
-        $limit = $this->settings['limit'] ? (int)$this->settings['limit'] : 10;
-
-        $orderObject = $this->getOrderObject();
-        $matcher = $this->getMatcherObject();
-
-        $offset = (int)$this->request->getArgument('offset');
-        $offsetImageStack = ($offset + $limit); //fix maximum limit
-
-        $this->view->assign('settings', $this->settings);
-        $this->view->assign('images', $this->imageRepository->findBy($matcher, $orderObject, $this->settings['limit'], $offset));
-        $this->view->assign('imageStack', $this->imageRepository->findBy($matcher, $orderObject, 10000000, $offsetImageStack));
-        $this->view->assign('totalImages', $this->imageRepository->countBy($matcher));
-    }
-
 //    /**
 //     * Get category objects
 //     *

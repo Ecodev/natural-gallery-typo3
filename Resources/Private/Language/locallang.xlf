@@ -87,9 +87,6 @@
 				<source>Descendant</source>
 			</trans-unit>
 
-			<trans-unit id="tx_infinitescrollgallery_listAjax_msg_no_image">
-				<source>No image matching this search</source>
-			</trans-unit>
 			<trans-unit id="tx_infinitescrollgallery_dropdown_tags">
 				<source>all</source>
 			</trans-unit>

@@ -7,10 +7,10 @@ if (!defined('TYPO3_MODE')) {
     'Fab.infinite_scroll_gallery',
     'Pi1',
     array(
-        'Gallery' => 'list', 'listAjax'
+        'Gallery' => 'list',
     ),
     // non-cacheable actions
     array(
-        'Gallery' => 'listAjax',
+        #'Gallery' => 'list',
     )
 );
