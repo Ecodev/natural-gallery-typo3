@@ -51,13 +51,13 @@
 				<source>General</source>
 			</trans-unit>
 			<trans-unit id="fields.categories">
-				<source>Categories of images displayed (comma separated values)</source>
+				<source>Categories of images (comma separated values)</source>
 			</trans-unit>
 			<trans-unit id="fields.enableMoreLoading">
 				<source>Load more images dynamically as you scroll</source>
 			</trans-unit>
-			<trans-unit id="fields.showFilters">
-				<source>Show filters</source>
+			<trans-unit id="fields.showFilterBar">
+				<source>Show filter bar</source>
 			</trans-unit>
 			<trans-unit id="fields.limit">
 				<source>Number of images displayed by batch</source>
@@ -99,6 +99,13 @@
 			<trans-unit id="search">
 				<source>Search...</source>
 			</trans-unit>
+			<trans-unit id="flexform.tab.general">
+				<source>General</source>
+			</trans-unit>
+			<trans-unit id="flexform.tab.filterBar">
+				<source>Filter bar</source>
+			</trans-unit>
+
 		</body>
 	</file>
 </xliff>

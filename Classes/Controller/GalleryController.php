@@ -28,10 +28,10 @@ class GalleryController extends ActionController
 {
 
     /**
-     * @var \TYPO3\CMS\Extbase\Service\FlexFormService
+     * @var \Fab\InfiniteScrollGallery\Domain\Repository\CategoryRepository
      * @inject
      */
-    protected $flexFormService;
+    protected $categoryRepository;
 
     /**
     /**
@@ -74,16 +74,16 @@ class GalleryController extends ActionController
         $this->view->assign('data', $this->configurationManager->getcontentObject()->data);
         $this->view->assign('images', $images);
         $this->view->assign('numberOfVisibleImages', $this->settings['limit'] > $totalNumberOfImages ? $totalNumberOfImages : $this->settings['limit']);
-        // @todo Fabien restore me
-        //$this->view->assign('categories', $this->getCategoriesObjects());
-//        $this->view->assign('imageStack', $this->imageRepository->findBy($matcher, $orderObject, 10000000, $this->settings['limit']));
+
+        $identifiers = GeneralUtility::trimExplode(',', $this->settings['categories'], TRUE);
+        $this->view->assign('categories', $this->categoryRepository->findByIdentifiers($identifiers));
     }
 
-//    /**
-//     * Get category objects
-//     *
-//     * @return \TYPO3\CMS\Extbase\Domain\Model\Category[]
-//     */
+    /**
+     * Get category objects
+     *
+     * @return \TYPO3\CMS\Extbase\Domain\Model\Category[]
+     */
 //    protected function getCategoriesObjects()
 //    {
 //        $categories = GeneralUtility::trimExplode(',', $this->settings['categories']);

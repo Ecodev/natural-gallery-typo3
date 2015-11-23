@@ -39,16 +39,18 @@
 			<f:form.hidden name="language" id="tx-infinitescrollgallery-language"
 			               value="{gallery:frontendConfiguration(key: 'language', default: 'en')}"/>
 
-			<div class="form-group">
-				<label id="tx-infinitescrollgallery-category">
-					<f:translate key="filter_by"/>
-				</label>
-				<f:form.select name="category"
-				               id="tx-infinitescrollgallery-category"
-				               options="{categories}"
-				               optionValueField="uid"
-				               optionLabelField="title"/>
-			</div>
+			<f:if condition="{categories}">
+				<div class="form-group">
+					<label id="tx-infinitescrollgallery-category">
+						<f:translate key="filter_by"/>
+					</label>
+					<f:form.select name="category"
+					               id="tx-infinitescrollgallery-category"
+					               options="{categories}"
+					               optionValueField="uid"
+					               optionLabelField="title"/>
+				</div>
+			</f:if>
 
 			<input type="search"
 			       id="tx-infinitescrollgallery-searchTerm"

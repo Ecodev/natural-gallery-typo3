@@ -51,13 +51,13 @@
 				<source>General</source>
 			</trans-unit>
 			<trans-unit id="fields.categories">
-				<source>Categories of images displayed (comma separated values)</source>
+				<source>Catégories affichées (identifieurs séparés par des virgules)</source>
 			</trans-unit>
 			<trans-unit id="fields.enableMoreLoading">
 				<source>Load more images dynamically as you scroll</source>
 			</trans-unit>
-			<trans-unit id="fields.showFilters">
-				<source>Show filters</source>
+			<trans-unit id="fields.showFilterBar">
+				<source>Afficher barre de filtre</source>
 			</trans-unit>
 			<trans-unit id="fields.limit">
 				<source>Number of images displayed by batch</source>
