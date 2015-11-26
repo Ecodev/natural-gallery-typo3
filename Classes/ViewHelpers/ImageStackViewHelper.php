@@ -15,6 +15,7 @@ namespace Fab\InfiniteScrollGallery\ViewHelpers;
  */
 
 use Fab\Vidi\Domain\Model\Content;
+use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\ProcessedFile;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
@@ -30,18 +31,27 @@ class ImageStackViewHelper extends AbstractViewHelper
      */
     public function render()
     {
-
         $images = $this->templateVariableContainer->get('images');
-
 
         $items = [];
         foreach ($images as $image) {
 
-            $processedFile = $this->createProcessedFile($image);
+            /** @var \TYPO3\CMS\Core\Resource\File $file */
+            $file = ResourceFactory::getInstance()->getFileObject($image->getUid());
+            $thumbnailFile = $this->createProcessedFile($file, 'thumbnailMaximumWidth', 'thumbnailMaximumHeight');
+            $enlargedFile = $this->createProcessedFile($file, 'enlargedImageMaximumWidth', 'enlargedImageMaximumHeight');
+
+            $categories = array_map(function($cat) {
+                return $cat['uid'];
+            }, $image['metadata']['categories']);
 
             $item = [
-                'thumbnail' => $processedFile->getPublicUrl(true)
-                // @todo continue
+                'thumbnail' => '/' . $thumbnailFile->getPublicUrl(true),
+                'enlarged' => '/' . $enlargedFile->getPublicUrl(true),
+                'title' => $file->getProperty('title'),
+                'width' => $enlargedFile->getProperty('width'),
+                'height' => $enlargedFile->getProperty('height'),
+                'categories' => $categories
             ];
 
             $items[] = $item;
@@ -50,27 +60,24 @@ class ImageStackViewHelper extends AbstractViewHelper
     }
 
     /**
-     * @param Content $image
+     * @param File $file
+     * @param $widthFormat
+     * @param $heightFormat
      * @return ProcessedFile
-     * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
-     * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception\InvalidVariableException
+     * @internal param Content $image
      */
-    public function createProcessedFile(Content $image)
+    public function createProcessedFile(File $file, $widthFormat, $heightFormat)
     {
+        $configuration = [
+            'maxWidth' => $this->getSettings()[$widthFormat] ? $this->getSettings()[$widthFormat] : null,
+            'maxHeight' => $this->getSettings()[$heightFormat] ? $this->getSettings()[$heightFormat] : null,
+        ];
 
-        $file = ResourceFactory::getInstance()->getFileObject($image->getUid());
+//        if ($configuration['maxWidth'] || $configuration['maxHeight']) {
+            $file = $file->process(ProcessedFile::CONTEXT_IMAGECROPSCALEMASK, $configuration);
+//        }
 
-        $configuration = [];
-        if ($this->getSettings()['thumbnailMaximumWidth'] > $file->getProperty('width')) {
-            $configuration['width'] = $file->getProperty('width');
-        }
-        if ($this->getSettings()['thumbnailMaximumHeight'] > $file->getProperty('height')) {
-            $configuration['height'] = $file->getProperty('height');
-        }
-
-        $processedFile = $file->process(ProcessedFile::CONTEXT_IMAGECROPSCALEMASK, $configuration);
-
-        return $processedFile;
+        return $file;
     }
 
 

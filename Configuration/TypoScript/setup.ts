@@ -16,7 +16,22 @@ plugin.tx_infinitescrollgallery {
 
 		asset {
 
-			vidiCss {
+			PhotoSwipeCss {
+				path = EXT:infinite_scroll_gallery/Resources/Public/StyleSheets/photoswipe.css
+				type = css
+
+				# Optional key if loading assets through EXT:vhs.
+				dependencies = mainCss
+			}
+			PhotoSwipeThemeCss {
+				path = EXT:infinite_scroll_gallery/Resources/Public/StyleSheets/default-skin/default-skin.css
+				type = css
+
+				# Optional key if loading assets through EXT:vhs.
+				dependencies = mainCss
+			}
+
+			InfiniteScrollGalleryCss {
 				path = EXT:infinite_scroll_gallery/Resources/Public/StyleSheets/InfiniteScrollGallery.css
 				type = css
 
@@ -24,12 +39,27 @@ plugin.tx_infinitescrollgallery {
 				dependencies = mainCss
 			}
 
-			vidiJs {
-				path = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/InfiniteScrollGallery.js
+			PhotoSwipeJs {
+				path = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/photoswipe.min.js
 				type = js
 
 				# Optional key if loading assets through EXT:vhs.
 				dependencies = mainJs
+			}
+			PhotoSwipeThemeJs {
+				path = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/photoswipe-ui-default.min.js
+				type = js
+
+				# Optional key if loading assets through EXT:vhs.
+				dependencies = mainJs
+			}
+
+			InfiniteScrollGalleryJs {
+				path = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/InfiniteScrollGallery.js
+				type = js
+
+				# Optional key if loading assets through EXT:vhs.
+						dependencies = mainJs
 			}
 		}
 

@@ -65,7 +65,7 @@ class GalleryController extends ActionController
         $contentRepository = ContentRepositoryFactory::getInstance($dataType);
 
         // Fetch and count files
-        $images = $contentRepository->findBy($matcher, $order, (int)$this->settings['limit']);
+        $images = $contentRepository->findBy($matcher, $order);
         $totalNumberOfImages = $contentRepository->countBy($matcher);
 
         // Assign template variables

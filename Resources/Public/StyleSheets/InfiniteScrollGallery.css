@@ -42,3 +42,29 @@ li.tx-infinitscrollgallery-thumbnail {
 .tx-infinitescrollgallery-hidden {
     display: none;
 }
+
+#infiniteScrollGallery {
+    padding:0;
+    margin-top:20px;
+}
+#infiniteScrollGallery li {
+    display: block;
+    float:left;
+    width: 285px;
+    height: 285px;
+    background: white url('../images/ajax-loader-unit.gif') no-repeat center center;
+    /*margin-right:10px;*/
+    /*margin-bottom:10px;*/
+}
+
+#infiniteScrollGallery a {
+    display: block;
+    width: 285px;
+    height: 285px;
+    background-repeat:no-repeat;
+    background-position: center center;
+    background-size:cover;
+    /*border-radius:100%;*/
+    /*border:1px solid #ddd;*/
+}
+

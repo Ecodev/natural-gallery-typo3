@@ -69,6 +69,39 @@
 			}
 		});
 
+		var $target = $('#infiniteScrollGallery');
+
+		for (var i = 0; i < infinitesSrollGallery.images.length; i++) {
+            var image = infinitesSrollGallery.images[i];
+            $target.append('<li><a data-width="' + image.width + '" data-height="' + image.height + '" href="' + image.enlarged + '" style="background-image:url(' + image.thumbnail + ');"></a></li>');
+        }
+
+        var container = [];
+        $target.find('li').each(function() {
+            var $link = $(this).find('a');
+            var item = {
+                src: $link.attr('href'),
+                w: $link.data('width'),
+                h: $link.data('height'),
+                title: $link.data('caption')
+            };
+
+            container.push(item);
+        });
+
+		$target.find('a').click(function(event) {
+			event.preventDefault();
+
+			var $pswp = $('.pswp')[0];
+			var options = {
+				index: $(this).parent('li').index(),
+				bgOpacity: 0.85,
+				showHideOpacity: true
+			};
+
+			var gallery = new PhotoSwipe($pswp, PhotoSwipeUI_Default, container, options);
+			gallery.init();
+		});
 
 	});
 })(jQuery);
