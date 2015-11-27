@@ -123,8 +123,12 @@
 		}
 
         function getGallery(element) {
-            var galleryId = $(element).parents('.tx-infinitescrollgallery').data('galleryid');
-            var gallery = _.find(infinitesScrollGallery, {id: Number(galleryId)});
+
+            var gallery = infinitesScrollGallery[0];
+            if (element) {
+                var galleryId = $(element).parents('.tx-infinitescrollgallery').data('galleryid');
+                gallery = _.find(infinitesScrollGallery, {id: Number(galleryId)});
+            }
             return gallery;
         }
 
@@ -180,15 +184,15 @@
                     var numberOfVisibleImages = parseInt($("#tx-infinitescrollgallery-numberOfVisibleImages").html());
                     var totalImages = parseInt($("#tx-infinitescrollgallery-totalImages").html());
 
-                    addElements(1);
+                    addElements(getGallery(), 1);
                     window.setTimeout(function() {
-                        addElements(1);
+                        addElements(getGallery(), 1);
                     }, 300);
                     window.setTimeout(function() {
-                        addElements(1);
+                        addElements(getGallery(), 1);
                     }, 600);
                     window.setTimeout(function() {
-                        addElements(1);
+                        addElements(getGallery(), 1);
                     }, 900);
 
                 }
