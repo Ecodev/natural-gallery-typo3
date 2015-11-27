@@ -43,11 +43,11 @@ li.tx-infinitscrollgallery-thumbnail {
     display: none;
 }
 
-#infiniteScrollGallery {
+.tx-infinitescrollgallery-body {
     padding:0;
     margin-top:20px;
 }
-#infiniteScrollGallery li {
+.tx-infinitescrollgallery-body figure {
     display: block;
     float:left;
     width: 285px;
@@ -57,7 +57,15 @@ li.tx-infinitscrollgallery-thumbnail {
     /*margin-bottom:10px;*/
 }
 
-#infiniteScrollGallery a {
+/*.tx-infinitescrollgallery:after {*/
+    /*float:none;*/
+    /*clear:both;*/
+    /*height:100px;*/
+    /*width:100px;*/
+    /*border:1px solid red;*/
+/*}*/
+
+.tx-infinitescrollgallery-body figure a {
     display: block;
     width: 285px;
     height: 285px;
