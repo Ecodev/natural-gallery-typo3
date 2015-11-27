@@ -12,9 +12,16 @@
 		var old_scroll_top = 0;
 
 		/**
-		 * Photoswipe global template element
+		 * Photoswipe global template element (dom element)
 		 */
-		var $pswp = $('.pswp')[0];
+        var $pswp = $('.pswp')[0];
+
+        /**
+         * Photoswipe javascript object
+         * Contains api to interact with library
+         * @type PhotoSwipe
+         */
+        var pswp = null;
 
 		/**
 		 * Default images by step
@@ -85,21 +92,30 @@
 			};
 		}
 
-		function bindClick(image) {
+        function bindClick(image) {
 
-			image.on('click', function(e) {
-				e.preventDefault();
+            image.on('click', function(e) {
+                e.preventDefault();
 
-				var options = {
-					index: $(this).parent('figure').index(),
-					bgOpacity: 0.85,
-					showHideOpacity: true
-				};
+                var self = this;
+                var options = {
+                    index: $(this).parent('figure').index(),
+                    bgOpacity: 0.85,
+                    showHideOpacity: true,
+                    loop:false
+                };
 
-				var gallery = new PhotoSwipe($pswp, PhotoSwipeUI_Default, getGallery(this).container, options);
-				gallery.init();
-			});
-		}
+                pswp = new PhotoSwipe($pswp, PhotoSwipeUI_Default, getGallery(self).container, options);
+                pswp.init();
+                pswp.listen('beforeChange', function(delta) {
+                    // Positive delta indicates "next" action, we don't load more objects on looping back the gallery
+                    if (delta > 0 && pswp.getCurrentIndex() == pswp.items.length - 1) {
+                        addElements(getGallery(self));
+                    }
+                });
+
+            });
+        }
 
 		function resetElements(gallery) {
 			gallery.container = [];
@@ -144,7 +160,7 @@
                 resetElements(getGallery(this));
 			}
 		});
-        
+
 		// Function scroll to load new images when scrolling down
         // Allow scroll if there is only a single gallery on page and moreLoading allowed
         if (infinitesScrollGallery.length == 1 && infinitesScrollGallery[0].enableMoreLoading) {
