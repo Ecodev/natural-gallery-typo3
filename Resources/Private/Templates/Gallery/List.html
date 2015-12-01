@@ -13,9 +13,12 @@
 			var infiniteScrollGallery = {};
 			infiniteScrollGallery.id = Number('{data.uid}');
 			infiniteScrollGallery.enableMoreLoading = '{settings.enableMoreLoading}';
-			infiniteScrollGallery.width = Number('{settings.thumbnailMaximumWidth}');
 			infiniteScrollGallery.height = Number('{settings.thumbnailMaximumHeight}');
 			infiniteScrollGallery.images = {gallery:imageStack()};
+			infiniteScrollGallery.round = Number('{settings.round}');
+			infiniteScrollGallery.thumbnailFormat = '{settings.thumbnailFormat}';
+			infiniteScrollGallery.imagesPerRow = Number('{settings.imagesPerRow}');
+			infiniteScrollGallery.margin = Number('{settings.margin}');
 
 			window.infinitesScrollGallery.push(infiniteScrollGallery);
 		</script>

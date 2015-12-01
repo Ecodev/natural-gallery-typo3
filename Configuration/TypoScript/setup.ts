@@ -62,12 +62,20 @@ plugin.tx_infinitescrollgallery {
 				dependencies = mainJs
 			}
 
+			Organizer {
+				path = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/organizer.js
+				type = js
+
+				# Optional key if loading assets through EXT:vhs.
+				dependencies = mainJs
+			}
+
 			InfiniteScrollGalleryJs {
 				path = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/InfiniteScrollGallery.js
 				type = js
 
 				# Optional key if loading assets through EXT:vhs.
-						dependencies = mainJs
+				dependencies = mainJs
 			}
 		}
 

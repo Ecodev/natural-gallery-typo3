@@ -29,19 +29,41 @@
          */
 		var defaultImagesByPage = 12;
 
+        function organize(gallery) {
+
+            var galleries = gallery ? [gallery] : infinitesScrollGallery;
+
+            _.forEach(galleries, function(gallery) {
+                if (gallery.thumbnailFormat == 'natural' ) {
+                    organizeNatural(gallery.bodyElement, gallery.height, gallery.margin, gallery.round);
+                } else if (gallery.thumbnailFormat == 'square') {
+                    organizeSquare(gallery.bodyElement, gallery.imagesPerRow,  gallery.margin, gallery.round);
+                } else {
+                    organizeNatural(gallery.bodyElement, gallery.height, gallery.margin, gallery.round);
+                }
+            });
+        }
+
         function initGallery() {
             infinitesScrollGallery.forEach(function(gallery) {
                 gallery.pswp = $pswp;
                 gallery.container = [];
                 gallery.bodyElement = $('#tx-infinitescrollgallery-main-' + gallery.id).find('.tx-infinitescrollgallery-body');
+
                 addElements(gallery);
             });
 		}
 
-		function addElements(gallery, number) {
+        window.addEventListener('resize', _.debounce(function() {organize();}, 200));
+
+        function addElements(gallery, number) {
 
 			if (!number) {
 				number = defaultImagesByPage;
+			}
+
+			if (!gallery) {
+				gallery = getGallery();
 			}
 
 			// Get elements already in the gallery
@@ -74,6 +96,8 @@
 				bindClick(figure.image);
 			});
 
+            organize(gallery);
+
 		}
 
 		function getFigure(image) {
@@ -82,6 +106,8 @@
 			var $image = $('<a></a>')
                 .css('background-image', 'url(' + image.thumbnail+ ')')
                 .css('display', 'none')
+                .attr('data-width', image.tWidth)
+                .attr('data-height', image.tHeight)
                 .attr('href', image.enlarged);
 
 			$figure.append($image);
@@ -165,7 +191,8 @@
 			}
 		});
 
-		// Function scroll to load new images when scrolling down
+
+        // Function scroll to load new images when scrolling down
         // Allow scroll if there is only a single gallery on page and moreLoading allowed
         if (infinitesScrollGallery.length == 1 && infinitesScrollGallery[0].enableMoreLoading) {
 
@@ -181,20 +208,10 @@
                 if (scroll_delta > 0 && $(window).scrollTop() >= $(document).height() - $(window).height() - 10) {
 
                     // Computes if there are more images to display and an ajax request can be sent against the server
-                    var numberOfVisibleImages = parseInt($("#tx-infinitescrollgallery-numberOfVisibleImages").html());
-                    var totalImages = parseInt($("#tx-infinitescrollgallery-totalImages").html());
+                    //var numberOfVisibleImages = parseInt($("#tx-infinitescrollgallery-numberOfVisibleImages").html());
+                    //var totalImages = parseInt($("#tx-infinitescrollgallery-totalImages").html());
 
-                    addElements(getGallery(), 1);
-                    window.setTimeout(function() {
-                        addElements(getGallery(), 1);
-                    }, 300);
-                    window.setTimeout(function() {
-                        addElements(getGallery(), 1);
-                    }, 600);
-                    window.setTimeout(function() {
-                        addElements(getGallery(), 1);
-                    }, 900);
-
+                    addElements(getGallery(), 4);
                 }
             });
         }

@@ -49,6 +49,9 @@ class ImageStackViewHelper extends AbstractViewHelper
                 'thumbnail' => '/' . $thumbnailFile->getPublicUrl(true),
                 'enlarged' => '/' . $enlargedFile->getPublicUrl(true),
                 'title' => $file->getProperty('title'),
+                'desc' => $file->getProperty('description'),
+                'tWidth' => $thumbnailFile->getProperty('width'),
+                'tHeight' => $thumbnailFile->getProperty('height'),
                 'width' => $enlargedFile->getProperty('width'),
                 'height' => $enlargedFile->getProperty('height'),
                 'categories' => $categories
@@ -73,9 +76,9 @@ class ImageStackViewHelper extends AbstractViewHelper
             'maxHeight' => $this->getSettings()[$heightFormat] ? $this->getSettings()[$heightFormat] : null,
         ];
 
-//        if ($configuration['maxWidth'] || $configuration['maxHeight']) {
+        if ($configuration['maxWidth'] || $configuration['maxHeight']) {
             $file = $file->process(ProcessedFile::CONTEXT_IMAGECROPSCALEMASK, $configuration);
-//        }
+        }
 
         return $file;
     }

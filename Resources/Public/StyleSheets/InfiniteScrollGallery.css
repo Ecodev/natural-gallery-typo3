@@ -50,28 +50,22 @@ li.tx-infinitscrollgallery-thumbnail {
 .tx-infinitescrollgallery-body figure {
     display: block;
     float:left;
-    width: 285px;
-    height: 285px;
     background: white url('../images/ajax-loader-unit.gif') no-repeat center center;
-    /*margin-right:10px;*/
-    /*margin-bottom:10px;*/
 }
 
-/*.tx-infinitescrollgallery:after {*/
-    /*float:none;*/
-    /*clear:both;*/
-    /*height:100px;*/
-    /*width:100px;*/
-    /*border:1px solid red;*/
-/*}*/
-
+.tx-infinitescrollgallery .last-row {
+    background:blue;
+}
+.tx-infinitescrollgallery .first-child{
+    background:green;
+}
 .tx-infinitescrollgallery-body figure a {
     display: block;
-    width: 285px;
-    height: 285px;
     background-repeat:no-repeat;
     background-position: center center;
     background-size:cover;
+    /*margin-right:1px;*/
+    /*margin-bottom:2px;*/
     /*border-radius:100%;*/
     /*border:1px solid #ddd;*/
 }
