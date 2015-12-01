@@ -12,9 +12,8 @@
 			window.infinitesScrollGallery = window.infinitesScrollGallery || [];
 			var infiniteScrollGallery = {};
 			infiniteScrollGallery.id = Number('{data.uid}');
-			infiniteScrollGallery.enableMoreLoading = '{settings.enableMoreLoading}';
-			infiniteScrollGallery.height = Number('{settings.thumbnailMaximumHeight}');
 			infiniteScrollGallery.images = {gallery:imageStack()};
+			infiniteScrollGallery.thumbnailMaximumHeight = Number('{settings.thumbnailMaximumHeight}');
 			infiniteScrollGallery.round = Number('{settings.round}');
 			infiniteScrollGallery.thumbnailFormat = '{settings.thumbnailFormat}';
 			infiniteScrollGallery.imagesPerRow = Number('{settings.imagesPerRow}');

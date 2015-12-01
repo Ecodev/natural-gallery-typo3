@@ -8,162 +8,170 @@
  * @param margin
  * @param body
  */
-function organize(gallery) {
 
-    var galleries = gallery ? [gallery] : infinitesScrollGallery;
+var tx_infiniteScrollGallery_organizer = {
 
-    _.forEach(galleries, function(gallery) {
-        if (gallery.thumbnailFormat == 'natural' ) {
-            organizeNatural(gallery.bodyElement, gallery.height, gallery.margin, gallery.round);
-        } else if (gallery.thumbnailFormat == 'square') {
-            organizeSquare(gallery.bodyElement, gallery.imagesPerRow,  gallery.margin, gallery.round);
-        } else {
-            organizeNatural(gallery.bodyElement, gallery.height, gallery.margin, gallery.round);
+    organize: function(gallery) {
+
+        var galleries = gallery ? [gallery] : infinitesScrollGallery;
+        var self = this;
+
+        _.forEach(galleries, function(gallery) {
+            if (gallery.thumbnailFormat == 'natural') {
+                self.organizeNatural(gallery.bodyElement, gallery.thumbnailMaximumHeight, gallery.margin, gallery.round);
+            }
+            else if(gallery.thumbnailFormat == 'square') {
+                self.organizeSquare(gallery.bodyElement, gallery.imagesPerRow, gallery.margin, gallery.round);
+            }
+            else {
+                self.organizeNatural(gallery.bodyElement, gallery.thumbnailMaximumHeight, gallery.margin, gallery.round);
+            }
+        });
+    },
+
+    organizeNatural: function(body, maxRowHeight, margin, round) {
+
+        if (!margin) {
+            margin = 0;
         }
-    });
-}
 
-function organizeNatural(body, maxRowHeight, margin, round) {
-
-    if (!margin) {
-        margin = 0;
-    }
-
-    if (!maxRowHeight) {
-        maxRowHeight = 300;
-    }
-
-    if (!round) {
-        round = 0;
-    }
-
-    var fullWidth = body.innerWidth();
-    var elements = body.find('a');
-    organizeRow(fullWidth, maxRowHeight, margin, elements, round);
-}
-
-function organizeSquare(body, nbPictPerRow, margin, round) {
-
-    if (!margin) {
-        margin = 1;
-    }
-
-    if (!nbPictPerRow) {
-        nbPictPerRow = 4;
-    }
-
-    if (!round) {
-        round = 0;
-    }
-
-    var fullWidth = body.innerWidth();
-    var elements = body.find('a');
-
-    var size = (fullWidth - (nbPictPerRow - 1) * margin) / nbPictPerRow;
-
-    applySquaredStyle(Math.floor(size), margin, elements, nbPictPerRow, round);
-}
-
-
-function organizeRow(fullWidth, maxRowHeight, margin, elements, round) {
-    for (var chunkSize = 0; chunkSize < elements.length; chunkSize++) {
-        var chunk = elements.slice(0, chunkSize);
-        var rowWidth = getRowWidth(maxRowHeight, margin, chunk);
-        if (rowWidth >= fullWidth) {
-            var rowHeight = getRowHeight(fullWidth, margin, chunk);
-            var newRowWidth = getRowWidth(rowHeight, margin, chunk);
-            applyStyle(fullWidth, newRowWidth, rowHeight, margin, chunk, round);
-            organizeRow(fullWidth, maxRowHeight, margin, elements.slice(chunkSize), round);
-            break;
+        if (!maxRowHeight) {
+            maxRowHeight = 300;
         }
-    }
-}
 
-function getRowWidth(maxRowHeight, margin, elements) {
-    return margin * (elements.length - 1) + getRatios(elements) * maxRowHeight;
-}
+        if (!round) {
+            round = 0;
+        }
 
-function getRowHeight(fullWidth, margin, elements) {
-    return fullWidth / getRatios(elements) + margin * (elements.length - 1);
-}
+        var fullWidth = body.innerWidth();
+        var elements = body.find('a');
+        this.organizeRow(fullWidth, maxRowHeight, margin, elements, round);
+    },
 
-function getRatios(elements) {
-    var totalWidth = 0;
+    organizeSquare: function(body, nbPictPerRow, margin, round) {
 
-    elements.each(function(index, el) {
-        totalWidth += getImageRatio(el);
-    });
+        if (!margin) {
+            margin = 1;
+        }
 
-    return totalWidth;
-}
+        if (!nbPictPerRow) {
+            nbPictPerRow = 4;
+        }
 
-function getImageRatio(el) {
-    el = $(el);
-    return Number(el.attr('data-width')) / Number(el.attr('data-height'));
-}
+        if (!round) {
+            round = 0;
+        }
 
+        var fullWidth = body.innerWidth();
+        var elements = body.find('a');
 
-function applySquaredStyle(size, margin, elements, nbPictPerRow, round) {
+        var size = (fullWidth - (nbPictPerRow - 1) * margin) / nbPictPerRow;
 
-    elements.each(function(index, el) {
+        this.applySquaredStyle(Math.floor(size), margin, elements, nbPictPerRow, round);
+    },
+
+    organizeRow: function(fullWidth, maxRowHeight, margin, elements, round) {
+        for (var chunkSize = 0; chunkSize < elements.length; chunkSize++) {
+            var chunk = elements.slice(0, chunkSize);
+            var rowWidth = this.getRowWidth(maxRowHeight, margin, chunk);
+            if (rowWidth >= fullWidth) {
+                var rowHeight = this.getRowHeight(fullWidth, margin, chunk);
+                var newRowWidth = this.getRowWidth(rowHeight, margin, chunk);
+                this.applyStyle(fullWidth, newRowWidth, rowHeight, margin, chunk, round);
+                this.organizeRow(fullWidth, maxRowHeight, margin, elements.slice(chunkSize), round);
+                break;
+            }
+        }
+    },
+
+    getRowWidth: function(maxRowHeight, margin, elements) {
+        return margin * (elements.length - 1) + this.getRatios(elements) * maxRowHeight;
+    },
+
+    getRowHeight: function(fullWidth, margin, elements) {
+        return fullWidth / this.getRatios(elements) + margin * (elements.length - 1);
+    },
+
+    getRatios: function(elements) {
+
+        var self = this;
+        var totalWidth = 0;
+
+        elements.each(function(index, el) {
+            totalWidth += self.getImageRatio(el);
+        });
+
+        return totalWidth;
+    },
+
+    getImageRatio: function(el) {
         el = $(el);
-        el.css('width', size)
-          .css('height', size);
+        return Number(el.attr('data-width')) / Number(el.attr('data-height'));
+    },
 
-        var figure = el.parent();
-        figure.css('width', size)
-              .css('height', size)
+    applySquaredStyle: function(size, margin, elements, nbPictPerRow, round) {
+        var self = this;
+        elements.each(function(index, el) {
+            el = $(el);
+            el.css('width', size)
+              .css('height', size);
+
+            var figure = el.parent();
+            figure.css('width', size)
+                  .css('height', size)
+                  .css('margin-bottom', margin)
+                  .css('margin-right', margin);
+
+            self.setImageSize(el, size, size, margin, round, index % nbPictPerRow === nbPictPerRow - 1);
+
+        });
+    },
+
+    applyStyle: function(fullWidth, rowWidth, height, margin, elements, round) {
+
+        var self = this;
+        var excess = this.apportionExcess(fullWidth, rowWidth, elements);
+
+        var lost = 0;
+        elements.each(function(index, el) {
+
+            var width = self.getImageRatio(el) * height - excess;
+            lost += width - Math.floor(width);
+            width = Math.floor(width);
+
+            if (lost >= 1 || index === elements.length - 1 && Math.round(lost) === 1) {
+                width++;
+                lost--;
+            }
+
+            self.setImageSize(el, width, height, margin, round, index == elements.length - 1);
+        });
+    },
+
+    setImageSize: function(el, width, height, margin, round, last) {
+
+        el = $(el);
+        var parent = el.parent();
+        el.css('width', width)
+          .css('height', Math.floor(height));
+
+        parent.css('width', width)
+              .css('height', Math.floor(height))
               .css('margin-bottom', margin)
               .css('margin-right', margin);
 
-        setImageSize(el, size, size, margin, round, index % nbPictPerRow === nbPictPerRow - 1);
-
-    });
-}
-
-function applyStyle(fullWidth, rowWidth, height, margin, elements, round) {
-
-    var excess = apportionExcess(fullWidth, rowWidth, elements);
-
-    var lost = 0;
-    elements.each(function(index, el) {
-
-        var width = getImageRatio(el) * height - excess;
-        lost += width - Math.floor(width);
-        width = Math.floor(width);
-
-        if (lost >= 1 || index === elements.length - 1 && Math.round(lost) === 1) {
-            width++;
-            lost--;
+        if (last) {
+            parent.css('margin-right', 0)
         }
 
-        setImageSize(el, width, height, margin, round, index == elements.length - 1);
-    });
-}
+        if (round) {
+            el.css('border-radius', round);
+        }
+    },
 
-function setImageSize(el, width, height, margin, round, last) {
-
-    el = $(el);
-    var parent = el.parent();
-    el.css('width', width)
-      .css('height', Math.floor(height));
-
-    parent.css('width', width)
-          .css('height', Math.floor(height))
-          .css('margin-bottom', margin)
-          .css('margin-right', margin);
-
-    if (last) {
-        parent.css('margin-right', 0)
+    apportionExcess: function(fullWidth, rowWidth, elements) {
+        var excess = rowWidth - fullWidth;
+        var excessPerItem = excess / elements.length;
+        return excessPerItem
     }
-
-    if (round) {
-        el.css('border-radius', round);
-    }
-}
-
-function apportionExcess(fullWidth, rowWidth, elements) {
-    var excess = rowWidth - fullWidth;
-    var excessPerItem = excess / elements.length;
-    return excessPerItem
-}
+};

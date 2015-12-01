@@ -29,16 +29,19 @@
          */
 		var defaultImagesByPage = 12;
 
+        var organizer = tx_infiniteScrollGallery_organizer;
+
         function initGallery() {
             infinitesScrollGallery.forEach(function(gallery) {
-                gallery.pswp = $pswp;
-                gallery.container = [];
+                gallery.pswpContainer = [];
                 gallery.bodyElement = $('#tx-infinitescrollgallery-main-' + gallery.id).find('.tx-infinitescrollgallery-body');
                 addElements(gallery, gallery.limit);
             });
         }
 
-        window.addEventListener('resize', _.debounce(function() {organize();}, 200));
+        window.addEventListener('resize', _.debounce(function() {
+            organizer.organize();
+        }, 200));
 
         function addElements(gallery, number) {
 
@@ -51,7 +54,7 @@
 			}
 
 			// Get elements already in the gallery
-			var start = gallery.container.length;
+			var start = gallery.pswpContainer.length;
 
 			// Select next elements
 			var elementsToAdd = gallery.images.slice(start, start + number);
@@ -70,17 +73,17 @@
 				// Add element to gallery
 				var item = {
 					src: image.enlarged,
-					w: image.width,
-					h: image.height,
+					w: image.eWidth,
+					h: image.eHeight,
 					title: image.title
 				};
 
-				gallery.container.push(item);
+				gallery.pswpContainer.push(item);
 
 				bindClick(figure.image);
 			});
 
-            organize(gallery);
+            organizer.organize(gallery);
 
 		}
 
@@ -115,10 +118,10 @@
                     loop:false
                 };
 
-                pswp = new PhotoSwipe($pswp, PhotoSwipeUI_Default, getGallery(self).container, options);
+                pswp = new PhotoSwipe($pswp, PhotoSwipeUI_Default, getGallery(this).pswpContainer, options);
                 pswp.init();
                 pswp.listen('beforeChange', function(delta) {
-                    // Positive delta indicates "next" action, we don't load more objects on looping back the gallery
+                    // Positive delta indicates "go to next" action, we don't load more objects on looping back the gallery (same logic when scrolling)
                     if (delta > 0 && pswp.getCurrentIndex() == pswp.items.length - 1) {
                         addElements(getGallery(self));
                     }
@@ -174,7 +177,7 @@
                 resetElements(getGallery(this));
 			}
 		});
-        
+
         // Function scroll to load new images when scrolling down
         // Allow scroll if there is only a single gallery on page and moreLoading allowed
         if (infinitesScrollGallery.length == 1 && getGallery().limit === 0) {

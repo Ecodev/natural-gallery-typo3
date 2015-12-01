@@ -52,8 +52,8 @@ class ImageStackViewHelper extends AbstractViewHelper
                 'desc' => $file->getProperty('description'),
                 'tWidth' => $thumbnailFile->getProperty('width'),
                 'tHeight' => $thumbnailFile->getProperty('height'),
-                'width' => $enlargedFile->getProperty('width'),
-                'height' => $enlargedFile->getProperty('height'),
+                'eWidth' => $enlargedFile->getProperty('width'),
+                'eHeight' => $enlargedFile->getProperty('height'),
                 'categories' => $categories
             ];
 
