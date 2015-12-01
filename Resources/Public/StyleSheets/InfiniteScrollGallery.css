@@ -48,7 +48,8 @@ li.tx-infinitscrollgallery-thumbnail {
     margin-top:20px;
 }
 .tx-infinitescrollgallery-body:after {
-    content:"&nbsp;";
+    content:'';
+    display:block;
     clear:both;
 }
 .tx-infinitescrollgallery-body figure {
