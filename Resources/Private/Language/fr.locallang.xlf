@@ -86,6 +86,27 @@
 			<trans-unit id="fields.direction.descendant">
 				<source>Descendant</source>
 			</trans-unit>
+            <trans-unit id="fields.thumbnailFormat">
+                <source>Thumbail format</source>
+            </trans-unit>
+            <trans-unit id="fields.thumbnailFormat.natural">
+                <source>Natural</source>
+            </trans-unit>
+            <trans-unit id="fields.thumbnailFormat.square">
+                <source>Square</source>
+            </trans-unit>
+            <trans-unit id="fields.imagesPerRow">
+                <source>Pictures per row (only for square)</source>
+            </trans-unit>
+            <trans-unit id="fields.margin">
+                <source>Margin between pictures</source>
+            </trans-unit>
+            <trans-unit id="fields.round">
+                <source>Rounded corners</source>
+            </trans-unit>
+            <trans-unit id="fields.showFilters">
+                <source>Show filters</source>
+            </trans-unit>
 
 			<trans-unit id="tx_infinitescrollgallery_dropdown_tags">
 				<source>all</source>

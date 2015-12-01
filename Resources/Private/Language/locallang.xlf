@@ -19,14 +19,11 @@
 			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.categories">
 				<source>Categories of images displayed (comma separated values)</source>
 			</trans-unit>
-			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.enableMoreLoading">
-				<source>Load more images dynamically as you scroll</source>
-			</trans-unit>
 			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.showFilters">
 				<source>Show filters</source>
 			</trans-unit>
 			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.limit">
-				<source>Number of images displayed by batch</source>
+				<source>Number of images displayed by batch (0 for auto scroll, a number for manual pages switch)</source>
 			</trans-unit>
 			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.thumbnailMaximumWidth">
 				<source>Maximum width of thumbnail image</source>
@@ -60,7 +57,7 @@
 				<source>Show filter bar</source>
 			</trans-unit>
 			<trans-unit id="fields.limit">
-				<source>Number of images displayed by batch</source>
+				<source>Number of rows by page (0 for auto scroll or a number for manuel page switch)</source>
 			</trans-unit>
 			<trans-unit id="fields.thumbnailMaximumWidth">
 				<source>Maximum width of thumbnail image</source>
@@ -86,6 +83,27 @@
 			<trans-unit id="fields.direction.descendant">
 				<source>Descendant</source>
 			</trans-unit>
+            <trans-unit id="fields.thumbnailFormat">
+                <source>Thumbail format</source>
+            </trans-unit>
+            <trans-unit id="fields.thumbnailFormat.natural">
+                <source>Natural</source>
+            </trans-unit>
+            <trans-unit id="fields.thumbnailFormat.square">
+                <source>Square</source>
+            </trans-unit>
+            <trans-unit id="fields.imagesPerRow">
+                <source>Pictures per row (only for square)</source>
+            </trans-unit>
+            <trans-unit id="fields.margin">
+                <source>Margin between pictures</source>
+            </trans-unit>
+            <trans-unit id="fields.round">
+                <source>Rounded corners</source>
+            </trans-unit>
+            <trans-unit id="fields.showFilters">
+                <source>Show filters</source>
+            </trans-unit>
 
 			<trans-unit id="tx_infinitescrollgallery_dropdown_tags">
 				<source>all</source>
