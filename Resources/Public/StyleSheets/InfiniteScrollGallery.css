@@ -47,6 +47,10 @@ li.tx-infinitscrollgallery-thumbnail {
     padding:0;
     margin-top:20px;
 }
+.tx-infinitescrollgallery-body:after {
+    content:"&nbsp;";
+    clear:both;
+}
 .tx-infinitescrollgallery-body figure {
     display: block;
     float:left;
@@ -64,9 +68,5 @@ li.tx-infinitscrollgallery-thumbnail {
     background-repeat:no-repeat;
     background-position: center center;
     background-size:cover;
-    /*margin-right:1px;*/
-    /*margin-bottom:2px;*/
-    /*border-radius:100%;*/
-    /*border:1px solid #ddd;*/
 }
 

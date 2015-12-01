@@ -29,30 +29,14 @@
          */
 		var defaultImagesByPage = 12;
 
-        function organize(gallery) {
-
-            var galleries = gallery ? [gallery] : infinitesScrollGallery;
-
-            _.forEach(galleries, function(gallery) {
-                if (gallery.thumbnailFormat == 'natural' ) {
-                    organizeNatural(gallery.bodyElement, gallery.height, gallery.margin, gallery.round);
-                } else if (gallery.thumbnailFormat == 'square') {
-                    organizeSquare(gallery.bodyElement, gallery.imagesPerRow,  gallery.margin, gallery.round);
-                } else {
-                    organizeNatural(gallery.bodyElement, gallery.height, gallery.margin, gallery.round);
-                }
-            });
-        }
-
         function initGallery() {
             infinitesScrollGallery.forEach(function(gallery) {
                 gallery.pswp = $pswp;
                 gallery.container = [];
                 gallery.bodyElement = $('#tx-infinitescrollgallery-main-' + gallery.id).find('.tx-infinitescrollgallery-body');
-
                 addElements(gallery, gallery.limit);
             });
-		}
+        }
 
         window.addEventListener('resize', _.debounce(function() {organize();}, 200));
 
@@ -190,22 +174,26 @@
                 resetElements(getGallery(this));
 			}
 		});
-
-
+        
         // Function scroll to load new images when scrolling down
         // Allow scroll if there is only a single gallery on page and moreLoading allowed
-        if (infinitesScrollGallery.length == 1 && infinitesScrollGallery[0].limit === 0) {
+        if (infinitesScrollGallery.length == 1 && getGallery().limit === 0) {
 
             $('.tx-infinitescrollgallery-next').hide();
 
-            $(window).scroll(function() {
+            $(document).scroll(function() {
 
+                var gallery = getGallery().bodyElement;
+
+                var endOfGalleryAt = gallery.offset().top + gallery.height() - $(window).height() + 150;
+
+                // Avoid to expand gallery if we are scrolling up
                 var current_scroll_top = $(document).scrollTop();
                 var scroll_delta = current_scroll_top - old_scroll_top;
                 old_scroll_top = current_scroll_top;
 
                 // "enableMoreLoading" is a setting coming from the BE bloking / enabling dynamic loading of thumbnail
-                if (scroll_delta > 0 && $(window).scrollTop() >= $(document).height() - $(window).height() - 10) {
+                if (scroll_delta > 0 && $(window).scrollTop() > endOfGalleryAt) {
 
                     // Computes if there are more images to display and an ajax request can be sent against the server
                     //var numberOfVisibleImages = parseInt($("#tx-infinitescrollgallery-numberOfVisibleImages").html());

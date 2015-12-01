@@ -8,6 +8,21 @@
  * @param margin
  * @param body
  */
+function organize(gallery) {
+
+    var galleries = gallery ? [gallery] : infinitesScrollGallery;
+
+    _.forEach(galleries, function(gallery) {
+        if (gallery.thumbnailFormat == 'natural' ) {
+            organizeNatural(gallery.bodyElement, gallery.height, gallery.margin, gallery.round);
+        } else if (gallery.thumbnailFormat == 'square') {
+            organizeSquare(gallery.bodyElement, gallery.imagesPerRow,  gallery.margin, gallery.round);
+        } else {
+            organizeNatural(gallery.bodyElement, gallery.height, gallery.margin, gallery.round);
+        }
+    });
+}
+
 function organizeNatural(body, maxRowHeight, margin, round) {
 
     if (!margin) {
