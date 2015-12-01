@@ -125,7 +125,7 @@
                             </label>
                             <config>
                                 <type>input</type>
-                                <default></default>
+                                <default>1600</default>
                                 <eval>trim</eval>
                             </config>
                         </TCEforms>
@@ -137,7 +137,6 @@
                             </label>
                             <config>
                                 <type>input</type>
-                                <default>1600</default>
                                 <eval>trim</eval>
                             </config>
                         </TCEforms>
