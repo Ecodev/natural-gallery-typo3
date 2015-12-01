@@ -50,7 +50,7 @@
                 gallery.container = [];
                 gallery.bodyElement = $('#tx-infinitescrollgallery-main-' + gallery.id).find('.tx-infinitescrollgallery-body');
 
-                addElements(gallery);
+                addElements(gallery, gallery.limit);
             });
 		}
 
@@ -194,7 +194,7 @@
 
         // Function scroll to load new images when scrolling down
         // Allow scroll if there is only a single gallery on page and moreLoading allowed
-        if (infinitesScrollGallery.length == 1 && infinitesScrollGallery[0].enableMoreLoading) {
+        if (infinitesScrollGallery.length == 1 && infinitesScrollGallery[0].limit === 0) {
 
             $('.tx-infinitescrollgallery-next').hide();
 

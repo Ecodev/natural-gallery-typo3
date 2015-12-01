@@ -11,7 +11,7 @@
 function organizeNatural(body, maxRowHeight, margin, round) {
 
     if (!margin) {
-        margin = 1;
+        margin = 0;
     }
 
     if (!maxRowHeight) {
@@ -101,7 +101,7 @@ function applySquaredStyle(size, margin, elements, nbPictPerRow, round) {
               .css('margin-bottom', margin)
               .css('margin-right', margin);
 
-        setImageSize(el, width, height, margin, round, index % nbPictPerRow === 3);
+        setImageSize(el, size, size, margin, round, index % nbPictPerRow === nbPictPerRow - 1);
 
     });
 }
