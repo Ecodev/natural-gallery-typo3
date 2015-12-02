@@ -29,6 +29,9 @@
          */
         var minNumberOfRowsAtStart = 2;
 
+        /**
+         * Computing tools to organize images
+         */
         var organizer = tx_infiniteScrollGallery_organizer;
 
         function initGallery() {
@@ -39,19 +42,6 @@
                 gallery.bodyElement = $('#tx-infinitescrollgallery-main-' + gallery.id).find('.tx-infinitescrollgallery-body');
                 organizer.organize(gallery);
                 addElements(gallery);
-            }
-        }
-
-        $(window).on('resize', _.debounce(function() {
-            organizer.organize(null, resize);
-        }, 200));
-
-        function resize() {
-            for (var i = 0; i < infinitesScrollGallery.length; i++) {
-                var gallery = infinitesScrollGallery[i];
-                var nbRows = gallery.images[gallery.pswpContainer.length - 1].row + 1;
-                resetElements(gallery);
-                addElements(gallery, nbRows);
             }
         }
 
@@ -187,7 +177,14 @@
             var gallery = infinitesScrollGallery[0];
             if (element) {
                 var galleryId = $(element).parents('.tx-infinitescrollgallery').data('galleryid');
-                gallery = _.find(infinitesScrollGallery, {id: Number(galleryId)});
+
+                var gallery = null;
+                for (var i = 0; i < infinitesScrollGallery.length; i++) {
+                    if (infinitesScrollGallery[i].id === Number(galleryId)) {
+                        gallery = infinitesScrollGallery[i];
+                        break;
+                    }
+                }
             }
             return gallery;
         }
@@ -252,6 +249,47 @@
                     addElements(getGallery(), 1);
                 }
             });
+        }
+
+        /**
+         * Use the underscore library debounce function (copied further in the file)
+         */
+        $(window).on('resize', debounce(function() {
+            organizer.organize(null, resize);
+        }, 200));
+
+        /**
+         * Empty a gallery and add the same elements with new size
+         */
+        function resize() {
+            for (var i = 0; i < infinitesScrollGallery.length; i++) {
+                var gallery = infinitesScrollGallery[i];
+                var nbRows = gallery.images[gallery.pswpContainer.length - 1].row + 1;
+                resetElements(gallery);
+                addElements(gallery, nbRows);
+            }
+        }
+
+        /**
+         * Debounce function from *Underscore.js*
+         * @param func
+         * @param wait
+         * @param immediate
+         * @returns {Function}
+         */
+        function debounce(func, wait, immediate) {
+            var timeout;
+            return function() {
+                var context = this, args = arguments;
+                var later = function() {
+                    timeout = null;
+                    if (!immediate) func.apply(context, args);
+                };
+                var callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                if (callNow) func.apply(context, args);
+            };
         }
 
         initGallery();

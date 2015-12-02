@@ -39,14 +39,6 @@ plugin.tx_infinitescrollgallery {
 				dependencies = mainCss
 			}
 
-			LodashJs {
-				path = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/lodash.min.js
-				type = js
-
-				# Optional key if loading assets through EXT:vhs.
-				dependencies = mainJs
-			}
-
 			PhotoSwipeJs {
 				path = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/photoswipe.min.js
 				type = js
