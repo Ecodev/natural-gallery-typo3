@@ -71,7 +71,7 @@
             // Select next elements, comparing their rows
             for (var i = nextImage; i < gallery.images.length; i++) {
                 var element = gallery.images[i];
-                if (element.row <= lastRow) {
+                if (element.row < lastRow) {
 
                     // Add enlarged to Photoswipe gallery
                     gallery.pswpContainer.push({
