@@ -2,18 +2,18 @@
  * Attach event when document is ready!
  */
 (function($) {
-	$(function() {
+    $(function() {
 
         /**
          * Used to test if we scroll direction
          * Avoid to load more images when scrolling up in the detection zone
          * @type {number}
          */
-		var old_scroll_top = 0;
+        var old_scroll_top = 0;
 
-		/**
-		 * Photoswipe global template element (dom element)
-		 */
+        /**
+         * Photoswipe global template element (dom element)
+         */
         var $pswp = $('.pswp')[0];
 
         /**
@@ -23,89 +23,123 @@
          */
         var pswp = null;
 
-		/**
-		 * Default images by step
-		 * @type {number}
+        /**
+         * Default images by step
+         * @type {number}
          */
-		var defaultImagesByPage = 12;
+        var defaultNumberOfRows = 3;
 
         var organizer = tx_infiniteScrollGallery_organizer;
 
         function initGallery() {
-            infinitesScrollGallery.forEach(function(gallery) {
+
+            for (var i = 0; i < infinitesScrollGallery.length; i++) {
+                var gallery = infinitesScrollGallery[i];
                 gallery.pswpContainer = [];
                 gallery.bodyElement = $('#tx-infinitescrollgallery-main-' + gallery.id).find('.tx-infinitescrollgallery-body');
-                addElements(gallery, gallery.limit);
-            });
+                organizer.organize(gallery);
+                addElements(gallery);
+            }
         }
 
         window.addEventListener('resize', _.debounce(function() {
             organizer.organize();
+            restyle();
         }, 200));
 
-        function addElements(gallery, number) {
+        function restyle() {
+            for (var i = 0; i < infinitesScrollGallery.length; i++) {
+                var gallery = infinitesScrollGallery[i];
+                var nbRows = gallery.images[gallery.pswpContainer.length - 1].row;
+                resetElements(gallery);
+                addElements(gallery, nbRows);
+            }
+        }
 
-			if (!number) {
-				number = defaultImagesByPage;
-			}
+        function addElements(gallery, rows) {
 
-			if (!gallery) {
-				gallery = getGallery();
-			}
+            if (!rows) {
+                rows = defaultNumberOfRows;
+            }
 
-			// Get elements already in the gallery
-			var start = gallery.pswpContainer.length;
+            if (!gallery) {
+                gallery = getGallery();
+            }
 
-			// Select next elements
-			var elementsToAdd = gallery.images.slice(start, start + number);
+            var nextImage = gallery.pswpContainer.length;
+            var lastRow = gallery.pswpContainer.length ? gallery.images[nextImage].row + rows : rows;
 
-			// For each element to add
-			elementsToAdd.forEach(function(image) {
 
-				// Transform to dom elements
-				var figure = getFigure(image);
+            // Select next elements, comparing their rows
+            for (var i = nextImage; i < gallery.images.length; i++) {
+                var element = gallery.images[i];
+                if (element.row <= lastRow ) {
 
-				// Append figure (with link inside) to dom
-				gallery.bodyElement.append(figure.figure);
+                    // Add enlarged to Photoswipe gallery
+                    gallery.pswpContainer.push({
+                        src: element.enlarged,
+                        w: element.eWidth,
+                        h: element.eHeight,
+                        title: element.title
+                    });
 
-                figure.image.fadeIn({duration: 1000});
+                    // Transform in DOM elements and store it
+                    var figure = getFigure(element, gallery);
+                    element.figure = figure;
 
-				// Add element to gallery
-				var item = {
-					src: image.enlarged,
-					w: image.eWidth,
-					h: image.eHeight,
-					title: image.title
-				};
+                    gallery.bodyElement.append(figure.figure);
 
-				gallery.pswpContainer.push(item);
+                    bindClick(figure.image, gallery);
+                    styleFigure(element, gallery, element.row === lastRow + 1);
+                }
+            }
 
-				bindClick(figure.image);
-			});
+        }
 
-            organizer.organize(gallery);
+        function getFigure(element, gallery) {
 
-		}
+            var $figure = $('<figure></figure>');
+            var $image = $('<a></a>')
+                .css('background-image', 'url(' + element.thumbnail + ')')
+                .attr('href', element.enlarged);
 
-		function getFigure(image) {
+            if (gallery.round) {
+                $image.css('border-radius', gallery.round)
+            }
 
-			var $figure = $('<figure></figure>');
-			var $image = $('<a></a>')
-                .css('background-image', 'url(' + image.thumbnail+ ')')
-                .css('display', 'none')
-                .attr('data-width', image.tWidth)
-                .attr('data-height', image.tHeight)
-                .attr('href', image.enlarged);
+            $figure.append($image);
 
-			$figure.append($image);
+            return {
+                figure: $figure,
+                image: $image
+            };
+        }
 
-			return {
-				figure : $figure,
-				image : $image
-			};
-		}
+        function styleFigure(element, gallery, hide) {
 
-        function bindClick(image) {
+            element.figure.figure
+                   .css('width', element.width)
+                   .css('height', element.height)
+                   .css('margin-right', gallery.margin)
+                   .css('margin-bottom', gallery.margin);
+
+            if (element.last) {
+                element.figure.figure.css('margin-right', 0);
+            }
+
+            if (hide) {
+                element.figure.figure.hide();
+            }
+
+            element.figure.image
+                   .css('display', 'none')
+                   .css('width', element.width)
+                   .css('height', element.height);
+
+            element.figure.image.fadeIn({duration: 1000});
+        }
+
+        function bindClick(image, gallery) {
 
             image.on('click', function(e) {
                 e.preventDefault();
@@ -115,25 +149,26 @@
                     index: $(this).parent('figure').index(),
                     bgOpacity: 0.85,
                     showHideOpacity: true,
-                    loop:false
+                    loop: false
                 };
 
-                pswp = new PhotoSwipe($pswp, PhotoSwipeUI_Default, getGallery(this).pswpContainer, options);
+                pswp = new PhotoSwipe($pswp, PhotoSwipeUI_Default, gallery.pswpContainer, options);
                 pswp.init();
+
+                // Loading one more page when going to next image
                 pswp.listen('beforeChange', function(delta) {
                     // Positive delta indicates "go to next" action, we don't load more objects on looping back the gallery (same logic when scrolling)
                     if (delta > 0 && pswp.getCurrentIndex() == pswp.items.length - 1) {
                         addElements(getGallery(self));
                     }
                 });
-
             });
         }
 
-		function resetElements(gallery) {
-			gallery.container = [];
+        function resetElements(gallery) {
+            gallery.pswpContainer = [];
             gallery.bodyElement.html('');
-		}
+        }
 
         function getGallery(element) {
 
@@ -145,19 +180,19 @@
             return gallery;
         }
 
-		/**
-		 * Attach event to the drop down menu
-		 */
-		$('#tx-infinitescrollgallery-category').change(function(event) {
+        /**
+         * Attach event to the drop down menu
+         */
+        $('#tx-infinitescrollgallery-category').change(function(event) {
 
-			// Reset variable
-			//infinitesScrollGallery.numberOfScroll = 0;
-			//$('#tx-infinitescrollgallery-offset').val(0);
-			//$('#tx-infinitescrollgallery-form').submit();
+            // Reset variable
+            //infinitesScrollGallery.numberOfScroll = 0;
+            //$('#tx-infinitescrollgallery-offset').val(0);
+            //$('#tx-infinitescrollgallery-form').submit();
 
-			// Empty image stack before loading
-			//$('#tx-infinitescrollgallery-recordnumber').hide();
-		});
+            // Empty image stack before loading
+            //$('#tx-infinitescrollgallery-recordnumber').hide();
+        });
 
         /**
          * Attach event to next button
@@ -167,16 +202,16 @@
             addElements(getGallery(this));
         });
 
-		/**
-		 * Attach event to the search field
-		 */
-		$('.tx-infinitescrollgallery-searchTerm').keydown(function(event) {
-			// True when key 'enter' hit
-			if (event.keyCode == 13) {
+        /**
+         * Attach event to the search field
+         */
+        $('.tx-infinitescrollgallery-searchTerm').keydown(function(event) {
+            // True when key 'enter' hit
+            if (event.keyCode == 13) {
                 event.preventDefault();
                 resetElements(getGallery(this));
-			}
-		});
+            }
+        });
 
         // Function scroll to load new images when scrolling down
         // Allow scroll if there is only a single gallery on page and moreLoading allowed
@@ -202,12 +237,12 @@
                     //var numberOfVisibleImages = parseInt($("#tx-infinitescrollgallery-numberOfVisibleImages").html());
                     //var totalImages = parseInt($("#tx-infinitescrollgallery-totalImages").html());
 
-                    addElements(getGallery(), 4);
+                    addElements(getGallery());
                 }
             });
         }
 
-		initGallery();
+        initGallery();
 
-	});
+    });
 })(jQuery);
