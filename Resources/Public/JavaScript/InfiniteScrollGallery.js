@@ -43,8 +43,7 @@
         }
 
         window.addEventListener('resize', _.debounce(function() {
-            organizer.organize();
-            restyle();
+            organizer.organize(null, restyle);
         }, 200));
 
         function restyle() {

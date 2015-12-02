@@ -11,22 +11,29 @@
 
 var tx_infiniteScrollGallery_organizer = {
 
-    organize: function(gallery) {
+    organize: function(gallery, callback) {
 
-        var self = this;
         var galleries = gallery ? [gallery] : infinitesScrollGallery;
 
         for (var i = 0; i < galleries.length; i++) {
 
             var gallery = galleries[i];
             var containerWidth = gallery.bodyElement.innerWidth();
-            var elements = gallery.images;
 
-            if (gallery.thumbnailFormat == 'natural') {
-                self.organizeNatural(elements, containerWidth, gallery.thumbnailMaximumHeight, gallery.margin);
-            } else {
-                if (gallery.thumbnailFormat == 'square') {
-                    self.organizeSquare(elements, containerWidth, gallery.imagesPerRow, gallery.margin);
+            // only if container changes
+            if (gallery.bodyElementWidth !== containerWidth) {
+
+                gallery.bodyElementWidth = containerWidth; // save new width for further comparison
+                var elements = gallery.images;
+
+                if (gallery.thumbnailFormat == 'natural') {
+                    this.organizeNatural(elements, containerWidth, gallery.thumbnailMaximumHeight, gallery.margin);
+                } else if (gallery.thumbnailFormat == 'square') {
+                    this.organizeSquare(elements, containerWidth, gallery.imagesPerRow, gallery.margin);
+                }
+
+                if (callback) {
+                    callback();
                 }
             }
         }
