@@ -63,6 +63,7 @@
             }
 
             if (gallery.pswpContainer.length === gallery.images.length) {
+                gallery.rootElement.find('.tx-infinitescrollgallery-next').hide();
                 return;
             }
 
