@@ -5,11 +5,12 @@
 <f:layout name="Default"/>
 <f:section name="main">
 
-	<div data-galleryid="{data.uid}" class="tx-infinitescrollgallery">
+	<div data-galleryid="{data.uid}" class="tx-infinitescrollgallery" id="tx-infinitescrollgallery-{data.uid}">
 
 		<gallery:loadAssets/>
 		<script type="text/javascript">
 			window.infinitesScrollGallery = window.infinitesScrollGallery || [];
+
 			var infiniteScrollGallery = {};
 			infiniteScrollGallery.id = Number('{data.uid}');
 			infiniteScrollGallery.images = {gallery:imageStack()};
@@ -31,18 +32,18 @@
 
 			<f:form class="tx-infinitescrollgallery-form form-inline" id="tx-infinitescrollgallery-form-{data.uid}" method="GET">
 				<f:form.hidden id="tx-infinitescrollgallery-url" value="{f:uri.page()}"/>
-				<f:form.hidden name="limit" id="tx-infinitescrollgallery-limit" value="{settings.limit}"/>
-				<f:form.hidden name="offset" id="tx-infinitescrollgallery-offset" value="0"/>
-				<f:form.hidden name="contentElement" id="tx-infinitescrollgallery-recordUid" value="{data.uid}"/>
-				<f:form.hidden name="language" id="tx-infinitescrollgallery-language" value="{gallery:frontendConfiguration(key: 'language', default: 'en')}"/>
+				<f:form.hidden name="limit" id="tx-infinitescrollgallery-limit-{data.uid}" value="{settings.limit}"/>
+				<f:form.hidden name="offset" id="tx-infinitescrollgallery-offset-{data.uid}" value="0"/>
+				<f:form.hidden name="contentElement" id="tx-infinitescrollgallery-recordUid-{data.uid}" value="{data.uid}"/>
+				<f:form.hidden name="language" id="tx-infinitescrollgallery-language-{data.uid}" value="{gallery:frontendConfiguration(key: 'language', default: 'en')}"/>
 
 				<f:if condition="{categories}">
 					<div class="form-group">
-						<label id="tx-infinitescrollgallery-category">
+						<label class="x-infinitescrollgallery-category" id="tx-infinitescrollgallery-category-{data.uid}">
 							<f:translate key="filter_by"/>
 						</label>
 						<f:form.select name="category"
-									   id="tx-infinitescrollgallery-category"
+									   id="tx-infinitescrollgallery-category-{data.uid}"
 									   options="{categories}"
 									   optionValueField="uid"
 									   optionLabelField="title"/>
@@ -58,13 +59,13 @@
 
 		</f:if>
 
-		<div class="tx-infinitescrollgallery-main" id="tx-infinitescrollgallery-main-{data.uid}">
+		<div class="tx-infinitescrollgallery-main">
 			<div class="tx-infinitescrollgallery-body"></div>
 
 			<div class="tx-infinitescrollgallery-footer" style="clear: both">
-				<div id="tx-infinitescrollgallery-recordnumber" <f:if condition="{numberOfVisibleImages} == {totalNumberOfImages}">class="tx-infinitescrollgallery-hidden"</f:if>>
-				<span id="tx-infinitescrollgallery-numberOfVisibleImages">{numberOfVisibleImages}</span> /
-				<span id="tx-infinitescrollgallery-totalImages">{totalNumberOfImages}</span>
+				<div class="tx-infinitescrollgallery-recordnumber" <f:if condition="{numberOfVisibleImages} == {totalNumberOfImages}">class="tx-infinitescrollgallery-hidden"</f:if>>
+				<span class="tx-infinitescrollgallery-numberOfVisibleImages">{numberOfVisibleImages}</span> /
+				<span class="tx-infinitescrollgallery-totalImages">{totalNumberOfImages}</span>
 			</div>
 			<div class="tx-infinitescrollgallery-next" style="text-align: center">
 				 <a href="">next &gt;</a>

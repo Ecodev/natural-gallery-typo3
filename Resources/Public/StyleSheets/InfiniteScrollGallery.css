@@ -25,16 +25,16 @@ li.tx-infinitscrollgallery-thumbnail {
     display: none;
 }
 
-#tx-infinitescrollgallery-form {
+.tx-infinitescrollgallery-form {
     padding-top: 10px;
     vertical-align: middle;
 }
 
-#tx-infinitescrollgallery-label-tag {
+.tx-infinitescrollgallery-label-tag {
     padding-right: 5px;
 }
 
-#tx-infinitescrollgallery-recordnumber {
+.tx-infinitescrollgallery-recordnumber {
     float: right;
     margin-left: 20px;
 }

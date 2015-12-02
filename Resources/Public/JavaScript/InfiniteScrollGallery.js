@@ -43,7 +43,8 @@
             for (var i = 0; i < infinitesScrollGallery.length; i++) {
                 var gallery = infinitesScrollGallery[i];
                 gallery.pswpContainer = [];
-                gallery.bodyElement = $('#tx-infinitescrollgallery-main-' + gallery.id).find('.tx-infinitescrollgallery-body');
+                gallery.rootElement = $('#tx-infinitescrollgallery-' + gallery.id);
+                gallery.bodyElement = gallery.rootElement.find('.tx-infinitescrollgallery-body');
                 organizer.organize(gallery);
                 addElements(gallery);
             }
@@ -91,6 +92,10 @@
                     styleFigure(element, gallery);
                 }
             }
+
+            gallery.rootElement.find('.tx-infinitescrollgallery-numberOfVisibleImages').text(gallery.pswpContainer.length);
+            gallery.rootElement.find('.tx-infinitescrollgallery-totalImages').text(gallery.images.length);
+
         }
 
         /**

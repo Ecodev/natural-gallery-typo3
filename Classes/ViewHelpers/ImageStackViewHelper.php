@@ -59,6 +59,7 @@ class ImageStackViewHelper extends AbstractViewHelper
 
             $items[] = $item;
         }
+
         return json_encode($items);
     }
 
