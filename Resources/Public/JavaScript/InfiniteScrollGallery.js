@@ -42,7 +42,7 @@
             }
         }
 
-        window.addEventListener('resize', _.debounce(function() {
+        $(window).on('resize', _.debounce(function() {
             organizer.organize(null, resize);
         }, 200));
 
