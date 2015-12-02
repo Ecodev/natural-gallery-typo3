@@ -24,10 +24,10 @@
         var pswp = null;
 
         /**
-         * Default images by step
+         * Default rows by step
          * @type {number}
          */
-        var defaultNumberOfRows = 3;
+        var minNumberOfRowsAtStart = 2;
 
         var organizer = tx_infiniteScrollGallery_organizer;
 
@@ -43,13 +43,13 @@
         }
 
         window.addEventListener('resize', _.debounce(function() {
-            organizer.organize(null, restyle);
+            organizer.organize(null, resize);
         }, 200));
 
-        function restyle() {
+        function resize() {
             for (var i = 0; i < infinitesScrollGallery.length; i++) {
                 var gallery = infinitesScrollGallery[i];
-                var nbRows = gallery.images[gallery.pswpContainer.length - 1].row;
+                var nbRows = gallery.images[gallery.pswpContainer.length - 1].row + 1;
                 resetElements(gallery);
                 addElements(gallery, nbRows);
             }
@@ -57,12 +57,12 @@
 
         function addElements(gallery, rows) {
 
-            if (!rows) {
-                rows = defaultNumberOfRows;
-            }
-
             if (!gallery) {
                 gallery = getGallery();
+            }
+
+            if (!rows) {
+                rows = getDefaultPageSize(gallery);
             }
 
             var nextImage = gallery.pswpContainer.length;
@@ -91,7 +91,21 @@
                     styleFigure(element, gallery, element.row === lastRow + 1);
                 }
             }
+        }
 
+        function getDefaultPageSize(gallery) {
+
+            if (gallery.limit) {
+                return gallery.limit;
+            }
+
+            var winHeight = $(window).height();
+            var top = gallery.bodyElement.offset().top;
+            var galleryVisibleHeight = winHeight - top;
+            var maxRowHeight = gallery.thumbnailMaximumHeight;
+            var nbRows = Math.ceil(galleryVisibleHeight / maxRowHeight);
+
+            return nbRows < minNumberOfRowsAtStart ? minNumberOfRowsAtStart : nbRows;
         }
 
         function getFigure(element, gallery) {
@@ -235,7 +249,7 @@
                     //var numberOfVisibleImages = parseInt($("#tx-infinitescrollgallery-numberOfVisibleImages").html());
                     //var totalImages = parseInt($("#tx-infinitescrollgallery-totalImages").html());
 
-                    addElements(getGallery());
+                    addElements(getGallery(), 1);
                 }
             });
         }
