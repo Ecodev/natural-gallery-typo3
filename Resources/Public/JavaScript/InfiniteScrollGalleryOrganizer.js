@@ -87,14 +87,14 @@ var tx_infiniteScrollGallery_organizer = {
             maxRowHeight = 300; // Should match the default value of thumbnailMaximumHeight field from flexform
         }
 
-        for (var chunkSize = 0; chunkSize < elements.length; chunkSize++) {
+        for (var chunkSize = 1; chunkSize <= elements.length; chunkSize++) {
             var chunk = elements.slice(0, chunkSize);
             var rowWidth = this.getRowWidth(maxRowHeight, margin, chunk);
             if (rowWidth >= containerWidth) { // if end of row
                 this.computeSizes(chunk, containerWidth, margin, row);
                 this.organizeNatural(elements.slice(chunkSize), containerWidth, maxRowHeight, margin, row + 1);
                 break;
-            } else if (chunkSize == elements.length - 1) { // if end of list
+            } else if (chunkSize == elements.length) { // if end of list
                 // the width is not fixed as we have not enough elements
                 // size of images are indexed on max row height.
                 this.computeSizes(chunk, null, margin, row, maxRowHeight);

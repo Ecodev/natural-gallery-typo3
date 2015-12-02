@@ -62,6 +62,10 @@
                 gallery = getGallery();
             }
 
+            if (gallery.pswpContainer.length === gallery.images.length) {
+                return;
+            }
+
             if (!rows) {
                 rows = getDefaultPageSize(gallery);
             }
