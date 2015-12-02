@@ -34,6 +34,10 @@
          */
         var organizer = tx_infiniteScrollGallery_organizer;
 
+        /**
+         * Everything starts here. Called in the end of this file.
+         * For each gallery in the page, set a body container (dom element) and compute images sizes, then add elements to dom container
+         */
         function initGallery() {
 
             for (var i = 0; i < infinitesScrollGallery.length; i++) {
@@ -45,6 +49,12 @@
             }
         }
 
+        /**
+         * Add a number of rows to DOM container, and to Photoswipe gallery.
+         * If rows are not given, is uses backoffice data or compute according to browser size
+         * @param gallery target
+         * @param rows
+         */
         function addElements(gallery, rows) {
 
             if (!gallery) {
@@ -78,11 +88,19 @@
                     gallery.bodyElement.append(figure.figure);
 
                     bindClick(figure.image, gallery);
-                    styleFigure(element, gallery, element.row === lastRow + 1);
+                    styleFigure(element, gallery);
                 }
             }
         }
 
+        /**
+         * Return number of rows to show per page,
+         * If a number of rows are specified in the backoffice, this data is used.
+         * If not specified, uses the vertical available space to compute the number of rows to display.
+         * There is a variable in the header of this file to specify the  minimum number of rows for the computation (minNumberOfRowsAtStart)
+         * @param gallery
+         * @returns {*}
+         */
         function getDefaultPageSize(gallery) {
 
             if (gallery.limit) {
@@ -98,6 +116,13 @@
             return nbRows < minNumberOfRowsAtStart ? minNumberOfRowsAtStart : nbRows;
         }
 
+        /**
+         * Create DOM elements according to element raw data (thumbnail and enlarged urls)
+         * Also apply border-radius at this level because it never changed threw time
+         * @param element
+         * @param gallery
+         * @returns {{figure: (*|HTMLElement), image: *}}
+         */
         function getFigure(element, gallery) {
 
             var $figure = $('<figure></figure>');
@@ -117,7 +142,13 @@
             };
         }
 
-        function styleFigure(element, gallery, hide) {
+        /**
+         * Use computed (organized) data to apply style (size and margin) to elements on DOM
+         * Does not apply border-radius because is used to restyle data on browser resize, and border-radius don't change.
+         * @param element
+         * @param gallery
+         */
+        function styleFigure(element, gallery) {
 
             element.figure.figure
                    .css('width', element.width)
@@ -129,10 +160,6 @@
                 element.figure.figure.css('margin-right', 0);
             }
 
-            if (hide) {
-                element.figure.figure.hide();
-            }
-
             element.figure.image
                    .css('display', 'none')
                    .css('width', element.width)
@@ -141,6 +168,12 @@
             element.figure.image.fadeIn({duration: 1000});
         }
 
+        /**
+         * Open photoswipe gallery on click
+         * Add elements to gallery when navigating until last element
+         * @param image
+         * @param gallery
+         */
         function bindClick(image, gallery) {
 
             image.on('click', function(e) {
@@ -167,11 +200,22 @@
             });
         }
 
+        /**
+         * Empty DOM container and Photoswipe container
+         * @param gallery
+         */
         function resetElements(gallery) {
             gallery.pswpContainer = [];
             gallery.bodyElement.html('');
         }
 
+        /**
+         * Get gallery according to the given element
+         * Search parenting to find the gallery id.
+         * If no element is passed, it take the first gallery in the list (should be the single one anyway)
+         * @param element a DOM element
+         * @returns {*}
+         */
         function getGallery(element) {
 
             var gallery = infinitesScrollGallery[0];
@@ -208,7 +252,7 @@
          */
         $('.tx-infinitescrollgallery-next a').on('click', function(e) {
             e.preventDefault();
-            addElements(getGallery(this));
+            addElements(getGallery(this)); // don't specify number of rows, addElements is smart enough to guess it
         });
 
         /**
@@ -222,8 +266,12 @@
             }
         });
 
-        // Function scroll to load new images when scrolling down
-        // Allow scroll if there is only a single gallery on page and moreLoading allowed
+        /**
+         * Scroll
+         * Load new images when scrolling down
+         * Allow scroll if there is only a single gallery on page and no limit specified
+         * If the limit is specified, the gallery switch to manual mode.
+         */
         if (infinitesScrollGallery.length == 1 && getGallery().limit === 0) {
 
             $('.tx-infinitescrollgallery-next').hide();
@@ -231,7 +279,6 @@
             $(document).scroll(function() {
 
                 var gallery = getGallery().bodyElement;
-
                 var endOfGalleryAt = gallery.offset().top + gallery.height() - $(window).height() + 150;
 
                 // Avoid to expand gallery if we are scrolling up
@@ -242,11 +289,13 @@
                 // "enableMoreLoading" is a setting coming from the BE bloking / enabling dynamic loading of thumbnail
                 if (scroll_delta > 0 && $(window).scrollTop() > endOfGalleryAt) {
 
+                    // When scrolling only add a row at once
+                    addElements(getGallery(), 1);
+
                     // Computes if there are more images to display and an ajax request can be sent against the server
                     //var numberOfVisibleImages = parseInt($("#tx-infinitescrollgallery-numberOfVisibleImages").html());
                     //var totalImages = parseInt($("#tx-infinitescrollgallery-totalImages").html());
 
-                    addElements(getGallery(), 1);
                 }
             });
         }

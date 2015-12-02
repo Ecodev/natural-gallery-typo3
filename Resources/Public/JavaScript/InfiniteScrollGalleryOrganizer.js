@@ -4,11 +4,9 @@
  * First, compute the number of pictures per row, based on target height (maxRowHeight).
  * Then compute the final height according to full container inner width
  *
- * @param maxRowHeight
- * @param margin
- * @param body
+ * Uses json, never read the dom, except to determine the size of parent container.
+ *
  */
-
 var tx_infiniteScrollGallery_organizer = {
 
     organize: function(gallery, callback) {
@@ -39,6 +37,13 @@ var tx_infiniteScrollGallery_organizer = {
         }
     },
 
+    /**
+     * Compute sizes for images with 1:1 ratio
+     * @param elements
+     * @param containerWidth
+     * @param nbPictPerRow
+     * @param margin
+     */
     organizeSquare: function(elements, containerWidth, nbPictPerRow, margin) {
 
         if (!margin) {
@@ -60,6 +65,14 @@ var tx_infiniteScrollGallery_organizer = {
         }
     },
 
+    /**
+     * Compute sizes for images that keep the most their native proportion
+     * @param elements
+     * @param containerWidth
+     * @param maxRowHeight
+     * @param margin
+     * @param row
+     */
     organizeNatural: function(elements, containerWidth, maxRowHeight, margin, row) {
 
         if (!row) {
