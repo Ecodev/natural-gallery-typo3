@@ -51,13 +51,13 @@ var tx_infiniteScrollGallery_organizer = {
 
         var size = (containerWidth - (nbPictPerRow - 1) * margin) / nbPictPerRow;
 
-         for(var i = 0; i < elements.length; i++) {
-             var element = elements[i];
-             element.width = Math.floor(size);
-             element.height = Math.floor(size);
-             element.last = i % nbPictPerRow === nbPictPerRow - 1;
-             element.row = Math.floor(i / nbPictPerRow);
-         }
+        for (var i = 0; i < elements.length; i++) {
+            var element = elements[i];
+            element.width = Math.floor(size);
+            element.height = Math.floor(size);
+            element.last = i % nbPictPerRow === nbPictPerRow - 1;
+            element.row = Math.floor(i / nbPictPerRow);
+        }
     },
 
     organizeNatural: function(elements, containerWidth, maxRowHeight, margin, row) {
@@ -97,7 +97,7 @@ var tx_infiniteScrollGallery_organizer = {
         var excess = containerWidth ? this.apportionExcess(chunk, containerWidth, rowWidth) : 0;
         var decimals = 0;
 
-        for(var i = 0; i < chunk.length; i++) {
+        for (var i = 0; i < chunk.length; i++) {
             var element = chunk[i];
             var width = this.getImageRatio(element) * rowHeight - excess;
             decimals += width - Math.floor(width);
@@ -130,7 +130,7 @@ var tx_infiniteScrollGallery_organizer = {
         var self = this;
         var totalWidth = 0;
 
-        for(var i = 0; i < elements.length; i++) {
+        for (var i = 0; i < elements.length; i++) {
             totalWidth += self.getImageRatio(elements[i]);
         }
 
