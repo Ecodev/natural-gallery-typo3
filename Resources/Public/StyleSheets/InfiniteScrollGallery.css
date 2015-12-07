@@ -20,11 +20,6 @@ li.tx-infinitscrollgallery-thumbnail {
     /*position: relative;*/
 }
 
-.tx-infinitescrollgallery-loading {
-    text-align: center;
-    display: none;
-}
-
 .tx-infinitescrollgallery-form {
     padding-top: 10px;
     vertical-align: middle;

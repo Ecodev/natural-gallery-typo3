@@ -35,7 +35,6 @@
 				<f:form.hidden name="limit" id="tx-infinitescrollgallery-limit-{data.uid}" value="{settings.limit}"/>
 				<f:form.hidden name="offset" id="tx-infinitescrollgallery-offset-{data.uid}" value="0"/>
 				<f:form.hidden name="contentElement" id="tx-infinitescrollgallery-recordUid-{data.uid}" value="{data.uid}"/>
-				<f:form.hidden name="language" id="tx-infinitescrollgallery-language-{data.uid}" value="{gallery:frontendConfiguration(key: 'language', default: 'en')}"/>
 
 				<f:if condition="{categories}">
 					<div class="form-group">
@@ -70,9 +69,6 @@
 			<div class="tx-infinitescrollgallery-next" style="text-align: center">
 				 <a href="">next &gt;</a>
 			</div>
-		</div>
-		<div class="tx-infinitescrollgallery-loading">
-			<img src="{gallery:publicPath(resource: 'Images/ajax-loader.gif')}" alt="loadding"/>
 		</div>
 
 		<!-- Root element of PhotoSwipe. Must have class pswp. -->
