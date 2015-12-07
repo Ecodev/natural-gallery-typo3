@@ -4,52 +4,138 @@
     </meta>
 
     <sheets>
-        <general>
+
+        <selection>
             <ROOT>
                 <TCEforms>
-                    <sheetTitle>LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:flexform.tab.general</sheetTitle>
+                    <sheetTitle>LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:flexform.tab.source</sheetTitle>
                 </TCEforms>
                 <type>array</type>
                 <el>
-                    <settings.categories>
+                    <settings.folders>
                         <TCEforms>
-                            <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:fields.categories
-                            </label>
+                            <label>LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.folders</label>
                             <config>
                                 <type>input</type>
+                                <size>40</size>
                                 <eval>trim</eval>
+                                <wizards type="array">
+                                    <link type="array">
+                                        <type>popup</type>
+                                        <icon>link_popup.gif</icon>
+                                        <module type="array">
+                                            <name>wizard_element_browser</name>
+                                            <urlParameters type="array">
+                                                <mode>wizard</mode>
+                                                <act>file</act>
+                                            </urlParameters>
+                                        </module>
+                                        <params>
+                                            <blindLinkOptions>page,url,mail,spec,file</blindLinkOptions>
+                                        </params>
+
+                                        <JSopenParams>height=900,width=900,status=0,menubar=0,scrollbars=1</JSopenParams>
+                                    </link>
+                                </wizards>
                             </config>
                         </TCEforms>
-                    </settings.categories>
-                    <settings.showFilters>
+                    </settings.folders>
+                    <settings.selection>
                         <TCEforms>
-                            <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:fields.showFilters
-                            </label>
+                            <label>LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.selection</label>
                             <config>
-                                <type>check</type>
-                                <default>1</default>
+                                <type>select</type>
+                                <itemsProcFunc>Fab\InfiniteScrollGallery\Backend\TceForms->getSelections</itemsProcFunc>
+                                <size>1</size>
+                                <maxitems>1</maxitems>
                             </config>
                         </TCEforms>
-                    </settings.showFilters>
+                    </settings.selection>
+                    <settings.additionalEquals>
+                        <TCEforms>
+                            <label>LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.additionalEquals</label>
+                            <config>
+                                <type>input</type>
+                            </config>
+                        </TCEforms>
+                    </settings.additionalEquals>
+
+                    <settings.sorting>
+                        <TCEforms>
+                            <label>LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.sorting</label>
+                            <config>
+                                <type>input</type>
+                            </config>
+                        </TCEforms>
+                    </settings.sorting>
+                    <settings.direction>
+                        <TCEforms>
+                            <label>LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.direction</label>
+                            <config>
+                                <type>select</type>
+                                <items>
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0"></numIndex>
+                                        <numIndex index="1"></numIndex>
+                                    </numIndex>
+
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.direction.descending
+                                        </numIndex>
+                                        <numIndex index="1">DESC</numIndex>
+                                    </numIndex>
+                                    <numIndex index="2" type="array">
+                                        <numIndex index="0">
+                                            LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.direction.ascending
+                                        </numIndex>
+                                        <numIndex index="1">ASC</numIndex>
+                                    </numIndex>
+                                </items>
+                                <size>1</size>
+                                <maxitems>1</maxitems>
+                            </config>
+                        </TCEforms>
+                    </settings.direction>
+                </el>
+            </ROOT>
+        </selection>
+
+        <sorting>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:flexform.tab.sorting</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                </el>
+            </ROOT>
+        </sorting>
+
+        <imageSettings>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:flexform.tab.imageSettings</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
                     <settings.thumbnailFormat>
                         <TCEforms>
                             <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:fields.thumbnailFormat
+                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.thumbnailFormat
                             </label>
                             <config>
                                 <type>select</type>
                                 <items type="array">
                                     <numIndex index="1" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:fields.thumbnailFormat.natural
+                                            LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.thumbnailFormat.natural
                                         </numIndex>
                                         <numIndex index="1">natural</numIndex>
                                     </numIndex>
                                     <numIndex index="2" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:fields.thumbnailFormat.square
+                                            LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.thumbnailFormat.square
                                         </numIndex>
                                         <numIndex index="1">square</numIndex>
                                     </numIndex>
@@ -62,7 +148,7 @@
                     <settings.imagesPerRow>
                         <TCEforms>
                             <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:fields.imagesPerRow
+                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.imagesPerRow
                             </label>
                             <config>
                                 <type>input</type>
@@ -74,7 +160,7 @@
                     <settings.limit>
                         <TCEforms>
                             <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:fields.limit
+                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.limit
                             </label>
                             <config>
                                 <type>input</type>
@@ -86,7 +172,7 @@
                     <settings.margin>
                         <TCEforms>
                             <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:fields.margin
+                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.margin
                             </label>
                             <config>
                                 <type>input</type>
@@ -98,7 +184,7 @@
                     <settings.round>
                         <TCEforms>
                             <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:fields.round
+                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.round
                             </label>
                             <config>
                                 <type>input</type>
@@ -109,7 +195,7 @@
                     <settings.thumbnailMaximumHeight>
                         <TCEforms>
                             <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:fields.thumbnailMaximumHeight
+                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.thumbnailMaximumHeight
                             </label>
                             <config>
                                 <type>input</type>
@@ -121,7 +207,7 @@
                     <settings.enlargedImageMaximumWidth>
                         <TCEforms>
                             <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:fields.enlargedImageMaximumWidth
+                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.enlargedImageMaximumWidth
                             </label>
                             <config>
                                 <type>input</type>
@@ -133,7 +219,7 @@
                     <settings.enlargedImageMaximumHeight>
                         <TCEforms>
                             <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:fields.enlargedImageMaximumHeight
+                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.enlargedImageMaximumHeight
                             </label>
                             <config>
                                 <type>input</type>
@@ -141,49 +227,10 @@
                             </config>
                         </TCEforms>
                     </settings.enlargedImageMaximumHeight>
-                    <settings.orderBy>
-                        <TCEforms>
-                            <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:fields.orderBy
-                            </label>
-                            <config>
-                                <type>input</type>
-                                <default>tstamp</default>
-                                <eval>trim</eval>
-                            </config>
-                        </TCEforms>
-                    </settings.orderBy>
-                    <settings.direction>
-                        <TCEforms>
-                            <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:fields.direction
-                            </label>
-                            <config>
-                                <type>select</type>
-                                <items type="array">
-                                    <numIndex index="1" type="array">
-                                        <numIndex index="0">
-                                            LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:fields.direction.descendant
-                                        </numIndex>
-                                        <numIndex index="1">DESC</numIndex>
-                                    </numIndex>
-                                    <numIndex index="2" type="array">
-                                        <numIndex index="0">
-                                            LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:fields.direction.ascendant
-                                        </numIndex>
-                                        <numIndex index="1">ASC</numIndex>
-                                    </numIndex>
-                                </items>
-                                <minitems>0</minitems>
-                                <maxitems>1</maxitems>
-                                <size>1</size>
-                            </config>
-                        </TCEforms>
-                    </settings.direction>
                 </el>
             </ROOT>
 
-        </general>
+        </imageSettings>
 
         <filterBar>
             <ROOT>
@@ -195,7 +242,7 @@
                     <settings.showFilters>
                         <TCEforms>
                             <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:fields.showFilters
+                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.showFilters
                             </label>
                             <config>
                                 <type>check</type>
@@ -206,17 +253,29 @@
                     <settings.categories>
                         <TCEforms>
                             <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:fields.categories
+                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.categories
                             </label>
                             <config>
-                                <type>input</type>
-                                <eval>trim</eval>
+                                <type>select</type>
+                                <autoSizeMax>50</autoSizeMax>
+                                <foreign_table>sys_category</foreign_table>
+                                <foreign_table_where> AND sys_category.sys_language_uid IN (-1, 0) ORDER BY sys_category.sorting ASC</foreign_table_where>
+                                <maxitems>9999</maxitems>
+                                <renderMode>tree</renderMode>
+                                <size>10</size>
+                                <treeConfig>
+                                    <appearance>
+                                        <expandAll>1</expandAll>
+                                        <showHeader>1</showHeader>
+                                    </appearance>
+                                    <parentField>parent</parentField>
+                                </treeConfig>
                             </config>
                         </TCEforms>
                     </settings.categories>
                 </el>
             </ROOT>
-
         </filterBar>
+
     </sheets>
 </T3DataStructure>

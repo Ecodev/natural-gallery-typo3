@@ -9,7 +9,7 @@ if (!defined('TYPO3_MODE')) {
     array(
         'Gallery' => 'list',
     ),
-    // non-cacheable actions
+    // non-cachable actions
     array(
         #'Gallery' => 'list',
     )

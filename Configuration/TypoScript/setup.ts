@@ -16,14 +16,14 @@ plugin.tx_infinitescrollgallery {
 
 		asset {
 
-			PhotoSwipeCss {
+			photoSwipeCss {
 				path = EXT:infinite_scroll_gallery/Resources/Public/StyleSheets/photoswipe.css
 				type = css
 
 				# Optional key if loading assets through EXT:vhs.
 				dependencies = mainCss
 			}
-			PhotoSwipeThemeCss {
+			photoSwipeThemeCss {
 				path = EXT:infinite_scroll_gallery/Resources/Public/StyleSheets/default-skin/default-skin.css
 				type = css
 
@@ -31,7 +31,7 @@ plugin.tx_infinitescrollgallery {
 				dependencies = mainCss
 			}
 
-			InfiniteScrollGalleryCss {
+			infiniteScrollGalleryCss {
 				path = EXT:infinite_scroll_gallery/Resources/Public/StyleSheets/InfiniteScrollGallery.css
 				type = css
 
@@ -39,14 +39,14 @@ plugin.tx_infinitescrollgallery {
 				dependencies = mainCss
 			}
 
-			PhotoSwipeJs {
+			photoSwipeJs {
 				path = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/photoswipe.min.js
 				type = js
 
 				# Optional key if loading assets through EXT:vhs.
 				dependencies = mainJs
 			}
-			PhotoSwipeThemeJs {
+			photoSwipeThemeJs {
 				path = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/photoswipe-ui-default.min.js
 				type = js
 
@@ -54,7 +54,7 @@ plugin.tx_infinitescrollgallery {
 				dependencies = mainJs
 			}
 
-			Organizer {
+			organizer {
 				path = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/InfiniteScrollGalleryOrganizer.js
 				type = js
 
@@ -63,7 +63,7 @@ plugin.tx_infinitescrollgallery {
 			}
 
 
-			InfiniteScrollGalleryJs {
+			infiniteScrollGalleryJs {
 				path = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/InfiniteScrollGallery.js
 				type = js
 

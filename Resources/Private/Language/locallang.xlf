@@ -4,107 +4,92 @@
 	      product-name="local lang">
 		<header/>
 		<body>
-			<trans-unit id="wizard.title">
-				<source>Infinite Scroll Gallery</source>
-			</trans-unit>
-			<trans-unit id="wizard.description">
-				<source>Display a gallery that shows image as you scroll.</source>
-			</trans-unit>
-			<trans-unit id="flux.infiniteScrollGalleryWidget">
-				<source>Infinite Scroll Gallery</source>
-			</trans-unit>
-			<trans-unit id="flux.infiniteScrollGalleryWidget.description">
-				<source>Display a gallery widget expending as you scroll</source>
-			</trans-unit>
-			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.categories">
-				<source>Categories of images displayed (comma separated values)</source>
-			</trans-unit>
-			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.showFilters">
-				<source>Show filters</source>
-			</trans-unit>
-			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.limit">
-				<source>Number of images displayed by batch (0 for auto scroll, a number for manual pages switch)</source>
-			</trans-unit>
-			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.thumbnailMaximumWidth">
-				<source>Maximum width of thumbnail image</source>
-			</trans-unit>
-			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.thumbnailMaximumHeight">
-				<source>Maximum height of thumbnail image</source>
-			</trans-unit>
-			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.enlargedImageMaximumWidth">
-				<source>Maximum width of enlarged image</source>
-			</trans-unit>
-			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.enlargedImageMaximumHeight">
-				<source>Maximum height of enlarged image</source>
-			</trans-unit>
-			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.orderBy">
-				<source>Order by</source>
-			</trans-unit>
-			<trans-unit id="flux.infiniteScrollGalleryWidget.fields.direction">
-				<source>Direction</source>
-			</trans-unit>
 
-			<trans-unit id="sheets.general">
-				<source>General</source>
+			<!-- Settings -->
+			<trans-unit id="settings.folders">
+				<source>Folders where to find images (CSV values)</source>
 			</trans-unit>
-			<trans-unit id="fields.categories">
-				<source>Categories of images (comma separated values)</source>
+			<trans-unit id="settings.selection">
+				<source>Public Selection of images</source>
 			</trans-unit>
-			<trans-unit id="fields.enableMoreLoading">
+			<trans-unit id="settings.additionalEquals">
+				<source>Additional comma separated constraints. Example: storage= 1, identifier like
+					/images/%, metadata.categories = 1
+				</source>
+			</trans-unit>
+			<trans-unit id="settings.enableMoreLoading">
 				<source>Load more images dynamically as you scroll</source>
 			</trans-unit>
-			<trans-unit id="fields.showFilterBar">
+			<trans-unit id="settings.showFilterBar">
 				<source>Show filter bar</source>
 			</trans-unit>
-			<trans-unit id="fields.limit">
+			<trans-unit id="settings.limit">
 				<source>Number of rows by page (0 for auto scroll or a number for manuel page switch)</source>
 			</trans-unit>
-			<trans-unit id="fields.thumbnailMaximumWidth">
+			<trans-unit id="settings.thumbnailMaximumWidth">
 				<source>Maximum width of thumbnail image</source>
 			</trans-unit>
-			<trans-unit id="fields.thumbnailMaximumHeight">
+			<trans-unit id="settings.thumbnailMaximumHeight">
 				<source>Maximum height of thumbnail image</source>
 			</trans-unit>
-			<trans-unit id="fields.enlargedImageMaximumWidth">
+			<trans-unit id="settings.enlargedImageMaximumWidth">
 				<source>Maximum width of enlarged image</source>
 			</trans-unit>
-			<trans-unit id="fields.enlargedImageMaximumHeight">
+			<trans-unit id="settings.enlargedImageMaximumHeight">
 				<source>Maximum height of enlarged image</source>
 			</trans-unit>
-			<trans-unit id="fields.orderBy">
-				<source>Order by</source>
+			<trans-unit id="settings.direction.ascending">
+				<source>Ascending</source>
 			</trans-unit>
-			<trans-unit id="fields.direction">
-				<source>Direction</source>
+			<trans-unit id="settings.direction.descending">
+				<source>Desending</source>
 			</trans-unit>
-			<trans-unit id="fields.direction.ascendant">
-				<source>Ascendant</source>
+			<trans-unit id="settings.thumbnailFormat">
+				<source>Thumbail format</source>
 			</trans-unit>
-			<trans-unit id="fields.direction.descendant">
-				<source>Descendant</source>
+			<trans-unit id="settings.thumbnailFormat.natural">
+				<source>Natural</source>
 			</trans-unit>
-            <trans-unit id="fields.thumbnailFormat">
-                <source>Thumbail format</source>
-            </trans-unit>
-            <trans-unit id="fields.thumbnailFormat.natural">
-                <source>Natural</source>
-            </trans-unit>
-            <trans-unit id="fields.thumbnailFormat.square">
-                <source>Square</source>
-            </trans-unit>
-            <trans-unit id="fields.imagesPerRow">
-                <source>Pictures per row (only for square)</source>
-            </trans-unit>
-            <trans-unit id="fields.margin">
-                <source>Margin between pictures</source>
-            </trans-unit>
-            <trans-unit id="fields.round">
-                <source>Rounded corners</source>
-            </trans-unit>
-            <trans-unit id="fields.showFilters">
-                <source>Show filters</source>
-            </trans-unit>
+			<trans-unit id="settings.thumbnailFormat.square">
+				<source>Square</source>
+			</trans-unit>
+			<trans-unit id="settings.imagesPerRow">
+				<source>Pictures per row (only for square)</source>
+			</trans-unit>
+			<trans-unit id="settings.margin">
+				<source>Margin between pictures (pixel)</source>
+			</trans-unit>
+			<trans-unit id="settings.round">
+				<source>Rounded corners (pixel)</source>
+			</trans-unit>
+			<trans-unit id="settings.showFilters">
+				<source>Show filters</source>
+			</trans-unit>
+			<trans-unit id="settings.categories">
+				<source>Show filters</source>
+			</trans-unit>
+			<trans-unit id="settings.sorting">
+				<source>Default sorting. Example: identifier, name, metadata.title</source>
+			</trans-unit>
+			<trans-unit id="settings.direction">
+				<source>Default direction</source>
+			</trans-unit>
+			<trans-unit id="settings.categories">
+				<source>Categories displayed in the filter bar</source>
+			</trans-unit>
 
+			<!-- Tabs -->
+			<trans-unit id="flexform.tab.source">
+				<source>Source</source>
+			</trans-unit>
+			<trans-unit id="flexform.tab.imageSettings">
+				<source>Image settings</source>
+			</trans-unit>
+			<trans-unit id="flexform.tab.filterBar">
+				<source>Filter bar</source>
+			</trans-unit>
+
+			<!-- Frontend -->
 			<trans-unit id="tx_infinitescrollgallery_dropdown_tags">
 				<source>all</source>
 			</trans-unit>
@@ -116,12 +101,6 @@
 			</trans-unit>
 			<trans-unit id="search">
 				<source>Search...</source>
-			</trans-unit>
-			<trans-unit id="flexform.tab.general">
-				<source>General</source>
-			</trans-unit>
-			<trans-unit id="flexform.tab.filterBar">
-				<source>Filter bar</source>
 			</trans-unit>
 
 		</body>
