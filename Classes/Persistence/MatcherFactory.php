@@ -17,7 +17,6 @@ namespace Fab\InfiniteScrollGallery\Persistence;
 use Fab\Vidi\Domain\Model\Selection;
 use Fab\Vidi\Domain\Repository\SelectionRepository;
 use Fab\Vidi\Resolver\FieldPathResolver;
-use Fab\VidiFrontend\Tca\FrontendTca;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -189,8 +188,8 @@ class MatcherFactory implements SingletonInterface
             // Retrieve the value.
             $value = current($queryPart);
 
-            if (FrontendTca::grid($resolvedDataType)->hasFacet($fieldName) && FrontendTca::grid($resolvedDataType)->facet($fieldName)->canModifyMatcher()) {
-                $matcher = FrontendTca::grid($resolvedDataType)->facet($fieldName)->modifyMatcher($matcher, $value);
+            if (Tca::grid($resolvedDataType)->hasFacet($fieldName) && Tca::grid($resolvedDataType)->facet($fieldName)->canModifyMatcher()) {
+                $matcher = Tca::grid($resolvedDataType)->facet($fieldName)->modifyMatcher($matcher, $value);
             } elseif (Tca::table($resolvedDataType)->hasField($fieldName)) {
                 // Check whether the field exists and set it as "equal" or "like".
                 if ($this->isOperatorEquals($fieldNameAndPath, $dataType, $value)) {

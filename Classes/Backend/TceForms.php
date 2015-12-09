@@ -16,7 +16,6 @@ namespace Fab\InfiniteScrollGallery\Backend;
 
 use Fab\Vidi\Domain\Model\Selection;
 use Fab\Vidi\Domain\Repository\SelectionRepository;
-use Fab\VidiFrontend\Tca\FrontendTca;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -66,7 +65,7 @@ class TceForms {
 
 			$parameters['items'][] = array('', '', NULL);
 			if (!empty($configuredDataType)) {
-				foreach(FrontendTca::grid($configuredDataType)->getFields() as $fieldNameAndPath => $configuration) {
+				foreach(Tca::grid($configuredDataType)->getFields() as $fieldNameAndPath => $configuration) {
 					if (FALSE === strpos($fieldNameAndPath, '__')) {
 						$values = array($fieldNameAndPath, $fieldNameAndPath, NULL);
 						$parameters['items'][] = $values;
