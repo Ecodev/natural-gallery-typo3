@@ -16,7 +16,7 @@ var tx_infiniteScrollGallery_organizer = {
         for (var i = 0; i < galleries.length; i++) {
 
             var gallery = galleries[i];
-            var containerWidth = gallery.bodyElement.innerWidth();
+            var containerWidth = Math.floor(gallery.bodyElement[0].getBoundingClientRect().width);
 
             // only if container changes
             if (gallery.bodyElementWidth !== containerWidth) {
