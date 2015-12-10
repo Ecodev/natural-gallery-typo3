@@ -402,7 +402,7 @@
             $(document).scroll(function() {
 
                 var gallery = getGallery().bodyElement;
-                var endOfGalleryAt = gallery.offset().top + gallery.height() - $(window).height() + 150;
+                var endOfGalleryAt = gallery.offset().top + gallery.height() - $(window).height() + 100;
 
                 // Avoid to expand gallery if we are scrolling up
                 var current_scroll_top = $(document).scrollTop();
