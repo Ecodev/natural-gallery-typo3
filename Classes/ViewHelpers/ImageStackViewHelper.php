@@ -48,8 +48,9 @@ class ImageStackViewHelper extends AbstractViewHelper
             $item = [
                 'thumbnail' => '/' . $thumbnailFile->getPublicUrl(true),
                 'enlarged' => '/' . $enlargedFile->getPublicUrl(true),
+                'uid' => $file->getProperty('uid'),
                 'title' => $file->getProperty('title'),
-                'desc' => $file->getProperty('description'),
+                'description' => $file->getProperty('description'),
                 'tWidth' => $thumbnailFile->getProperty('width'),
                 'tHeight' => $thumbnailFile->getProperty('height'),
                 'eWidth' => $enlargedFile->getProperty('width'),
