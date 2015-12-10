@@ -43,6 +43,7 @@
             for (var i = 0; i < infinitesScrollGallery.length; i++) {
                 var gallery = infinitesScrollGallery[i];
                 gallery.pswpContainer = [];
+                gallery.selection = []; // for filtered elements
                 gallery.rootElement = $('#tx-infinitescrollgallery-' + gallery.id);
                 gallery.bodyElement = gallery.rootElement.find('.tx-infinitescrollgallery-body');
                 gallery.bodyElementWidth = Math.floor(gallery.bodyElement[0].getBoundingClientRect().width);
@@ -63,7 +64,9 @@
                 gallery = getGallery();
             }
 
-            if (gallery.pswpContainer.length === gallery.images.length) {
+            var collection = gallery.selection.length ? gallery.selection : gallery.images;
+
+            if (gallery.pswpContainer.length === collection.length) {
                 gallery.rootElement.find('.tx-infinitescrollgallery-next').hide();
                 return;
             }
@@ -73,11 +76,11 @@
             }
 
             var nextImage = gallery.pswpContainer.length;
-            var lastRow = gallery.pswpContainer.length ? gallery.images[nextImage].row + rows : rows;
+            var lastRow = gallery.pswpContainer.length ? collection[nextImage].row + rows : rows;
 
             // Select next elements, comparing their rows
-            for (var i = nextImage; i < gallery.images.length; i++) {
-                var element = gallery.images[i];
+            for (var i = nextImage; i < collection.length; i++) {
+                var element = collection[i];
                 if (element.row < lastRow) {
 
                     // Add enlarged to Photoswipe gallery
@@ -100,7 +103,7 @@
             }
 
             gallery.rootElement.find('.tx-infinitescrollgallery-numberOfVisibleImages').text(gallery.pswpContainer.length);
-            gallery.rootElement.find('.tx-infinitescrollgallery-totalImages').text(gallery.images.length);
+            gallery.rootElement.find('.tx-infinitescrollgallery-totalImages').text(collection.length);
 
         }
 
@@ -228,7 +231,7 @@
          * Empty DOM container and Photoswipe container
          * @param gallery
          */
-        function resetElements(gallery) {
+        function reset(gallery) {
             gallery.pswpContainer = [];
             gallery.bodyElement.html('');
         }
@@ -280,13 +283,59 @@
         });
 
         /**
+         * On category checkboxes change
+         */
+        $('.tx-infinitescrollgallery-category').on('change', function(e) {
+
+            console.log('change');
+
+            var gallery = getGallery(this);
+            gallery.selection = [];
+
+            // Create an array with id of each selected categories
+            var selectedCategories = [];
+
+            gallery.rootElement.find('.tx-infinitescrollgallery-category:checked').each(function() {
+                selectedCategories.push($(this).data('uid'));
+            });
+
+            console.log('selected categories', selectedCategories);
+            var filteredCategories = [];
+            for (var i = 0; i < gallery.images.length; i++) {
+                var image = gallery.images[i];
+
+                // If image has no categories and "without" is checked
+                if (image.categories.length === 0 && selectedCategories.indexOf("none") >= 0) {
+                    filteredCategories.push(image);
+
+                } else if (image.categories.length > 0) {
+                    // Set image as responding to filter if at least one category is found
+                    for (var j = 0; j < image.categories; j++) {
+                        var category = image.categories[j];
+                        if (selectedCategories.indexOf(category) >= 0) {
+                            filteredCategories.push(image);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            gallery.selection = filteredCategories;
+
+            reset(gallery);
+            organizer.organize(gallery);
+            addElements(gallery);
+
+        });
+
+        /**
          * Attach event to the search field
          */
         $('.tx-infinitescrollgallery-searchTerm').keydown(function(event) {
             // True when key 'enter' hit
             if (event.keyCode == 13) {
                 event.preventDefault();
-                resetElements(getGallery(this));
+                reset(getGallery(this));
             }
         });
 
@@ -346,7 +395,7 @@
             for (var i = 0; i < galleries.length; i++) {
                 var gallery = galleries[i];
                 var nbRows = gallery.images[gallery.pswpContainer.length - 1].row + 1;
-                resetElements(gallery);
+                reset(gallery);
                 addElements(gallery, nbRows);
             }
         }

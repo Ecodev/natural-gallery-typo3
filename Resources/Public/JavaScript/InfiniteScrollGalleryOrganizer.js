@@ -16,7 +16,7 @@ var tx_infiniteScrollGallery_organizer = {
         for (var i = 0; i < galleries.length; i++) {
 
             var gallery = galleries[i];
-            var elements = gallery.images;
+            var elements = gallery.selection.length ? gallery.selection : gallery.images;
 
             if (gallery.thumbnailFormat == 'natural') {
                 this.organizeNatural(elements, gallery.bodyElementWidth, gallery.thumbnailMaximumHeight, gallery.margin);

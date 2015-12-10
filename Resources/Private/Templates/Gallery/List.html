@@ -36,24 +36,27 @@
 				<f:form.hidden name="offset" id="tx-infinitescrollgallery-offset-{data.uid}" value="0"/>
 				<f:form.hidden name="contentElement" id="tx-infinitescrollgallery-recordUid-{data.uid}" value="{data.uid}"/>
 
-				<f:if condition="{categories}">
-					<div class="form-group">
-						<label class="x-infinitescrollgallery-category" id="tx-infinitescrollgallery-category-{data.uid}">
-							<f:translate key="filter_by"/>
-						</label>
-						<f:form.select name="category"
-									   id="tx-infinitescrollgallery-category-{data.uid}"
-									   options="{categories}"
-									   optionValueField="uid"
-									   optionLabelField="title"/>
-					</div>
-				</f:if>
-
 				<input type="search"
 					   id="tx-infinitescrollgallery-searchTerm-{data.uid}"
 					   placeholder="{f:translate(key:'search')}"
 					   class="tx-infinitescrollgallery-searchTerm search placeholder"
 					   name="tx_infinitescrollgallery_pi1[searchTerm]"/>
+
+				<f:if condition="{categories}">
+					<div class="form-group">
+						<label>
+							<input type="checkbox" checked="checked" data-uid="none" class="tx-infinitescrollgallery-category" id="tx-infinitescrollgallery-category-all">
+							<f:translate key="without"/>
+						</label>
+						<f:for each="{categories}" as="category">
+							<label>
+								<input type="checkbox" checked="checked" data-uid="{category.uid}" class="tx-infinitescrollgallery-category" id="tx-infinitescrollgallery-category-{category.uid}">
+								{category.title}
+							</label>
+						</f:for>
+					</div>
+				</f:if>
+
 			</f:form>
 
 		</f:if>

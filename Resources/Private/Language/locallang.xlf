@@ -96,6 +96,9 @@
 			<trans-unit id="filter_by">
 				<source>Filter by</source>
 			</trans-unit>
+			<trans-unit id="without">
+				<source>Without</source>
+			</trans-unit>
 			<trans-unit id="select_category">
 				<source>Select a category</source>
 			</trans-unit>
