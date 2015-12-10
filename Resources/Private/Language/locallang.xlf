@@ -105,7 +105,9 @@
 			<trans-unit id="search">
 				<source>Search...</source>
 			</trans-unit>
-
+			<trans-unit id="more">
+				<source>More</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

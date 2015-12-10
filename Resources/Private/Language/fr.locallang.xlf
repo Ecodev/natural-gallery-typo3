@@ -105,6 +105,9 @@
 			<trans-unit id="search">
 				<target>Search...</target>
 			</trans-unit>
+			<trans-unit id="more">
+				<target>More</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
