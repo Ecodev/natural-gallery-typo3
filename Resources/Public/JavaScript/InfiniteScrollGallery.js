@@ -239,7 +239,7 @@
             var filteredByCategory = filterByCategory(gallery);
 
             // if nothing found, show all
-            if (filteredByTerm.length + filteredByCategory.length == 0 ) {
+            if (filteredByTerm.length + filteredByCategory.length == 0) {
                 filtered = gallery.images;
 
             } else {
@@ -270,7 +270,7 @@
             var filteredImages = [];
 
             // show all if empty
-            if (term.length == 0 ) {
+            if (term.length === 0) {
                 filteredImages = gallery.images;
             } else {
                 for (var i = 0; i < gallery.images.length; i++) {
@@ -423,7 +423,7 @@
             });
         }
 
-        $(window).on('resize', function(){
+        $(window).on('resize', function() {
             for (var i = 0; i < infinitesScrollGallery.length; i++) {
                 var gallery = infinitesScrollGallery[i];
                 var containerWidth = Math.floor(gallery.bodyElement[0].getBoundingClientRect().width);
@@ -537,17 +537,14 @@
             {'base':'y','letters':/[\u0079\u24E8\uFF59\u1EF3\u00FD\u0177\u1EF9\u0233\u1E8F\u00FF\u1EF7\u1E99\u1EF5\u01B4\u024F\u1EFF]/g},
             {'base':'z','letters':/[\u007A\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763]/g}
         ];
-        var changes;
-        function removeDiacritics (str) {
-            if(!changes) {
-                changes = defaultDiacriticsRemovalMap;
-            }
-            for(var i=0; i<changes.length; i++) {
-                str = str.replace(changes[i].letters, changes[i].base);
+
+        function removeDiacritics(str) {
+
+            for (var i = 0; i < defaultDiacriticsRemovalMap.length; i++) {
+                str = str.replace(defaultDiacriticsRemovalMap[i].letters, defaultDiacriticsRemovalMap[i].base);
             }
             return str;
         }
-
 
         initGallery();
 
