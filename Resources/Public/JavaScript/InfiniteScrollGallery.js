@@ -286,9 +286,6 @@
          * On category checkboxes change
          */
         $('.tx-infinitescrollgallery-category').on('change', function(e) {
-
-            console.log('change');
-
             var gallery = getGallery(this);
             gallery.selection = [];
 
@@ -299,7 +296,6 @@
                 selectedCategories.push($(this).data('uid'));
             });
 
-            console.log('selected categories', selectedCategories);
             var filteredCategories = [];
             for (var i = 0; i < gallery.images.length; i++) {
                 var image = gallery.images[i];
