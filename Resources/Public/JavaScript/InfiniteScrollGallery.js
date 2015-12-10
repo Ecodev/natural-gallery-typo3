@@ -45,6 +45,7 @@
                 gallery.pswpContainer = [];
                 gallery.rootElement = $('#tx-infinitescrollgallery-' + gallery.id);
                 gallery.bodyElement = gallery.rootElement.find('.tx-infinitescrollgallery-body');
+                gallery.bodyElementWidth = Math.floor(gallery.bodyElement[0].getBoundingClientRect().width);
                 organizer.organize(gallery);
                 addElements(gallery);
             }
@@ -323,19 +324,27 @@
             });
         }
 
-        /**
-         * Use the underscore library debounce function (copied further in the file)
-         */
-        $(window).on('resize', debounce(function() {
-            organizer.organize(null, resize);
-        }, 200));
+        $(window).on('resize', function(){
+            for (var i = 0; i < infinitesScrollGallery.length; i++) {
+                var gallery = infinitesScrollGallery[i];
+                var containerWidth = Math.floor(gallery.bodyElement[0].getBoundingClientRect().width);
+
+                if (containerWidth != gallery.bodyElementWidth) {
+                    gallery.bodyElementWidth = containerWidth;
+                    gallery.bodyElement.find('figure').css('visibility', 'hidden');
+                    organizer.organize();
+                    resize(gallery);
+                }
+            }
+        });
 
         /**
          * Empty a gallery and add the same elements with new size
          */
-        function resize() {
-            for (var i = 0; i < infinitesScrollGallery.length; i++) {
-                var gallery = infinitesScrollGallery[i];
+        function resize(gallery) {
+            var galleries = gallery ? [gallery] : infinitesScrollGallery
+            for (var i = 0; i < galleries.length; i++) {
+                var gallery = galleries[i];
                 var nbRows = gallery.images[gallery.pswpContainer.length - 1].row + 1;
                 resetElements(gallery);
                 addElements(gallery, nbRows);

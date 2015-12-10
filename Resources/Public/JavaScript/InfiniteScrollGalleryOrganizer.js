@@ -9,31 +9,21 @@
  */
 var tx_infiniteScrollGallery_organizer = {
 
-    organize: function(gallery, callback) {
+    organize: function(gallery) {
 
         var galleries = gallery ? [gallery] : infinitesScrollGallery;
 
         for (var i = 0; i < galleries.length; i++) {
 
             var gallery = galleries[i];
-            var containerWidth = Math.floor(gallery.bodyElement[0].getBoundingClientRect().width);
+            var elements = gallery.images;
 
-            // only if container changes
-            if (gallery.bodyElementWidth !== containerWidth) {
-
-                gallery.bodyElementWidth = containerWidth; // save new width for further comparison
-                var elements = gallery.images;
-
-                if (gallery.thumbnailFormat == 'natural') {
-                    this.organizeNatural(elements, containerWidth, gallery.thumbnailMaximumHeight, gallery.margin);
-                } else if (gallery.thumbnailFormat == 'square') {
-                    this.organizeSquare(elements, containerWidth, gallery.imagesPerRow, gallery.margin);
-                }
-
-                if (callback) {
-                    callback();
-                }
+            if (gallery.thumbnailFormat == 'natural') {
+                this.organizeNatural(elements, gallery.bodyElementWidth, gallery.thumbnailMaximumHeight, gallery.margin);
+            } else if (gallery.thumbnailFormat == 'square') {
+                this.organizeSquare(elements, gallery.bodyElementWidth, gallery.imagesPerRow, gallery.margin);
             }
+
         }
     },
 
