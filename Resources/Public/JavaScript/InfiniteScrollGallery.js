@@ -64,7 +64,7 @@
                 gallery = getGallery();
             }
 
-            var collection = gallery.selection.length ? gallery.selection : gallery.images;
+            var collection = gallery.filtered ? gallery.selection : gallery.images;
 
             if (gallery.pswpContainer.length === collection.length) {
                 gallery.rootElement.find('.tx-infinitescrollgallery-next').hide();
@@ -102,6 +102,7 @@
                 }
             }
 
+            gallery.rootElement.find('.tx-infinitescrollgallery-noresults').hide();
             gallery.rootElement.find('.tx-infinitescrollgallery-numberOfVisibleImages').text(gallery.pswpContainer.length);
             gallery.rootElement.find('.tx-infinitescrollgallery-totalImages').text(collection.length);
 
@@ -238,26 +239,20 @@
             var filteredByTerm = filterByTerm(gallery);
             var filteredByCategory = filterByCategory(gallery);
 
-            // if nothing found, show all
-            if (filteredByTerm.length + filteredByCategory.length == 0) {
-                filtered = gallery.images;
+            for (var i = 0; i < filteredByTerm.length; i++) {
+                var img1 = filteredByTerm[i];
 
-            } else {
-
-                for (var i = 0; i < filteredByTerm.length; i++) {
-                    var img1 = filteredByTerm[i];
-
-                    for (var j = 0; j < filteredByCategory.length; j++) {
-                        var img2 = filteredByCategory[j];
-                        if (img1.uid == img2.uid) {
-                            filtered.push(img1);
-                            break;
-                        }
+                for (var j = 0; j < filteredByCategory.length; j++) {
+                    var img2 = filteredByCategory[j];
+                    if (img1.uid == img2.uid) {
+                        filtered.push(img1);
+                        break;
                     }
                 }
             }
 
             gallery.selection = filtered;
+            gallery.filtered = true;
             reset(gallery);
             organizer.organize(gallery);
             addElements(gallery);
@@ -324,7 +319,8 @@
          */
         function reset(gallery) {
             gallery.pswpContainer = [];
-            gallery.bodyElement.html('');
+            gallery.bodyElement.find('figure').remove();
+            gallery.rootElement.find('.tx-infinitescrollgallery-noresults').show();
         }
 
         /**

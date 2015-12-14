@@ -108,6 +108,9 @@
 			<trans-unit id="more">
 				<source>More</source>
 			</trans-unit>
+			<trans-unit id="none">
+				<source>No results</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
