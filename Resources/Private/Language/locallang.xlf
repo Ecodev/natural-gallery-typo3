@@ -5,12 +5,20 @@
 		<header/>
 		<body>
 
+			<!-- Wizard -->
+			<trans-unit id="wizard.title">
+				<source>Infinite Scroll Gallery</source>
+			</trans-unit>
+			<trans-unit id="wizard.description">
+				<source>Display images as you scroll and enlarged them in a slideshow.</source>
+			</trans-unit>
+
 			<!-- Settings -->
 			<trans-unit id="settings.folders">
 				<source>Folders where to find images (CSV values)</source>
 			</trans-unit>
 			<trans-unit id="settings.selection">
-				<source>Public Selection of images</source>
+				<source>Public Selection of images (defined in the Media module)</source>
 			</trans-unit>
 			<trans-unit id="settings.additionalEquals">
 				<source>Additional comma separated constraints. Example: storage= 1, identifier like
@@ -30,7 +38,7 @@
 				<source>Maximum width of thumbnail image</source>
 			</trans-unit>
 			<trans-unit id="settings.thumbnailMaximumHeight">
-				<source>Maximum height of thumbnail image</source>
+				<source>Maximum height of thumbnail image (only for natural)</source>
 			</trans-unit>
 			<trans-unit id="settings.enlargedImageMaximumWidth">
 				<source>Maximum width of enlarged image</source>
