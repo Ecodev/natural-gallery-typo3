@@ -16,6 +16,7 @@ namespace Fab\InfiniteScrollGallery\Backend;
 
 use Fab\Vidi\Domain\Model\Selection;
 use Fab\Vidi\Domain\Repository\SelectionRepository;
+use Fab\Vidi\Tca\Tca;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -47,33 +48,6 @@ class TceForms
                 /** @var Selection $selection */
                 $values = array($selection->getName(), $selection->getUid(), NULL);
                 $parameters['items'][] = $values;
-            }
-        }
-    }
-
-    /**
-     * This method modifies the list of items for FlexForm "sorting".
-     *
-     * @param array $parameters
-     */
-    public function feedItemsForSettingsSorting(&$parameters)
-    {
-        $configuration = $this->getPluginConfiguration();
-
-        if (empty($configuration) || empty($configuration['settings']['templates'])) {
-            $parameters['items'][] = array('No template found. Forgotten to load the static TS template?', '', NULL);
-        } else {
-
-            $configuredDataType = $this->getDataTypeFromFlexform($parameters);
-
-            $parameters['items'][] = array('', '', NULL);
-            if (!empty($configuredDataType)) {
-                foreach (Tca::grid($configuredDataType)->getFields() as $fieldNameAndPath => $configuration) {
-                    if (FALSE === strpos($fieldNameAndPath, '__')) {
-                        $values = array($fieldNameAndPath, $fieldNameAndPath, NULL);
-                        $parameters['items'][] = $values;
-                    }
-                }
             }
         }
     }
