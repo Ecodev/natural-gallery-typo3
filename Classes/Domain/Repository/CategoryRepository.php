@@ -34,11 +34,15 @@ class CategoryRepository extends \TYPO3\CMS\Extbase\Domain\Repository\CategoryRe
 
 	/**
 	 * @param array $identifiers
-	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult
+	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult|null
 	 */
 	public function findByIdentifiers(array $identifiers) {
-		$query = $this->createQuery();
-		$query->matching($query->in('uid', $identifiers));
-		return $query->execute();
+		$result = null;
+		if (!empty($identifiers)) {
+			$query = $this->createQuery();
+			$query->matching($query->in('uid', $identifiers));
+			$result = $query->execute();
+		}
+		return $result;
 	}
 }
