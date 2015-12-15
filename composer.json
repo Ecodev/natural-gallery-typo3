@@ -2,14 +2,14 @@
   "name": "fab/infinite-scroll-gallery",
   "type": "typo3-cms-extension",
   "description": "Display images as you scroll and enlarged images in a slideshow.",
-  "homepage": "https://github.com/fabarea/infinite_scroll_gallery",
+  "homepage": "https://github.com/Ecodev/infinite_scroll_gallery",
   "license": ["GPL-2.0+"],
   "keywords": [
     "TYPO3 CMS",
     "Photo Gallery"
   ],
   "support": {
-    "issues": "https://github.com/fabarea/infinite_scroll_gallery/issues"
+    "issues": "https://github.com/Ecodev/infinite_scroll_gallery/issues"
   },
   "autoload": {
     "psr-4": {

@@ -1,21 +1,17 @@
-==========================
+=======================
 Infinite Scroll Gallery
-==========================
+=======================
 
 Display images as you scroll. Images are displayed within a slideshow when enlarged.
 Under the hood it uses the Media API and relies on categories to filter images on the FE.
-Demo can bee seen on the `Bootstrap Distribution`_.
 
 .. image:: https://raw.github.com/Ecodev/infinite_scroll_gallery/master/Documentation/Introduction-01.png
 
-.. _Bootstrap Package: http://bootstrap.typo3cms.demo.typo3.org/examples-extended/gallery-slideshow/
 
 Project info and releases
-=============================
+=========================
 
-The home page of the project is at http://forge.typo3.org/projects/extension-infinite_scroll_gallery
-
-Bug can be reported on `Forge`_ (preferred) or on `Github`_
+The home page of the project is on https://github.com/Ecodev/infinite_scroll_gallery.git
 
 Stable version:
 http://typo3.org/extensions/repository/view/infinite_scroll_gallery
@@ -27,11 +23,8 @@ https://github.com/Ecodev/infinite_scroll_gallery.git
 
 	git clone https://github.com/Ecodev/infinite_scroll_gallery.git
 
-.. _Forge: http://forge.typo3.org/projects/extension-infinite_scroll_gallery/issues/new
-.. _Github: https://github.com/Ecodev/infinite_scroll_gallery/issues
-
 Users manual
-=================
+============
 
 To install a gallery on a page, click on the page where the gallery should be displayed and create a new content element.
 
@@ -52,7 +45,7 @@ Choose "Infinite Scroll Gallery" plugin
 Once the plugin "Infinite Scroll Gallery" is selected, configuration is self explanatory.
 
 Configuration
-===================
+=============
 
 .. .....................................................................................
 .. container:: table-row
