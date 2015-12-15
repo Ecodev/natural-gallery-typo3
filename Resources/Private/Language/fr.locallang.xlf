@@ -7,83 +7,83 @@
 
 			<!-- Wizard -->
 			<trans-unit id="wizard.title">
-				<source>Infinite Scroll Gallery</source>
+				<target>Infini Scroll Galerie</target>
 			</trans-unit>
 			<trans-unit id="wizard.description">
-				<source>Display images as you scroll and enlarged them in a slideshow.</source>
+				<target>Afficher des images à mesure que l'utilisateur scroll et les afficher dans un slideshow.</target>
 			</trans-unit>
 
 			<!-- Settings -->
 			<trans-unit id="settings.folders">
-				<target>Folders where to find images (CSV values)</target>
+				<target>Dossier de stockage (valeurs séparées par des virgules)</target>
 			</trans-unit>
 			<trans-unit id="settings.selection">
-				<target>Public Selection of images</target>
+				<target>Sélection public d'image (définie dans le module Media)</target>
 			</trans-unit>
 			<trans-unit id="settings.additionalEquals">
-				<target>Additional comma separated constraints. Example: storage= 1, identifier like
+				<target>Contraintes supplémentaires séparées par des virgules. Exemple: storage= 1, identifier like
 					/images/%, metadata.categories = 1
 				</target>
 			</trans-unit>
 			<trans-unit id="settings.enableMoreLoading">
-				<target>Load more images dynamically as you scroll</target>
+				<target>Charger dynamiquement des images lorsque scroll</target>
 			</trans-unit>
 			<trans-unit id="settings.showFilterBar">
-				<target>Show filter bar</target>
+				<target>Afficher la barre de filtre</target>
 			</trans-unit>
 			<trans-unit id="settings.limit">
-				<target>Number of rows by page (0 for auto scroll or a number for manuel page switch)</target>
+				<target>Nombre de lignes par page (0 pour la fonction auto-scroll ou sinon un nombre pour un chargement manuel par l'utilisateur)</target>
 			</trans-unit>
 			<trans-unit id="settings.thumbnailMaximumWidth">
-				<target>Maximum width of thumbnail image</target>
+				<target>Largeur maximale des vignettes</target>
 			</trans-unit>
 			<trans-unit id="settings.thumbnailMaximumHeight">
-				<target>Maximum height of thumbnail image</target>
+				<target>Hauteur maximale des vignettes</target>
 			</trans-unit>
 			<trans-unit id="settings.enlargedImageMaximumWidth">
-				<target>Maximum width of enlarged image</target>
+				<target>Largeur maximale des images élargies</target>
 			</trans-unit>
 			<trans-unit id="settings.enlargedImageMaximumHeight">
-				<target>Maximum height of enlarged image</target>
+				<target>Hauteur maximale des images élargies</target>
 			</trans-unit>
 			<trans-unit id="settings.direction.ascending">
-				<target>Ascending</target>
+				<target>Croissant</target>
 			</trans-unit>
 			<trans-unit id="settings.direction.descending">
-				<target>Desending</target>
+				<target>Décroissant</target>
 			</trans-unit>
 			<trans-unit id="settings.thumbnailFormat">
-				<target>Thumbail format</target>
+				<target>Format des vignettes</target>
 			</trans-unit>
 			<trans-unit id="settings.thumbnailFormat.natural">
-				<target>Natural</target>
+				<target>Naturel</target>
 			</trans-unit>
 			<trans-unit id="settings.thumbnailFormat.square">
-				<target>Square</target>
+				<target>Carré</target>
 			</trans-unit>
 			<trans-unit id="settings.imagesPerRow">
-				<target>Pictures per row (only for square)</target>
+				<target>Images par lignes (seulement pour carré)</target>
 			</trans-unit>
 			<trans-unit id="settings.margin">
-				<target>Margin between pictures (pixel)</target>
+				<target>Marge entre les images (pixel)</target>
 			</trans-unit>
 			<trans-unit id="settings.round">
-				<target>Rounded corners (pixel)</target>
+				<target>Bords arrondis (pixel)</target>
 			</trans-unit>
 			<trans-unit id="settings.showFilters">
-				<target>Show filters</target>
+				<target>Afficher les filtres</target>
 			</trans-unit>
 			<trans-unit id="settings.categories">
-				<target>Show filters</target>
+				<target>Afficher les catégories</target>
 			</trans-unit>
 			<trans-unit id="settings.sorting">
-				<target>Default sorting. Example: identifier, name, metadata.title</target>
+				<target>Tri par défaut. Example: identifier, name, metadata.title</target>
 			</trans-unit>
 			<trans-unit id="settings.direction">
-				<target>Default direction</target>
+				<target>Direction par défaut</target>
 			</trans-unit>
 			<trans-unit id="settings.categories">
-				<target>Categories displayed in the filter bar</target>
+				<target>Catégories affichées dans la bar de recherche</target>
 			</trans-unit>
 
 			<!-- Tabs -->
@@ -91,33 +91,33 @@
 				<target>Source</target>
 			</trans-unit>
 			<trans-unit id="flexform.tab.imageSettings">
-				<target>Image settings</target>
+				<target>Préférences images</target>
 			</trans-unit>
 			<trans-unit id="flexform.tab.filterBar">
-				<target>Filter bar</target>
+				<target>Barre de filtre</target>
 			</trans-unit>
 
 			<!-- Frontend -->
 			<trans-unit id="tx_infinitescrollgallery_dropdown_tags">
-				<target>all</target>
+				<target>tous</target>
 			</trans-unit>
 			<trans-unit id="filter_by">
-				<target>Filter by</target>
+				<target>Filtrer par</target>
 			</trans-unit>
 			<trans-unit id="without">
-				<target>Without</target>
+				<target>Sans</target>
 			</trans-unit>
 			<trans-unit id="select_category">
-				<target>Select a category</target>
+				<target>Sélectionner une catégorie</target>
 			</trans-unit>
 			<trans-unit id="search">
-				<target>Search...</target>
+				<target>Recherche...</target>
 			</trans-unit>
 			<trans-unit id="more">
-				<target>More</target>
+				<target>Plus</target>
 			</trans-unit>
 			<trans-unit id="none">
-				<target>No results</target>
+				<target>Aucun résultat trouvé</target>
 			</trans-unit>
 		</body>
 	</file>

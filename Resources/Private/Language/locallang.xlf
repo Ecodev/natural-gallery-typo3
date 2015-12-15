@@ -32,7 +32,7 @@
 				<source>Show filter bar</source>
 			</trans-unit>
 			<trans-unit id="settings.limit">
-				<source>Number of rows by page (0 for auto scroll or a number for manuel page switch)</source>
+				<source>Number of rows by page (0 for auto scroll or enter a number for manuel loading by the User)</source>
 			</trans-unit>
 			<trans-unit id="settings.thumbnailMaximumWidth">
 				<source>Maximum width of thumbnail image</source>
@@ -74,7 +74,7 @@
 				<source>Show filters</source>
 			</trans-unit>
 			<trans-unit id="settings.categories">
-				<source>Show filters</source>
+				<source>Show categories</source>
 			</trans-unit>
 			<trans-unit id="settings.sorting">
 				<source>Default sorting. Example: identifier, name, metadata.title</source>
