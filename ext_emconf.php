@@ -10,7 +10,7 @@
 
 $EM_CONF[$_EXTKEY] = array (
   'title' => 'Infinite Scroll Gallery',
-  'description' => 'Display images as you scroll and enlarged images in a slideshow.',
+  'description' => 'Display images as you scroll and enlarged them in a slideshow.',
   'category' => 'plugin',
   'author' => 'Fabien Udriot, Sylvain Tissot, Samuel Baptista',
   'author_email' => 'fabien.udriot@ecodev.ch, sylvain.tissot@ecodev.ch',
