@@ -196,7 +196,7 @@
 
                 var self = this;
                 var options = {
-                    index: $(this).parent('figure').index(),
+                    index: $(this).parent('figure').index() - 1,
                     bgOpacity: 0.85,
                     showHideOpacity: true,
                     loop: false
