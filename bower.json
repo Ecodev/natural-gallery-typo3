@@ -2,7 +2,7 @@
   "name": "infinite_scroll_gallery",
   "version": "1.0.0",
   "ignore": [],
-  "dependencies": {
+  "devDependencies": {
     "photoswipe": "~4.1.0",
     "natural-gallery": "^1.0.0"
   }
