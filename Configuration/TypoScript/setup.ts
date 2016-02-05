@@ -32,7 +32,7 @@ plugin.tx_infinitescrollgallery {
 			}
 
 			infiniteScrollGalleryCss {
-				path = EXT:infinite_scroll_gallery/Resources/Public/StyleSheets/InfiniteScrollGallery.css
+				path = EXT:infinite_scroll_gallery/Resources/Public/StyleSheets/natural-gallery.css
 				type = css
 
 				# Optional key if loading assets through EXT:vhs.
@@ -55,7 +55,7 @@ plugin.tx_infinitescrollgallery {
 			}
 
 			organizer {
-				path = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/InfiniteScrollGalleryOrganizer.js
+				path = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/natural-gallery-organizer.js
 				type = js
 
 				# Optional key if loading assets through EXT:vhs.
@@ -64,7 +64,7 @@ plugin.tx_infinitescrollgallery {
 
 
 			infiniteScrollGalleryJs {
-				path = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/InfiniteScrollGallery.js
+				path = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/natural-gallery.js
 				type = js
 
 				# Optional key if loading assets through EXT:vhs.

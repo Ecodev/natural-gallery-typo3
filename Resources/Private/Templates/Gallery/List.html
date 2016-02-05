@@ -5,23 +5,23 @@
 <f:layout name="Default"/>
 <f:section name="main">
 
-	<div data-galleryid="{data.uid}" class="tx-infinitescrollgallery" id="tx-infinitescrollgallery-{data.uid}">
+	<div data-galleryid="{data.uid}" class="natural-gallery" id="natural-gallery-{data.uid}">
 
 		<gallery:loadAssets/>
 		<script type="text/javascript">
-			window.infinitesScrollGallery = window.infinitesScrollGallery || [];
+			window.naturalGalleries = window.naturalGalleries || [];
 
-			var infiniteScrollGallery = {};
-			infiniteScrollGallery.id = Number('{data.uid}');
-			infiniteScrollGallery.images = {gallery:imageStack()};
-			infiniteScrollGallery.thumbnailMaximumHeight = Number('{settings.thumbnailMaximumHeight}');
-			infiniteScrollGallery.round = Number('{settings.round}');
-			infiniteScrollGallery.thumbnailFormat = '{settings.thumbnailFormat}';
-			infiniteScrollGallery.imagesPerRow = Number('{settings.imagesPerRow}');
-			infiniteScrollGallery.margin = Number('{settings.margin}');
-			infiniteScrollGallery.limit = Number('{settings.limit}');
+			var naturalGallery = {};
+			naturalGallery.id = Number('{data.uid}');
+			naturalGallery.images = {gallery:imageStack()};
+			naturalGallery.thumbnailMaximumHeight = Number('{settings.thumbnailMaximumHeight}');
+			naturalGallery.round = Number('{settings.round}');
+			naturalGallery.thumbnailFormat = '{settings.thumbnailFormat}';
+			naturalGallery.imagesPerRow = Number('{settings.imagesPerRow}');
+			naturalGallery.margin = Number('{settings.margin}');
+			naturalGallery.limit = Number('{settings.limit}');
 
-			window.infinitesScrollGallery.push(infiniteScrollGallery);
+			window.naturalGalleries.push(naturalGallery);
 		</script>
 
 		<f:comment>
@@ -30,27 +30,27 @@
 
 		<f:if condition="{settings.showFilters}">
 
-			<f:form class="tx-infinitescrollgallery-form form-inline" id="tx-infinitescrollgallery-form-{data.uid}" method="GET">
-				<f:form.hidden id="tx-infinitescrollgallery-url" value="{f:uri.page()}"/>
-				<f:form.hidden name="limit" id="tx-infinitescrollgallery-limit-{data.uid}" value="{settings.limit}"/>
-				<f:form.hidden name="offset" id="tx-infinitescrollgallery-offset-{data.uid}" value="0"/>
-				<f:form.hidden name="contentElement" id="tx-infinitescrollgallery-recordUid-{data.uid}" value="{data.uid}"/>
+			<f:form class="natural-gallery-form form-inline" id="natural-gallery-form-{data.uid}" method="GET">
+				<f:form.hidden id="natural-gallery-url" value="{f:uri.page()}"/>
+				<f:form.hidden name="limit" id="natural-gallery-limit-{data.uid}" value="{settings.limit}"/>
+				<f:form.hidden name="offset" id="natural-gallery-offset-{data.uid}" value="0"/>
+				<f:form.hidden name="contentElement" id="natural-gallery-recordUid-{data.uid}" value="{data.uid}"/>
 
 				<input type="search"
-					   id="tx-infinitescrollgallery-searchTerm-{data.uid}"
+					   id="natural-gallery-searchTerm-{data.uid}"
 					   placeholder="{f:translate(key:'search')}"
-					   class="tx-infinitescrollgallery-searchTerm search placeholder"
-					   name="tx_infinitescrollgallery_pi1[searchTerm]"/>
+					   class="natural-gallery-searchTerm search placeholder"
+					   name="tx_naturalGallery_pi1[searchTerm]"/>
 
 				<f:if condition="{categories}">
 					<div class="form-group">
 						<label>
-							<input type="checkbox" checked="checked" data-uid="none" class="tx-infinitescrollgallery-category" id="tx-infinitescrollgallery-category-all">
+							<input type="checkbox" checked="checked" data-uid="none" class="natural-gallery-category" id="natural-gallery-category-all">
 							<f:translate key="without"/>
 						</label>
 						<f:for each="{categories}" as="category">
 							<label>
-								<input type="checkbox" checked="checked" data-uid="{category.uid}" class="tx-infinitescrollgallery-category" id="tx-infinitescrollgallery-category-{category.uid}">
+								<input type="checkbox" checked="checked" data-uid="{category.uid}" class="natural-gallery-category" id="natural-gallery-category-{category.uid}">
 								{category.title}
 							</label>
 						</f:for>
@@ -61,48 +61,37 @@
 
 		</f:if>
 
-		<div class="tx-infinitescrollgallery-main">
-			<div class="tx-infinitescrollgallery-body">
-				<div class="tx-infinitescrollgallery-noresults"><f:translate key="none"/></div>
+		<div class="natural-gallery-main">
+			<div class="natural-gallery-body">
+				<div class="natural-gallery-noresults"><f:translate key="none"/></div>
 			</div>
 
-			<div class="tx-infinitescrollgallery-footer" style="clear: both">
-				<div class="tx-infinitescrollgallery-recordnumber">
-					<span class="tx-infinitescrollgallery-numberOfVisibleImages">{numberOfVisibleImages}</span> /
-					<span class="tx-infinitescrollgallery-totalImages">{totalNumberOfImages}</span>
+			<div class="natural-gallery-footer" style="clear: both">
+				<div class="natural-gallery-recordnumber">
+					<span class="natural-gallery-numberOfVisibleImages">{numberOfVisibleImages}</span> /
+					<span class="natural-gallery-totalImages">{totalNumberOfImages}</span>
 				</div>
 			</div>
-			<div class="tx-infinitescrollgallery-next" style="text-align: center">
+			<div class="natural-gallery-next" style="text-align: center">
 				 <a href=""><f:translate key="more"/></a>
 			</div>
 		</div>
 
-		<!-- Root element of PhotoSwipe. Must have class pswp. -->
 		<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-			<!-- Background of PhotoSwipe.
-				 It's a separate element as animating opacity is faster than rgba(). -->
 			<div class="pswp__bg"></div>
-			<!-- Slides wrapper with overflow:hidden. -->
 			<div class="pswp__scroll-wrap">
-				<!-- Container that holds slides.
-					PhotoSwipe keeps only 3 of them in the DOM to save memory.
-					Don't modify these 3 pswp__item elements, data is added later on. -->
 				<div class="pswp__container">
 					<div class="pswp__item"></div>
 					<div class="pswp__item"></div>
 					<div class="pswp__item"></div>
 				</div>
-				<!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
 				<div class="pswp__ui pswp__ui--hidden">
 					<div class="pswp__top-bar">
-						<!--  Controls are self-explanatory. Order can be changed. -->
 						<div class="pswp__counter"></div>
 						<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
 						<button class="pswp__button pswp__button--share" title="Share"></button>
 						<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
 						<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-						<!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-						<!-- element will get class pswp__preloader--active when preloader is running -->
 						<div class="pswp__preloader">
 							<div class="pswp__preloader__icn">
 								<div class="pswp__preloader__cut">

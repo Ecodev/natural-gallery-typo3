@@ -32,20 +32,19 @@
         /**
          * Computing tools to organize images
          */
-        var organizer = tx_infiniteScrollGallery_organizer;
+        var organizer = natural_gallery_organizer;
 
         /**
          * Everything starts here. Called in the end of this file.
          * For each gallery in the page, set a body container (dom element) and compute images sizes, then add elements to dom container
          */
         function initGallery() {
-
-            for (var i = 0; i < infinitesScrollGallery.length; i++) {
-                var gallery = infinitesScrollGallery[i];
+            for (var i = 0; i < naturalGalleries.length; i++) {
+                var gallery = naturalGalleries[i];
                 gallery.pswpContainer = [];
                 gallery.selection = []; // for filtered elements
-                gallery.rootElement = $('#tx-infinitescrollgallery-' + gallery.id);
-                gallery.bodyElement = gallery.rootElement.find('.tx-infinitescrollgallery-body');
+                gallery.rootElement = $('#natural-gallery-' + gallery.id);
+                gallery.bodyElement = gallery.rootElement.find('.natural-gallery-body');
                 gallery.bodyElementWidth = Math.floor(gallery.bodyElement[0].getBoundingClientRect().width);
                 organizer.organize(gallery);
                 addElements(gallery);
@@ -67,7 +66,6 @@
             var collection = gallery.filtered ? gallery.selection : gallery.images;
 
             if (gallery.pswpContainer.length === collection.length) {
-                gallery.rootElement.find('.tx-infinitescrollgallery-next').hide();
                 return;
             }
 
@@ -100,12 +98,18 @@
                     bindClick(figure.image, gallery);
                     styleFigure(element, gallery);
                 }
+
+                // Show / Hide "more" button.
+                var nextButton = gallery.rootElement.find('.natural-gallery-next span');
+                nextButton.show(); // display because filters may add more images and we have to show it again
+                if (gallery.pswpContainer.length === collection.length) {
+                    nextButton.hide();
+                }
             }
 
-            gallery.rootElement.find('.tx-infinitescrollgallery-noresults').hide();
-            gallery.rootElement.find('.tx-infinitescrollgallery-numberOfVisibleImages').text(gallery.pswpContainer.length);
-            gallery.rootElement.find('.tx-infinitescrollgallery-totalImages').text(collection.length);
-
+            gallery.rootElement.find('.natural-gallery-noresults').hide();
+            gallery.rootElement.find('.natural-gallery-numberOfVisibleImages').text(gallery.pswpContainer.length);
+            gallery.rootElement.find('.natural-gallery-totalImages').text(collection.length);
         }
 
         /**
@@ -123,10 +127,8 @@
             }
 
             var winHeight = $(window).height();
-            var top = gallery.bodyElement.offset().top;
-            var galleryVisibleHeight = winHeight - top;
-            var maxRowHeight = gallery.thumbnailMaximumHeight;
-            var nbRows = Math.ceil(galleryVisibleHeight / maxRowHeight);
+            var galleryVisibleHeight = winHeight - gallery.bodyElement.offset().top;
+            var nbRows = Math.floor(galleryVisibleHeight / (gallery.thumbnailMaximumHeight * 0.7 )); // ratio to be more close from reality average row height
 
             return nbRows < minNumberOfRowsAtStart ? minNumberOfRowsAtStart : nbRows;
         }
@@ -261,7 +263,7 @@
 
         function filterByTerm(gallery) {
 
-            var term = removeDiacritics(gallery.rootElement.find('.tx-infinitescrollgallery-searchTerm').val()).toLowerCase();
+            var term = removeDiacritics(gallery.rootElement.find('.natural-gallery-searchTerm').val()).toLowerCase();
             var filteredImages = [];
 
             // show all if empty
@@ -286,7 +288,7 @@
             // Create an array with id of each selected categories
             var selectedCategories = [];
 
-            gallery.rootElement.find('.tx-infinitescrollgallery-category:checked').each(function() {
+            gallery.rootElement.find('.natural-gallery-category:checked').each(function() {
                 selectedCategories.push($(this).data('uid'));
             });
 
@@ -294,19 +296,21 @@
             for (var i = 0; i < gallery.images.length; i++) {
                 var image = gallery.images[i];
 
-                // If image has no categories and "without" is checked
+                // If not categories, dont filter, add to elements to consider
+                // !image.hasOwnProperty('categories') && !Array.isArray(image.categories) &&
                 if (image.categories.length === 0 && selectedCategories.indexOf("none") != -1) {
                     filteredImages.push(image);
 
                 } else if (image.categories.length > 0) {
                     // Set image as responding to filter if at least one category is found
-                    for (var j = 0; j < image.categories; j++) {
+                    for (var j = 0; j < image.categories.length; j++) {
                         var category = image.categories[j];
                         if (selectedCategories.indexOf(category) >= 0) {
                             filteredImages.push(image);
                             break;
                         }
                     }
+
                 }
             }
 
@@ -320,7 +324,7 @@
         function reset(gallery) {
             gallery.pswpContainer = [];
             gallery.bodyElement.find('figure').remove();
-            gallery.rootElement.find('.tx-infinitescrollgallery-noresults').show();
+            gallery.rootElement.find('.natural-gallery-noresults').show();
         }
 
         /**
@@ -332,14 +336,14 @@
          */
         function getGallery(element) {
 
-            var gallery = infinitesScrollGallery[0];
+            var gallery = naturalGalleries[0];
             if (element) {
-                var galleryId = $(element).parents('.tx-infinitescrollgallery').data('galleryid');
+                var galleryId = $(element).parents('.natural-gallery').data('galleryid');
 
                 var gallery = null;
-                for (var i = 0; i < infinitesScrollGallery.length; i++) {
-                    if (infinitesScrollGallery[i].id === Number(galleryId)) {
-                        gallery = infinitesScrollGallery[i];
+                for (var i = 0; i < naturalGalleries.length; i++) {
+                    if (naturalGalleries[i].id == Number(galleryId)) {
+                        gallery = naturalGalleries[i];
                         break;
                     }
                 }
@@ -350,7 +354,7 @@
         /**
          * Attach event to next button
          */
-        $('.tx-infinitescrollgallery-next a').on('click', function(e) {
+        $('.natural-gallery-next a').on('click', function(e) {
             e.preventDefault();
             addElements(getGallery(this)); // don't specify number of rows, addElements is smart enough to guess it
         });
@@ -358,14 +362,14 @@
         /**
          * On category checkboxes change
          */
-        $('.tx-infinitescrollgallery-category').on('change', function(e) {
+        $('.natural-gallery-category').on('change', function(e) {
             filterSelection(getGallery(this));
         });
 
         /**
          * Attach event to the search field
          */
-        $('.tx-infinitescrollgallery-searchTerm').on('keydown', function(event) {
+        $('.natural-gallery-searchTerm').on('keydown', function(event) {
             // True when key 'enter' hit
             if (event.keyCode == 13) {
                 event.preventDefault();
@@ -377,7 +381,7 @@
             }
         });
 
-        $('.tx-infinitescrollgallery-searchTerm').on('blur', function() {
+        $('.natural-gallery-searchTerm').on('blur', function() {
             var gallery = getGallery(this);
             if (gallery.lastSearch != $(this).val()) {
                 gallery.lastSearch = $(this).val();
@@ -391,53 +395,94 @@
          * Allow scroll if there is only a single gallery on page and no limit specified
          * If the limit is specified, the gallery switch to manual mode.
          */
-        if (infinitesScrollGallery.length == 1 && getGallery().limit === 0) {
-
-            $('.tx-infinitescrollgallery-next').hide();
+        if (naturalGalleries.length == 1 && getGallery().limit === 0) {
 
             $(document).scroll(function() {
 
                 var gallery = getGallery().bodyElement;
-                var endOfGalleryAt = gallery.offset().top + gallery.height() - $(window).height() + 100;
+                var endOfGalleryAt = gallery.offset().top + gallery.height() + 100;
 
                 // Avoid to expand gallery if we are scrolling up
                 var current_scroll_top = $(document).scrollTop();
+                var window_size = $(window).height();//document.body.clientHeight;
                 var scroll_delta = current_scroll_top - old_scroll_top;
                 old_scroll_top = current_scroll_top;
 
                 // "enableMoreLoading" is a setting coming from the BE bloking / enabling dynamic loading of thumbnail
-                if (scroll_delta > 0 && $(window).scrollTop() > endOfGalleryAt) {
+                if (scroll_delta > 0 && current_scroll_top + window_size > endOfGalleryAt) {
 
                     // When scrolling only add a row at once
                     addElements(getGallery(), 1);
-
-                    // Computes if there are more images to display and an ajax request can be sent against the server
-                    //var numberOfVisibleImages = parseInt($("#tx-infinitescrollgallery-numberOfVisibleImages").html());
-                    //var totalImages = parseInt($("#tx-infinitescrollgallery-totalImages").html());
-
                 }
             });
         }
 
+        /**
+         * Resize
+         * .on('resize') only works with window resize. When scroll appear, we can't detect it.
+         * This little plugin add an invisible iframe with 100% and fires custom event "scrollbar" when it's size changes, including when parent window
+         * scrollbar appear
+         */
+        $('<iframe id="scrollbar-listener"/>').css({
+            'position'      : 'fixed',
+            'width'         : '100%',
+            'height'        : 0,
+            'bottom'        : 0,
+            'border'        : 0,
+            'background-color'  : 'transparent'
+        }).on('load',function() {
+            var vsb     = (document.body.scrollHeight > document.body.clientHeight);
+            var timer   = null;
+            this.contentWindow.addEventListener('resize', function() {
+                clearTimeout(timer);
+                timer = setTimeout(function() {
+                    var vsbnew = (document.body.scrollHeight > document.body.clientHeight);
+                    if (vsbnew) {
+                        if (!vsb) {
+                            $(top.window).trigger('scrollbar',[true]);
+                            vsb=true;
+                        }
+                    } else {
+                        if (vsb) {
+                            $(top.window).trigger('scrollbar',[false]);
+                            vsb=false;
+                        }
+                    }
+                }, 100);
+            });
+        }).appendTo('body');
+
+        // When browser size change
         $(window).on('resize', function() {
-            for (var i = 0; i < infinitesScrollGallery.length; i++) {
-                var gallery = infinitesScrollGallery[i];
+            resize();
+        });
+
+        // On windows scrollbar (dis)appear
+        $(window).on('scrollbar', function(){
+            resize();
+        });
+
+        /**
+         * Check whetever we need to resize a gallery (only if parent container width changes)
+         */
+        function resize() {
+            for (var i = 0; i < naturalGalleries.length; i++) {
+                var gallery = naturalGalleries[i];
                 var containerWidth = Math.floor(gallery.bodyElement[0].getBoundingClientRect().width);
 
                 if (containerWidth != gallery.bodyElementWidth) {
                     gallery.bodyElementWidth = containerWidth;
                     gallery.bodyElement.find('figure').css('visibility', 'hidden');
                     organizer.organize();
-                    resize(gallery);
+                    redraw(gallery);
                 }
             }
-        });
-
+        }
         /**
          * Empty a gallery and add the same elements with new size
          */
-        function resize(gallery) {
-            var galleries = gallery ? [gallery] : infinitesScrollGallery
+        function redraw(gallery) {
+            var galleries = gallery ? [gallery] : naturalGalleries
             for (var i = 0; i < galleries.length; i++) {
                 var gallery = galleries[i];
                 var nbRows = gallery.images[gallery.pswpContainer.length - 1].row + 1;

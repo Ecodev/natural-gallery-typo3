@@ -7,11 +7,11 @@
  * Uses json, never read the dom, except to determine the size of parent container.
  *
  */
-var tx_infiniteScrollGallery_organizer = {
+var natural_gallery_organizer = {
 
     organize: function(gallery) {
 
-        var galleries = gallery ? [gallery] : infinitesScrollGallery;
+        var galleries = gallery ? [gallery] : naturalGalleries;
 
         for (var i = 0; i < galleries.length; i++) {
 
@@ -29,7 +29,7 @@ var tx_infiniteScrollGallery_organizer = {
 
     /**
      * Compute sizes for images with 1:1 ratio
-     * @param elements
+     * @param elements«
      * @param containerWidth
      * @param nbPictPerRow
      * @param margin
