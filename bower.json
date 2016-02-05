@@ -4,5 +4,6 @@
   "ignore": [],
   "dependencies": {
     "photoswipe": "~4.1.0",
+    "natural-gallery": "^1.0.0"
   }
 }
