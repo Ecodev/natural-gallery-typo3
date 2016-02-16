@@ -1,5 +1,5 @@
 <?php
-namespace Fab\InfiniteScrollGallery\Persistence;
+namespace Fab\NaturalGallery\Persistence;
 
 /**
  * This file is part of the TYPO3 CMS project.

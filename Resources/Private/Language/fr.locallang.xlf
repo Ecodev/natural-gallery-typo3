@@ -7,7 +7,7 @@
 
 			<!-- Wizard -->
 			<trans-unit id="wizard.title">
-				<target>Infini Scroll Galerie</target>
+				<target>Naturelle Galerie</target>
 			</trans-unit>
 			<trans-unit id="wizard.description">
 				<target>Afficher des images à mesure que l'utilisateur scroll et les afficher dans un slideshow.</target>
@@ -98,7 +98,7 @@
 			</trans-unit>
 
 			<!-- Frontend -->
-			<trans-unit id="tx_infinitescrollgallery_dropdown_tags">
+			<trans-unit id="tx_naturalgallery_dropdown_tags">
 				<target>tous</target>
 			</trans-unit>
 			<trans-unit id="filter_by">

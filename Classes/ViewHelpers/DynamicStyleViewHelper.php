@@ -1,5 +1,5 @@
 <?php
-namespace Fab\InfiniteScrollGallery\ViewHelpers;
+namespace Fab\NaturalGallery\ViewHelpers;
 
 /**
  * This file is part of the TYPO3 CMS project.

@@ -1,15 +1,15 @@
 #################################
-# plugin.tx_infinitescrollgallery
+# plugin.tx_naturalgallery
 #################################
 
-plugin.tx_infinitescrollgallery {
+plugin.tx_naturalgallery {
 	view {
-		templateRootPath = {$plugin.tx_infinitescrollgallery.view.templateRootPath}
-		partialRootPath = {$plugin.tx_infinitescrollgallery.view.partialRootPath}
-		layoutRootPath = {$plugin.tx_infinitescrollgallery.view.layoutRootPath}
+		templateRootPath = {$plugin.tx_naturalgallery.view.templateRootPath}
+		partialRootPath = {$plugin.tx_naturalgallery.view.partialRootPath}
+		layoutRootPath = {$plugin.tx_naturalgallery.view.layoutRootPath}
 	}
 	persistence {
-		storagePid = {$plugin.tx_infinitescrollgallery.persistence.storagePid}
+		storagePid = {$plugin.tx_naturalgallery.persistence.storagePid}
 	}
 
 	settings {
@@ -17,22 +17,22 @@ plugin.tx_infinitescrollgallery {
 		asset {
 
 			photoSwipeCss {
-				path = EXT:infinite_scroll_gallery/Resources/Public/StyleSheets/photoswipe.css
+				path = EXT:natural_gallery/Resources/Public/StyleSheets/photoswipe.css
 				type = css
 
 				# Optional key if loading assets through EXT:vhs.
 				dependencies = mainCss
 			}
 			photoSwipeThemeCss {
-				path = EXT:infinite_scroll_gallery/Resources/Public/StyleSheets/default-skin/default-skin.css
+				path = EXT:natural_gallery/Resources/Public/StyleSheets/default-skin/default-skin.css
 				type = css
 
 				# Optional key if loading assets through EXT:vhs.
 				dependencies = mainCss
 			}
 
-			infiniteScrollGalleryCss {
-				path = EXT:infinite_scroll_gallery/Resources/Public/StyleSheets/natural-gallery.css
+			naturalGalleryCss {
+				path = EXT:natural_gallery/Resources/Public/StyleSheets/natural-gallery.css
 				type = css
 
 				# Optional key if loading assets through EXT:vhs.
@@ -40,14 +40,14 @@ plugin.tx_infinitescrollgallery {
 			}
 
 			photoSwipeJs {
-				path = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/photoswipe.min.js
+				path = EXT:natural_gallery/Resources/Public/JavaScript/photoswipe.min.js
 				type = js
 
 				# Optional key if loading assets through EXT:vhs.
 				dependencies = mainJs
 			}
 			photoSwipeThemeJs {
-				path = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/photoswipe-ui-default.min.js
+				path = EXT:natural_gallery/Resources/Public/JavaScript/photoswipe-ui-default.min.js
 				type = js
 
 				# Optional key if loading assets through EXT:vhs.
@@ -55,7 +55,7 @@ plugin.tx_infinitescrollgallery {
 			}
 
 			organizer {
-				path = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/natural-gallery-organizer.js
+				path = EXT:natural_gallery/Resources/Public/JavaScript/natural-gallery-organizer.js
 				type = js
 
 				# Optional key if loading assets through EXT:vhs.
@@ -63,8 +63,8 @@ plugin.tx_infinitescrollgallery {
 			}
 
 
-			infiniteScrollGalleryJs {
-				path = EXT:infinite_scroll_gallery/Resources/Public/JavaScript/natural-gallery.js
+			naturalGalleryJs {
+				path = EXT:natural_gallery/Resources/Public/JavaScript/natural-gallery.js
 				type = js
 
 				# Optional key if loading assets through EXT:vhs.

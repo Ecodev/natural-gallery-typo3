@@ -1,5 +1,5 @@
 <?php
-namespace Fab\InfiniteScrollGallery\Backend;
+namespace Fab\NaturalGallery\Backend;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -84,11 +84,11 @@ class TceForms
         $setup = $this->getConfigurationManager()->getTypoScriptSetup();
 
         $pluginConfiguration = array();
-        if (is_array($setup['plugin.']['tx_infinitescrollgallery.'])) {
+        if (is_array($setup['plugin.']['tx_naturalgallery.'])) {
 
             /** @var TypoScriptService $typoScriptService */
             $typoScriptService = GeneralUtility::makeInstance(TypoScriptService::class);
-            $pluginConfiguration = $typoScriptService->convertTypoScriptArrayToPlainArray($setup['plugin.']['tx_infinitescrollgallery.']);
+            $pluginConfiguration = $typoScriptService->convertTypoScriptArrayToPlainArray($setup['plugin.']['tx_naturalgallery.']);
         }
         return $pluginConfiguration;
     }

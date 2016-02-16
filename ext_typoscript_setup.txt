@@ -1,9 +1,9 @@
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:infinite_scroll_gallery/Configuration/TypoScript/setup.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:natural_gallery/Configuration/TypoScript/setup.ts">
 
 config.tx_extbase {
     persistence{
         classes {
-            Fab\InfiniteScrollGallery\Domain\Model\Category {
+            Fab\NaturalGallery\Domain\Model\Category {
                 mapping {
                     tableName = sys_category
                 }

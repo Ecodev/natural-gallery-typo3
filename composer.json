@@ -1,20 +1,20 @@
 {
-  "name": "fab/infinite-scroll-gallery",
+  "name": "fab/natural-gallery",
   "type": "typo3-cms-extension",
   "description": "Display images as you scroll and enlarged them in a slideshow.",
-  "homepage": "https://github.com/Ecodev/infinite_scroll_gallery",
+  "homepage": "https://github.com/Ecodev/natural_gallery",
   "license": ["GPL-2.0+"],
   "keywords": [
     "TYPO3 CMS",
     "Photo Gallery"
   ],
   "support": {
-    "issues": "https://github.com/Ecodev/infinite_scroll_gallery/issues"
+    "issues": "https://github.com/Ecodev/natural_gallery/issues"
   },
   "autoload": {
     "psr-4": {
-      "Fab\\InfiniteScrollGallery\\": "Classes/"
+      "Fab\\NaturalGallery\\": "Classes/"
     }
   },
-  "version": "2.0.0-dev"
+  "version": "0.9.0-dev"
 }

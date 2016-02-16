@@ -1,5 +1,5 @@
 <?php
-namespace Fab\InfiniteScrollGallery\Domain\Model;
+namespace Fab\NaturalGallery\Domain\Model;
 
 /**
  * This file is part of the TYPO3 CMS project.

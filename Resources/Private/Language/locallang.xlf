@@ -7,7 +7,7 @@
 
 			<!-- Wizard -->
 			<trans-unit id="wizard.title">
-				<source>Infinite Scroll Gallery</source>
+				<source>Natural Gallery</source>
 			</trans-unit>
 			<trans-unit id="wizard.description">
 				<source>Display images as you scroll and enlarged them in a slideshow.</source>
@@ -98,7 +98,7 @@
 			</trans-unit>
 
 			<!-- Frontend -->
-			<trans-unit id="tx_infinitescrollgallery_dropdown_tags">
+			<trans-unit id="tx_naturalgallery_dropdown_tags">
 				<source>all</source>
 			</trans-unit>
 			<trans-unit id="filter_by">

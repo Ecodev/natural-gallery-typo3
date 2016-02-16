@@ -1,1 +1,1 @@
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:infinite_scroll_gallery/Configuration/TypoScript/constants.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:natural_gallery/Configuration/TypoScript/constants.ts">

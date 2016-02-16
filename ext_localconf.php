@@ -4,7 +4,7 @@ if (!defined('TYPO3_MODE')) {
 }
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-    'Fab.infinite_scroll_gallery',
+    'Fab.natural_gallery',
     'Pi1',
     array(
         'Gallery' => 'list',

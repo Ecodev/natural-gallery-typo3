@@ -8,13 +8,13 @@
         <selection>
             <ROOT>
                 <TCEforms>
-                    <sheetTitle>LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:flexform.tab.source</sheetTitle>
+                    <sheetTitle>LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:flexform.tab.source</sheetTitle>
                 </TCEforms>
                 <type>array</type>
                 <el>
                     <settings.folders>
                         <TCEforms>
-                            <label>LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.folders</label>
+                            <label>LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.folders</label>
                             <config>
                                 <type>input</type>
                                 <size>40</size>
@@ -42,10 +42,10 @@
                     </settings.folders>
                     <settings.selection>
                         <TCEforms>
-                            <label>LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.selection</label>
+                            <label>LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.selection</label>
                             <config>
                                 <type>select</type>
-                                <itemsProcFunc>Fab\InfiniteScrollGallery\Backend\TceForms->getSelections</itemsProcFunc>
+                                <itemsProcFunc>Fab\NaturalGallery\Backend\TceForms->getSelections</itemsProcFunc>
                                 <size>1</size>
                                 <maxitems>1</maxitems>
                             </config>
@@ -53,7 +53,7 @@
                     </settings.selection>
                     <settings.additionalEquals>
                         <TCEforms>
-                            <label>LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.additionalEquals</label>
+                            <label>LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.additionalEquals</label>
                             <config>
                                 <type>input</type>
                             </config>
@@ -62,7 +62,7 @@
 
                     <settings.sorting>
                         <TCEforms>
-                            <label>LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.sorting</label>
+                            <label>LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.sorting</label>
                             <config>
                                 <type>input</type>
                             </config>
@@ -70,7 +70,7 @@
                     </settings.sorting>
                     <settings.direction>
                         <TCEforms>
-                            <label>LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.direction</label>
+                            <label>LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.direction</label>
                             <config>
                                 <type>select</type>
                                 <items>
@@ -81,13 +81,13 @@
 
                                     <numIndex index="1" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.direction.descending
+                                            LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.direction.descending
                                         </numIndex>
                                         <numIndex index="1">DESC</numIndex>
                                     </numIndex>
                                     <numIndex index="2" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.direction.ascending
+                                            LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.direction.ascending
                                         </numIndex>
                                         <numIndex index="1">ASC</numIndex>
                                     </numIndex>
@@ -104,7 +104,7 @@
         <sorting>
             <ROOT>
                 <TCEforms>
-                    <sheetTitle>LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:flexform.tab.sorting</sheetTitle>
+                    <sheetTitle>LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:flexform.tab.sorting</sheetTitle>
                 </TCEforms>
                 <type>array</type>
                 <el>
@@ -115,27 +115,27 @@
         <imageSettings>
             <ROOT>
                 <TCEforms>
-                    <sheetTitle>LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:flexform.tab.imageSettings</sheetTitle>
+                    <sheetTitle>LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:flexform.tab.imageSettings</sheetTitle>
                 </TCEforms>
                 <type>array</type>
                 <el>
                     <settings.thumbnailFormat>
                         <TCEforms>
                             <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.thumbnailFormat
+                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.thumbnailFormat
                             </label>
                             <config>
                                 <type>select</type>
                                 <items type="array">
                                     <numIndex index="1" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.thumbnailFormat.natural
+                                            LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.thumbnailFormat.natural
                                         </numIndex>
                                         <numIndex index="1">natural</numIndex>
                                     </numIndex>
                                     <numIndex index="2" type="array">
                                         <numIndex index="0">
-                                            LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.thumbnailFormat.square
+                                            LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.thumbnailFormat.square
                                         </numIndex>
                                         <numIndex index="1">square</numIndex>
                                     </numIndex>
@@ -148,7 +148,7 @@
                     <settings.imagesPerRow>
                         <TCEforms>
                             <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.imagesPerRow
+                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.imagesPerRow
                             </label>
                             <config>
                                 <type>input</type>
@@ -160,7 +160,7 @@
                     <settings.limit>
                         <TCEforms>
                             <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.limit
+                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.limit
                             </label>
                             <config>
                                 <type>input</type>
@@ -172,7 +172,7 @@
                     <settings.margin>
                         <TCEforms>
                             <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.margin
+                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.margin
                             </label>
                             <config>
                                 <type>input</type>
@@ -184,7 +184,7 @@
                     <settings.round>
                         <TCEforms>
                             <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.round
+                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.round
                             </label>
                             <config>
                                 <type>input</type>
@@ -195,7 +195,7 @@
                     <settings.thumbnailMaximumHeight>
                         <TCEforms>
                             <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.thumbnailMaximumHeight
+                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.thumbnailMaximumHeight
                             </label>
                             <config>
                                 <type>input</type>
@@ -207,7 +207,7 @@
                     <settings.enlargedImageMaximumWidth>
                         <TCEforms>
                             <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.enlargedImageMaximumWidth
+                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.enlargedImageMaximumWidth
                             </label>
                             <config>
                                 <type>input</type>
@@ -219,7 +219,7 @@
                     <settings.enlargedImageMaximumHeight>
                         <TCEforms>
                             <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.enlargedImageMaximumHeight
+                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.enlargedImageMaximumHeight
                             </label>
                             <config>
                                 <type>input</type>
@@ -235,14 +235,14 @@
         <filterBar>
             <ROOT>
                 <TCEforms>
-                    <sheetTitle>LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:flexform.tab.filterBar</sheetTitle>
+                    <sheetTitle>LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:flexform.tab.filterBar</sheetTitle>
                 </TCEforms>
                 <type>array</type>
                 <el>
                     <settings.showFilters>
                         <TCEforms>
                             <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.showFilters
+                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.showFilters
                             </label>
                             <config>
                                 <type>check</type>
@@ -253,7 +253,7 @@
                     <settings.categories>
                         <TCEforms>
                             <label>
-                                LLL:EXT:infinite_scroll_gallery/Resources/Private/Language/locallang.xlf:settings.categories
+                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.categories
                             </label>
                             <config>
                                 <type>select</type>

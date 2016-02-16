@@ -1,5 +1,5 @@
 <?php
-namespace Fab\InfiniteScrollGallery\Controller;
+namespace Fab\NaturalGallery\Controller;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -14,8 +14,8 @@ namespace Fab\InfiniteScrollGallery\Controller;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Fab\InfiniteScrollGallery\Persistence\MatcherFactory;
-use Fab\InfiniteScrollGallery\Persistence\OrderFactory;
+use Fab\NaturalGallery\Persistence\MatcherFactory;
+use Fab\NaturalGallery\Persistence\OrderFactory;
 use Fab\Vidi\Domain\Repository\ContentRepositoryFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -26,7 +26,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 class GalleryController extends ActionController
 {
     /**
-     * @var \Fab\InfiniteScrollGallery\Domain\Repository\CategoryRepository
+     * @var \Fab\NaturalGallery\Domain\Repository\CategoryRepository
      * @inject
      */
     protected $categoryRepository;
