@@ -36,33 +36,24 @@ class OrderFactory implements SingletonInterface
     protected $dataType = 'sys_file';
 
     /**
-     * Constructor
-     *
-     * @param array $settings
-     */
-    public function __construct(array $settings)
-    {
-        $this->settings = $settings;
-    }
-
-    /**
      * Gets a singleton instance of this class.
      *
-     * @param array $settings
      * @return OrderFactory
      */
-    static public function getInstance(array $settings)
+    static public function getInstance()
     {
-        return GeneralUtility::makeInstance(self::class, $settings);
+        return GeneralUtility::makeInstance(self::class);
     }
 
     /**
      * Returns an order object.
      *
+     * @param array $settings
      * @return Order
      */
-    public function getOrder()
+    public function getOrder(array $settings = [])
     {
+        $this->settings = $settings;
 
         // Default ordering
         $order = Tca::table($this->dataType)->getDefaultOrderings();

@@ -52,8 +52,8 @@ class GalleryController extends ActionController
         }
 
         // Initialize some objects related to the query.
-        $matcher = MatcherFactory::getInstance($this->settings)->getMatcher();
-        $order = OrderFactory::getInstance($this->settings)->getOrder();
+        $matcher = MatcherFactory::getInstance()->getMatcher($this->settings);
+        $order = OrderFactory::getInstance()->getOrder($this->settings);
 
         // Fetch the adequate repository for a known data type.
         $contentRepository = ContentRepositoryFactory::getInstance('sys_file');

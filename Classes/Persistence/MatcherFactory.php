@@ -44,41 +44,32 @@ class MatcherFactory implements SingletonInterface
     protected $dataType = 'sys_file';
 
     /**
-     * Constructor
-     *
-     * @param array $settings
-     */
-    public function __construct(array $settings)
-    {
-        $this->settings = $settings;
-    }
-
-    /**
      * Gets a singleton instance of this class.
      *
-     * @param array $settings
      * @return MatcherFactory
      */
-    static public function getInstance(array $settings)
+    static public function getInstance()
     {
-        return GeneralUtility::makeInstance(self::class, $settings);
+        return GeneralUtility::makeInstance(self::class);
     }
 
     /**
      * Returns a matcher object.
      *
+     * @param array $settings
      * @return Matcher
      */
-    public function getMatcher()
+    public function getMatcher(array $settings)
     {
 
+        $this->settings = $settings;
+
         /** @var $matcher Matcher */
-        $matcher = GeneralUtility::makeInstance(\Fab\Vidi\Persistence\Matcher::class);
+        $matcher = GeneralUtility::makeInstance(Matcher::class);
 
         // We only want files of type images, consider it as a prerequisite.
         $matcher->equals('type', File::FILETYPE_IMAGE);
 
-        $dataType = $this->dataType;
         $matcher = $this->applyCriteriaFromFolders($matcher);
         $matcher = $this->applyCriteriaFromSelection($matcher);
         $matcher = $this->applyCriteriaFromAdditionalConstraints($matcher);
