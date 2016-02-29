@@ -28,6 +28,9 @@
 			<trans-unit id="settings.enableMoreLoading">
 				<target>Charger dynamiquement des images lorsque scroll</target>
 			</trans-unit>
+			<trans-unit id="settings.showHeader">
+				<target>Afficher l'entête</target>
+			</trans-unit>
 			<trans-unit id="settings.showFilterBar">
 				<target>Afficher la barre de filtre</target>
 			</trans-unit>
@@ -85,6 +88,25 @@
 			<trans-unit id="settings.categories">
 				<target>Catégories affichées dans la bar de recherche</target>
 			</trans-unit>
+			<trans-unit id="settings.lightbox">
+				<source>Zoomer dans la gallerie (lors du clic sur les images)</source>
+			</trans-unit>
+			<trans-unit id="settings.showLabels">
+				<source>Affichage des labels des images</source>
+			</trans-unit>
+			<trans-unit id="settings.showLabels.true">
+				<source>Toujours</source>
+			</trans-unit>
+			<trans-unit id="settings.showLabels.false">
+				<source>Jamais</source>
+			</trans-unit>
+			<trans-unit id="settings.showLabels.hover">
+				<source>Lors du survol</source>
+			</trans-unit>
+
+
+
+
 
 			<!-- Tabs -->
 			<trans-unit id="flexform.tab.source">

@@ -70,6 +70,9 @@
 			<trans-unit id="settings.round">
 				<source>Rounded corners (pixel)</source>
 			</trans-unit>
+			<trans-unit id="settings.showHeader">
+				<source>Show header</source>
+			</trans-unit>
 			<trans-unit id="settings.showFilters">
 				<source>Show filters</source>
 			</trans-unit>
@@ -84,6 +87,21 @@
 			</trans-unit>
 			<trans-unit id="settings.categories">
 				<source>Categories displayed in the filter bar</source>
+			</trans-unit>
+			<trans-unit id="settings.lightbox">
+				<source>Show lightbox (on image click)</source>
+			</trans-unit>
+			<trans-unit id="settings.showLabels">
+				<source>Show picture labels</source>
+			</trans-unit>
+			<trans-unit id="settings.showLabels.true">
+				<source>Always</source>
+			</trans-unit>
+			<trans-unit id="settings.showLabels.false">
+				<source>Never</source>
+			</trans-unit>
+			<trans-unit id="settings.showLabels.hover">
+				<source>On hover</source>
 			</trans-unit>
 
 			<!-- Tabs -->

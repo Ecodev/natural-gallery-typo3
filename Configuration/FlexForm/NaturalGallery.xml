@@ -145,6 +145,41 @@
                             </config>
                         </TCEforms>
                     </settings.thumbnailFormat>
+                    <settings.lightbox>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.lightbox
+                            </label>
+                            <config>
+                                <type>check</type>
+                                <default>1</default>
+                            </config>
+                        </TCEforms>
+                    </settings.lightbox>
+                    <settings.showLabels>
+                        <TCEforms>
+                            <label>LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.showLabels</label>
+                            <config>
+                                <type>select</type>
+                                <items>
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.showLabels.hover</numIndex>
+                                        <numIndex index="1">hover</numIndex>
+                                    </numIndex>
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.showLabels.true</numIndex>
+                                        <numIndex index="1">true</numIndex>
+                                    </numIndex>
+                                    <numIndex index="2" type="array">
+                                        <numIndex index="0">LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.showLabels.false</numIndex>
+                                        <numIndex index="1">false</numIndex>
+                                    </numIndex>
+                                </items>
+                                <size>1</size>
+                                <maxitems>1</maxitems>
+                            </config>
+                        </TCEforms>
+                    </settings.showLabels>
                     <settings.imagesPerRow>
                         <TCEforms>
                             <label>
@@ -239,6 +274,17 @@
                 </TCEforms>
                 <type>array</type>
                 <el>
+                    <settings.showHeader>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.showHeader
+                            </label>
+                            <config>
+                                <type>check</type>
+                                <default>0</default>
+                            </config>
+                        </TCEforms>
+                    </settings.showHeader>
                     <settings.showFilters>
                         <TCEforms>
                             <label>

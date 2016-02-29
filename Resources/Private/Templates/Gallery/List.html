@@ -1,116 +1,143 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
-      xmlns:f="http://typo3.org/ns/fluid/ViewHelpers"
-      xmlns:gallery="http://typo3.org/ns/Fab/NaturalGallery/ViewHelpers">
+	  xmlns:f="http://typo3.org/ns/fluid/ViewHelpers"
+	  xmlns:gallery="http://typo3.org/ns/Fab/NaturalGallery/ViewHelpers">
 
-<f:layout name="Default"/>
-<f:section name="main">
+	<f:layout name="Default"/>
 
-	<div data-galleryid="{data.uid}" class="natural-gallery" id="natural-gallery-{data.uid}">
+	<f:section name="main">
 
-		<gallery:loadAssets/>
-		<script type="text/javascript">
-			window.naturalGalleries = window.naturalGalleries || [];
+		<f:render section="Icons" partial="Icons"/>
 
-			var naturalGallery = {};
-			naturalGallery.id = Number('{data.uid}');
-			naturalGallery.images = {gallery:imageStack()};
-			naturalGallery.thumbnailMaximumHeight = Number('{settings.thumbnailMaximumHeight}');
-			naturalGallery.round = Number('{settings.round}');
-			naturalGallery.thumbnailFormat = '{settings.thumbnailFormat}';
-			naturalGallery.imagesPerRow = Number('{settings.imagesPerRow}');
-			naturalGallery.margin = Number('{settings.margin}');
-			naturalGallery.limit = Number('{settings.limit}');
+		<div data-galleryid="{data.uid}" class="natural-gallery" id="natural-gallery-{data.uid}">
 
-			window.naturalGalleries.push(naturalGallery);
-		</script>
+			<gallery:loadAssets/>
 
-		<f:comment>
-			<gallery:dynamicStyle settings="{settings}"/>
-		</f:comment>
+			<script type="text/javascript">
+				window.naturalGalleries = window.naturalGalleries || [];
 
-		<f:if condition="{settings.showFilters}">
+				var naturalGallery = {};
+				naturalGallery.id = Number('{data.uid}');
+				naturalGallery.images = {gallery:imageStack()};
+				naturalGallery.thumbnailMaximumHeight = Number('{settings.thumbnailMaximumHeight}');
+				naturalGallery.round = Number('{settings.round}');
+				naturalGallery.thumbnailFormat = '{settings.thumbnailFormat}';
+				naturalGallery.imagesPerRow = Number('{settings.imagesPerRow}');
+				naturalGallery.margin = Number('{settings.margin}');
+				naturalGallery.limit = Number('{settings.limit}');
+				naturalGallery.lightbox = '{settings.lightbox}' == true;
+				naturalGallery.showLabels = '{settings.showLabels}';
 
-			<f:form class="natural-gallery-form form-inline" id="natural-gallery-form-{data.uid}" method="GET">
-				<f:form.hidden id="natural-gallery-url" value="{f:uri.page()}"/>
-				<f:form.hidden name="limit" id="natural-gallery-limit-{data.uid}" value="{settings.limit}"/>
-				<f:form.hidden name="offset" id="natural-gallery-offset-{data.uid}" value="0"/>
-				<f:form.hidden name="contentElement" id="natural-gallery-recordUid-{data.uid}" value="{data.uid}"/>
+				window.naturalGalleries.push(naturalGallery);
+			</script>
 
-				<input type="search"
-					   id="natural-gallery-searchTerm-{data.uid}"
-					   placeholder="{f:translate(key:'search')}"
-					   class="natural-gallery-searchTerm search placeholder"
-					   name="tx_naturalGallery_pi1[searchTerm]"/>
+			<f:comment>
+				<gallery:dynamicStyle settings="{settings}"/>
+			</f:comment>
 
-				<f:if condition="{categories}">
-					<div class="form-group">
-						<label>
-							<input type="checkbox" checked="checked" data-uid="none" class="natural-gallery-category" id="natural-gallery-category-all">
-							<f:translate key="without"/>
-						</label>
-						<f:for each="{categories}" as="category">
-							<label>
-								<input type="checkbox" checked="checked" data-uid="{category.uid}" class="natural-gallery-category" id="natural-gallery-category-{category.uid}">
-								{category.title}
-							</label>
-						</f:for>
+
+			<f:if condition="{settings.showHeader}">
+				<div class="natural-gallery-header">
+
+					<f:if condition="{settings.showFilters}">
+						<div class="natural-gallery-searchTerm sectionContainer">
+							<svg viewBox="0 0 100 100">
+								<use xlink:href="#icon-search"></use>
+							</svg>
+							<input type="text" required/>
+							<label class="sectionName">{f:translate(key:'search')}</label>
+							<span class="bar"></span>
+						</div>
+
+						<f:if condition="{categories}">
+							<div class="natural-gallery-categories sectionContainer">
+								<div class="sectionName">Categories</div>
+								<label>
+									<input type="checkbox" checked="checked" data-uid="none" class="natural-gallery-category" id="natural-gallery-category-without">
+								<span class="label">
+									<svg viewBox="0 0 100 100">
+										<use xlink:href="#icon-category"></use>
+									</svg>
+									<f:translate key="without"/>
+								</span> <span class="bar"></span>
+								</label>
+								<f:for each="{categories}" as="category">
+									<label>
+										<input type="checkbox" checked="checked" data-uid="{category.uid}" class="natural-gallery-category" id="natural-gallery-category-{category.uid}">
+									<span class="label">
+										<svg viewBox="0 0 100 100">
+											<use xlink:href="#icon-category"></use>
+										</svg>
+										{category.title}
+									</span> <span class="bar"></span>
+									</label>
+								</f:for>
+							</div>
+						</f:if>
+					</f:if>
+
+					<div class="natural-gallery-images sectionContainer">
+						<svg viewBox="0 0 100 100">
+							<use xlink:href="#icon-pict"></use>
+						</svg>
+						<div class="sectionName">Images</div>
+						<span class="natural-gallery-visible"></span> / <span class="natural-gallery-total"></span>
 					</div>
-				</f:if>
+				</div>
+			</f:if>
 
-			</f:form>
-
-		</f:if>
-
-		<div class="natural-gallery-main">
-			<div class="natural-gallery-body">
-				<div class="natural-gallery-noresults"><f:translate key="none"/></div>
-			</div>
-
-			<div class="natural-gallery-footer" style="clear: both">
-				<div class="natural-gallery-recordnumber">
-					<span class="natural-gallery-numberOfVisibleImages">{numberOfVisibleImages}</span> /
-					<span class="natural-gallery-totalImages">{totalNumberOfImages}</span>
+			<div class="natural-gallery-main">
+				<div class="natural-gallery-body">
+					<div class="natural-gallery-noresults">
+						<svg viewBox="0 0 100 100">
+							<use xlink:href="#icon-noresults"></use>
+						</svg>
+					</div>
+				</div>
+				<div class="natural-gallery-footer">
+					<a class="natural-gallery-next">
+						<svg viewBox="0 0 100 100">
+							<use xlink:href="#icon-next"></use>
+						</svg>
+					</a>
 				</div>
 			</div>
-			<div class="natural-gallery-next" style="text-align: center">
-				 <a href=""><f:translate key="more"/></a>
-			</div>
-		</div>
 
-		<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-			<div class="pswp__bg"></div>
-			<div class="pswp__scroll-wrap">
-				<div class="pswp__container">
-					<div class="pswp__item"></div>
-					<div class="pswp__item"></div>
-					<div class="pswp__item"></div>
-				</div>
-				<div class="pswp__ui pswp__ui--hidden">
-					<div class="pswp__top-bar">
-						<div class="pswp__counter"></div>
-						<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-						<button class="pswp__button pswp__button--share" title="Share"></button>
-						<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-						<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-						<div class="pswp__preloader">
-							<div class="pswp__preloader__icn">
-								<div class="pswp__preloader__cut">
-									<div class="pswp__preloader__donut"></div>
+			<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="pswp__bg"></div>
+				<div class="pswp__scroll-wrap">
+					<div class="pswp__container">
+						<div class="pswp__item"></div>
+						<div class="pswp__item"></div>
+						<div class="pswp__item"></div>
+					</div>
+					<div class="pswp__ui pswp__ui--hidden">
+						<div class="pswp__top-bar">
+							<div class="pswp__counter"></div>
+							<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+							<button class="pswp__button pswp__button--share" title="Share"></button>
+							<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+							<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+							<div class="pswp__preloader">
+								<div class="pswp__preloader__icn">
+									<div class="pswp__preloader__cut">
+										<div class="pswp__preloader__donut"></div>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class="pswp__share-tooltip"></div></div>
-					<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
-					<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
-					<div class="pswp__caption">
-						<div class="pswp__caption__center"></div>
+						<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+							<div class="pswp__share-tooltip"></div>
+						</div>
+						<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+						<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+						<div class="pswp__caption">
+							<div class="pswp__caption__center"></div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-</f:section>
+	</f:section>
 
 </html>
