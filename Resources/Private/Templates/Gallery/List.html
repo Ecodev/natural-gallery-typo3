@@ -51,8 +51,8 @@
 						<f:if condition="{categories}">
 							<div class="natural-gallery-categories sectionContainer">
 								<div class="sectionName">Categories</div>
-								<label>
-									<input type="checkbox" checked="checked" data-uid="none" class="natural-gallery-category" id="natural-gallery-category-without">
+								<label data-id="none">
+									<input type="checkbox" checked>
 								<span class="label">
 									<svg viewBox="0 0 100 100">
 										<use xlink:href="#icon-category"></use>
@@ -61,8 +61,8 @@
 								</span> <span class="bar"></span>
 								</label>
 								<f:for each="{categories}" as="category">
-									<label>
-										<input type="checkbox" checked="checked" data-uid="{category.uid}" class="natural-gallery-category" id="natural-gallery-category-{category.uid}">
+									<label data-id="{category.uid}">
+										<input type="checkbox" checked>
 									<span class="label">
 										<svg viewBox="0 0 100 100">
 											<use xlink:href="#icon-category"></use>
