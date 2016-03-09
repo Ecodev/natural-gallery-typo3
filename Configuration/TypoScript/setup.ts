@@ -30,19 +30,19 @@ plugin.tx_naturalgallery {
 				# Optional key if loading assets through EXT:vhs.
 				dependencies = mainCss
 			}
-			naturalGalleryThemeCss {
-				path = EXT:natural_gallery/Resources/Public/StyleSheets/natural-gallery/themes/natural.css
-				type = css
-
-				# Optional key if loading assets through EXT:vhs.
-				dependencies = mainCss
-			}
 			naturalGalleryCss {
 				path = EXT:natural_gallery/Resources/Public/StyleSheets/natural-gallery/natural-gallery.min.css
 				type = css
 
 				# Optional key if loading assets through EXT:vhs.
 				dependencies = mainCss
+			}
+			naturalGalleryThemeCss {
+				path = EXT:natural_gallery/Resources/Public/StyleSheets/natural-gallery/themes/natural.css
+				type = css
+
+				# Optional key if loading assets through EXT:vhs.
+				dependencies = naturalGalleryCss
 			}
 			photoSwipeJs {
 				path = EXT:natural_gallery/Resources/Public/JavaScript/photoswipe.min.js

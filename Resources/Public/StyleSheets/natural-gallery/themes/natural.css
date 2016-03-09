@@ -3,9 +3,10 @@
  * -----------------------------------------
  */
 
-.natural-gallery .bar:before,
-.natural-gallery .bar:after {
-    background-color: #002b9b !important;
+.natural-gallery .natural-gallery-body figure.loading::before,
+.natural-gallery .bar::before,
+.natural-gallery .bar::after {
+    background-color: #0089e0 !important;
 }
 
 /* Inactive */
@@ -40,12 +41,12 @@
 .natural-gallery .natural-gallery-searchTerm:hover input,
 .natural-gallery .natural-gallery-searchTerm:hover .sectionName,
 .natural-gallery .natural-gallery-images:hover .sectionName {
-    color: #002b9b !important;
+    color: #0089e0 !important;
     fill: currentColor !important;
 }
 
 .natural-gallery .natural-gallery-categories input[type=checkbox]:checked ~ .label svg {
-    fill: #002b9b !important;
+    fill: #0089e0 !important;
 }
 
 .natural-gallery .natural-gallery-next:hover {
