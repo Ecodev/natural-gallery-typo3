@@ -2,19 +2,19 @@
   "name": "fab/natural-gallery",
   "type": "typo3-cms-extension",
   "description": "Display images as you scroll and enlarged them in a slideshow.",
-  "homepage": "https://github.com/Ecodev/natural_gallery",
+  "homepage": "https://github.com/Ecodev/natural-gallery-typo3",
   "license": ["GPL-2.0+"],
   "keywords": [
     "TYPO3 CMS",
     "Photo Gallery"
   ],
   "support": {
-    "issues": "https://github.com/Ecodev/natural_gallery/issues"
+    "issues": "https://github.com/Ecodev/natural-gallery-typo3/issues"
   },
   "autoload": {
     "psr-4": {
       "Fab\\NaturalGallery\\": "Classes/"
     }
   },
-  "version": "0.9.1-dev"
+  "version": "0.9.2-dev"
 }
