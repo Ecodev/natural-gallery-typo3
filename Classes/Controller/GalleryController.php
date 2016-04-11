@@ -17,6 +17,7 @@ namespace Fab\NaturalGallery\Controller;
 use Fab\NaturalGallery\Persistence\MatcherFactory;
 use Fab\NaturalGallery\Persistence\OrderFactory;
 use Fab\Vidi\Domain\Repository\ContentRepositoryFactory;
+use Fab\Vidi\Persistence\Matcher;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
@@ -53,24 +54,25 @@ class GalleryController extends ActionController
 
         // Initialize some objects related to the query.
         $matcher = MatcherFactory::getInstance()->getMatcher($this->settings);
+        $matcher->setLogicalSeparatorForEquals(Matcher::LOGICAL_OR);
         $order = OrderFactory::getInstance()->getOrder($this->settings);
+
+        $categories = GeneralUtility::trimExplode(',', $this->settings['categories'], true);
+        foreach($categories as $category) {
+            $matcher->equals('metadata.categories', (int)$category);
+        }
 
         // Fetch the adequate repository for a known data type.
         $contentRepository = ContentRepositoryFactory::getInstance('sys_file');
 
         // Fetch and count files
         $images = $contentRepository->findBy($matcher, $order);
-        $totalNumberOfImages = $contentRepository->countBy($matcher);
 
         // Assign template variables
-        $this->view->assign('totalNumberOfImages', $totalNumberOfImages);
         $this->view->assign('settings', $this->settings);
         $this->view->assign('data', $this->configurationManager->getcontentObject()->data);
         $this->view->assign('images', $images);
-        $this->view->assign('numberOfVisibleImages', $this->settings['limit'] > $totalNumberOfImages ? $totalNumberOfImages : $this->settings['limit']);
-
-        $identifiers = GeneralUtility::trimExplode(',', $this->settings['categories'], TRUE);
-        $this->view->assign('categories', $this->categoryRepository->findByIdentifiers($identifiers));
+        $this->view->assign('categories', $this->categoryRepository->findByIdentifiers($categories));
     }
 
 }

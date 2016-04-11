@@ -68,7 +68,7 @@ class MatcherFactory implements SingletonInterface
         $matcher = GeneralUtility::makeInstance(Matcher::class);
 
         // We only want files of type images, consider it as a prerequisite.
-        $matcher->equals('type', File::FILETYPE_IMAGE);
+        $matcher->like('type', File::FILETYPE_IMAGE);
 
         $matcher = $this->applyCriteriaFromFolders($matcher);
         $matcher = $this->applyCriteriaFromSelection($matcher);
