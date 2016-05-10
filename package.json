@@ -1,0 +1,38 @@
+{
+  "name": "natural_gallery",
+  "description": "A lazy load, infinite scroll and natural layout list gallery",
+  "main": "index.js",
+  "devDependencies": {
+    "natural-gallery-js": "^2.0.0"
+  },
+  "dependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Ecodev/natural-gallery-typo3.git"
+  },
+  "keywords": [
+    "TYPO3",
+    "CMS",
+    "TYPO3 CMS",
+    "Gallery",
+    "Photo",
+    "Gallery",
+    "Lazyload",
+    "Images",
+    "Picts",
+    "Lightbox",
+    "Slideshow",
+    "Zoom",
+    "Infinite",
+    "Scroll"
+  ],
+  "author": "Samuel Baptista <samuel.baptista@ecodev.ch>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Ecodev/natural-gallery-typo3/issues"
+  },
+  "homepage": "https://github.com/Ecodev/natural-gallery-typo3#readme"
+}

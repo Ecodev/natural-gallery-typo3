@@ -54,13 +54,7 @@ class GalleryController extends ActionController
 
         // Initialize some objects related to the query.
         $matcher = MatcherFactory::getInstance()->getMatcher($this->settings);
-        $matcher->setLogicalSeparatorForEquals(Matcher::LOGICAL_OR);
         $order = OrderFactory::getInstance()->getOrder($this->settings);
-
-        $categories = GeneralUtility::trimExplode(',', $this->settings['categories'], true);
-        foreach($categories as $category) {
-            $matcher->equals('metadata.categories', (int)$category);
-        }
 
         // Fetch the adequate repository for a known data type.
         $contentRepository = ContentRepositoryFactory::getInstance('sys_file');
@@ -72,7 +66,9 @@ class GalleryController extends ActionController
         $this->view->assign('settings', $this->settings);
         $this->view->assign('data', $this->configurationManager->getcontentObject()->data);
         $this->view->assign('images', $images);
-        $this->view->assign('categories', $this->categoryRepository->findByIdentifiers($categories));
+
+        $identifiers = GeneralUtility::trimExplode(',', $this->settings['categories'], TRUE);
+        $this->view->assign('categories', $this->categoryRepository->findByIdentifiers($identifiers));
     }
 
 }

@@ -16,94 +16,39 @@
 			</f:if>
 		</f:if>
 
-		<div class="natural-gallery">
+		<!-- The gallery -->
+		<div class="natural-gallery"></div>
 
-			<gallery:loadAssets/>
+		<script type="text/javascript">
 
-			<script type="text/javascript">
-				window.naturalGalleries = window.naturalGalleries || [];
+			window.naturalGalleries = window.naturalGalleries || [];
 
-				var naturalGallery = {};
-				naturalGallery.images = {gallery:imageStack()};
-				naturalGallery.thumbnailMaximumHeight = Number('{settings.thumbnailMaximumHeight}');
-				naturalGallery.round = Number('{settings.round}');
-				naturalGallery.thumbnailFormat = '{settings.thumbnailFormat}';
-				naturalGallery.imagesPerRow = Number('{settings.imagesPerRow}');
-				naturalGallery.margin = Number('{settings.margin}');
-				naturalGallery.limit = Number('{settings.limit}');
-				naturalGallery.lightbox = '{settings.lightbox}' == true;
-				naturalGallery.showLabels = '{settings.showLabels}';
+			var naturalGallery = {};
 
-				window.naturalGalleries.push(naturalGallery);
-			</script>
+			//@off
+			naturalGallery.images = {gallery:imageStack()};
+			naturalGallery.categories = {gallery:categoryStack()};
+			//@on
 
-			<f:comment>
-				<gallery:dynamicStyle settings="{settings}"/>
-			</f:comment>
+			naturalGallery.options = {};
+			naturalGallery.options.rowHeight = Number("{settings.rowHeight}");
+			naturalGallery.options.thumbnailFormat = '{settings.thumbnailFormat}';
+			naturalGallery.options.round = Number('{settings.round}');
+			naturalGallery.options.imagesPerRow = Number('{settings.imagesPerRow}');
+			naturalGallery.options.margin = Number('{settings.margin}');
+			naturalGallery.options.limit = Number('{settings.limit}');
+			naturalGallery.options.showLabels = '{settings.showLabels}';
+			naturalGallery.options.lightbox = '{settings.lightbox}' == true;
+			naturalGallery.options.showCount = '{settings.showCount}' == true;
+			naturalGallery.options.searchFilter = '{settings.searchFilter}' == true;
+			naturalGallery.options.categoriesFilter = '{settings.categoriesFilter}' == true;
+			naturalGallery.options.showNone = '{settings.showNone}' == true;
+			naturalGallery.options.showOthers = '{settings.showOthers}' == true;
 
-			<f:if condition="{settings.showHeader}">
-				<div class="natural-gallery-header">
+			window.naturalGalleries.push(naturalGallery);
+		</script>
 
-					<f:if condition="{settings.showFilters}">
-						<div class="natural-gallery-searchTerm sectionContainer">
-							<svg viewBox="0 0 100 100">
-								<use xlink:href="#icon-search"></use>
-							</svg>
-							<input type="text" required/>
-							<label class="sectionName">{f:translate(key:'search')}</label>
-							<span class="bar"></span>
-						</div>
-
-						<f:if condition="{categories}">
-							<div class="natural-gallery-categories sectionContainer">
-								<div class="sectionName">Categories</div>
-								<label data-id="none">
-									<input type="checkbox" checked>
-								<span class="label">
-									<svg viewBox="0 0 100 100">
-										<use xlink:href="#icon-category"></use>
-									</svg>
-									<f:translate key="without"/>
-								</span> <span class="bar"></span>
-								</label>
-								<f:for each="{categories}" as="category">
-									<label data-id="{category.uid}">
-										<input type="checkbox" checked>
-									<span class="label">
-										<svg viewBox="0 0 100 100">
-											<use xlink:href="#icon-category"></use>
-										</svg>
-										{category.title}
-									</span> <span class="bar"></span>
-									</label>
-								</f:for>
-							</div>
-						</f:if>
-					</f:if>
-
-					<div class="natural-gallery-images sectionContainer">
-						<svg viewBox="0 0 100 100">
-							<use xlink:href="#icon-pict"></use>
-						</svg>
-						<div class="sectionName">Images</div>
-						<span class="natural-gallery-visible"></span> / <span class="natural-gallery-total"></span>
-					</div>
-				</div>
-			</f:if>
-
-			<div class="natural-gallery-body">
-				<div class="natural-gallery-noresults">
-					<svg viewBox="0 0 100 100">
-						<use xlink:href="#icon-noresults"></use>
-					</svg>
-				</div>
-			</div>
-			<a class="natural-gallery-next">
-				<svg viewBox="0 0 100 100">
-					<use xlink:href="#icon-next"></use>
-				</svg>
-			</a>
-		</div><!-- end of gallery -->
+		<gallery:loadAssets/>
 
 	</f:section>
 

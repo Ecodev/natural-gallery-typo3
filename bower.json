@@ -1,9 +1,0 @@
-{
-  "name": "natural_gallery",
-  "version": "1.0.0",
-  "ignore": [],
-  "devDependencies": {
-    "photoswipe": "~4.1.0",
-    "natural-gallery": "~1.5.0"
-  }
-}

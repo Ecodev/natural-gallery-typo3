@@ -25,20 +25,11 @@
 					/images/%, metadata.categories = 1
 				</source>
 			</trans-unit>
-			<trans-unit id="settings.enableMoreLoading">
-				<source>Load more images dynamically as you scroll</source>
-			</trans-unit>
-			<trans-unit id="settings.showFilterBar">
-				<source>Show filter bar</source>
-			</trans-unit>
 			<trans-unit id="settings.limit">
 				<source>Number of rows by page (0 for auto scroll or enter a number for manuel loading by the User)</source>
 			</trans-unit>
-			<trans-unit id="settings.thumbnailMaximumWidth">
-				<source>Maximum width of thumbnail image</source>
-			</trans-unit>
-			<trans-unit id="settings.thumbnailMaximumHeight">
-				<source>Maximum height of thumbnail image (only for natural)</source>
+			<trans-unit id="settings.rowHeight">
+				<source>Maximum row height (only for natural format)</source>
 			</trans-unit>
 			<trans-unit id="settings.enlargedImageMaximumWidth">
 				<source>Maximum width of enlarged image</source>
@@ -73,20 +64,11 @@
 			<trans-unit id="settings.showHeader">
 				<source>Show header</source>
 			</trans-unit>
-			<trans-unit id="settings.showFilters">
-				<source>Show filters</source>
-			</trans-unit>
-			<trans-unit id="settings.categories">
-				<source>Show categories</source>
-			</trans-unit>
 			<trans-unit id="settings.sorting">
 				<source>Default sorting. Example: identifier, name, metadata.title</source>
 			</trans-unit>
 			<trans-unit id="settings.direction">
 				<source>Default direction</source>
-			</trans-unit>
-			<trans-unit id="settings.categories">
-				<source>Categories displayed in the filter bar</source>
 			</trans-unit>
 			<trans-unit id="settings.lightbox">
 				<source>Show lightbox (on image click)</source>
@@ -103,6 +85,27 @@
 			<trans-unit id="settings.showLabels.hover">
 				<source>On hover</source>
 			</trans-unit>
+
+
+			<trans-unit id="settings.showCount">
+				<source>Display images counter</source>
+			</trans-unit>
+            <trans-unit id="settings.searchFilter">
+                <source>Show search field</source>
+            </trans-unit>
+            <trans-unit id="settings.categoriesFilter">
+                <source>Display categories filter</source>
+            </trans-unit>
+            <trans-unit id="settings.showNone">
+                <source>Add a category for images that have none</source>
+            </trans-unit>
+            <trans-unit id="settings.categories">
+                <source>Categories (replace the categories retrieved directly on images)</source>
+            </trans-unit>
+            <trans-unit id="settings.showOthers">
+                <source>Add a category for images that are not included in selected ones (considered only if categories are selected)</source>
+            </trans-unit>
+
 
 			<!-- Tabs -->
 			<trans-unit id="flexform.tab.source">

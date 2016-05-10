@@ -31,34 +31,21 @@ plugin.tx_naturalgallery {
 				dependencies = mainCss
 			}
 			naturalGalleryCss {
-				path = EXT:natural_gallery/Resources/Public/StyleSheets/natural-gallery/natural-gallery.min.css
+				path = EXT:natural_gallery/Resources/Public/StyleSheets/natural-gallery-js/natural-gallery.min.css
 				type = css
 
 				# Optional key if loading assets through EXT:vhs.
 				dependencies = mainCss
 			}
 			naturalGalleryThemeCss {
-				path = EXT:natural_gallery/Resources/Public/StyleSheets/natural-gallery/themes/natural.css
+				path = EXT:natural_gallery/Resources/Public/StyleSheets/natural-gallery-js/themes/natural-theme.css
 				type = css
 
 				# Optional key if loading assets through EXT:vhs.
 				dependencies = naturalGalleryCss
 			}
-			photoSwipeJs {
-				path = EXT:natural_gallery/Resources/Public/JavaScript/photoswipe.min.js
-				type = js
-
-				# Optional key if loading assets through EXT:vhs.
-				dependencies = mainJs
-			}
-			photoSwipeThemeJs {
-				path = EXT:natural_gallery/Resources/Public/JavaScript/photoswipe-ui-default.min.js
-				type = js
-
-				# Optional key if loading assets through EXT:vhs.
-				dependencies = mainJs
-			}
 			naturalGalleryJs {
+				#path = EXT:natural_gallery/Resources/Public/JavaScript/natural-gallery.min.js
 				path = EXT:natural_gallery/Resources/Public/JavaScript/natural-gallery.min.js
 				type = js
 

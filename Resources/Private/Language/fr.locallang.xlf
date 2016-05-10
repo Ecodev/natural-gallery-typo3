@@ -25,23 +25,11 @@
 					/images/%, metadata.categories = 1
 				</target>
 			</trans-unit>
-			<trans-unit id="settings.enableMoreLoading">
-				<target>Charger dynamiquement des images lorsque scroll</target>
-			</trans-unit>
-			<trans-unit id="settings.showHeader">
-				<target>Afficher l'entête</target>
-			</trans-unit>
-			<trans-unit id="settings.showFilterBar">
-				<target>Afficher la barre de filtre</target>
-			</trans-unit>
 			<trans-unit id="settings.limit">
 				<target>Nombre de lignes par page (0 pour la fonction auto-scroll ou sinon un nombre pour un chargement manuel par l'utilisateur)</target>
 			</trans-unit>
-			<trans-unit id="settings.thumbnailMaximumWidth">
-				<target>Largeur maximale des vignettes</target>
-			</trans-unit>
-			<trans-unit id="settings.thumbnailMaximumHeight">
-				<target>Hauteur maximale des vignettes</target>
+			<trans-unit id="settings.rowHeight">
+				<target>Hauteur maximale des rangées (seulement pour le format Natural)</target>
 			</trans-unit>
 			<trans-unit id="settings.enlargedImageMaximumWidth">
 				<target>Largeur maximale des images élargies</target>
@@ -73,20 +61,11 @@
 			<trans-unit id="settings.round">
 				<target>Bords arrondis (pixel)</target>
 			</trans-unit>
-			<trans-unit id="settings.showFilters">
-				<target>Afficher les filtres</target>
-			</trans-unit>
-			<trans-unit id="settings.categories">
-				<target>Afficher les catégories</target>
-			</trans-unit>
 			<trans-unit id="settings.sorting">
 				<target>Tri par défaut. Example: identifier, name, metadata.title</target>
 			</trans-unit>
 			<trans-unit id="settings.direction">
 				<target>Direction par défaut</target>
-			</trans-unit>
-			<trans-unit id="settings.categories">
-				<target>Catégories affichées dans la bar de recherche</target>
 			</trans-unit>
 			<trans-unit id="settings.lightbox">
 				<source>Zoomer dans la gallerie (lors du clic sur les images)</source>
@@ -105,7 +84,24 @@
 			</trans-unit>
 
 
-
+			<trans-unit id="settings.showCount">
+				<source>Afficher le compteur d'images</source>
+			</trans-unit>
+			<trans-unit id="settings.searchFilter">
+				<source>Afficher le champ de recherche</source>
+			</trans-unit>
+			<trans-unit id="settings.categoriesFilter">
+				<source>Afficher le filtre par catégories</source>
+			</trans-unit>
+			<trans-unit id="settings.showNone">
+				<source>Ajouter une catégorie pour les images qui n'en ont pas</source>
+			</trans-unit>
+            <trans-unit id="settings.categories">
+                <source>Categories (prend la place des catégories récupérées directement sur les images)</source>
+            </trans-unit>
+            <trans-unit id="settings.showOthers">
+                <source>Ajouter une catégorie pour les images qui ne sont pas inclues dans celles qui sont sélectionnées (pris en compte seulement si des catégories sont cochées)</source>
+            </trans-unit>
 
 
 			<!-- Tabs -->

@@ -42,7 +42,10 @@ class ImageStackViewHelper extends AbstractViewHelper
             $enlargedFile = $this->createProcessedFile($file, 'enlargedImageMaximumWidth', 'enlargedImageMaximumHeight');
 
             $categories = array_map(function($cat) {
-                return $cat['uid'];
+                return [
+                    'id' => $cat['uid'],
+                    'title' => $cat['title']
+                ];
             }, $image['metadata']['categories']);
 
             $item = [

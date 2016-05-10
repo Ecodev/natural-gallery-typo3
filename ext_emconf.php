@@ -10,13 +10,13 @@
 
 $EM_CONF[$_EXTKEY] = array (
   'title' => 'Natural Gallery',
-  'description' => 'Display images as you scroll and enlarged them in a slideshow.',
+  'description' => 'A lazy load, infinite scroll and natural layout list gallery',
   'category' => 'plugin',
   'author' => 'Fabien Udriot, Sylvain Tissot, Samuel Baptista',
   'author_email' => 'fabien.udriot@ecodev.ch, sylvain.tissot@ecodev.ch, samuel.baptista@ecodev.ch',
   'author_company' => 'Ecodev',
   'state' => 'beta',
-  'version' => '0.9.3',
+  'version' => '1.0.0',
   'constraints' =>
   array (
     'depends' =>

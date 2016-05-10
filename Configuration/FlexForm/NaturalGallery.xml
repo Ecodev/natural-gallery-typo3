@@ -227,18 +227,18 @@
                             </config>
                         </TCEforms>
                     </settings.round>
-                    <settings.thumbnailMaximumHeight>
+                    <settings.rowHeight>
                         <TCEforms>
                             <label>
-                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.thumbnailMaximumHeight
+                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.rowHeight
                             </label>
                             <config>
                                 <type>input</type>
-                                <default>300</default>
+                                <default>350</default>
                                 <eval>trim</eval>
                             </config>
                         </TCEforms>
-                    </settings.thumbnailMaximumHeight>
+                    </settings.rowHeight>
                     <settings.enlargedImageMaximumWidth>
                         <TCEforms>
                             <label>
@@ -274,28 +274,61 @@
                 </TCEforms>
                 <type>array</type>
                 <el>
-                    <settings.showHeader>
+                    <settings.showCount>
                         <TCEforms>
                             <label>
-                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.showHeader
+                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.showCount
                             </label>
                             <config>
                                 <type>check</type>
                                 <default>0</default>
                             </config>
                         </TCEforms>
-                    </settings.showHeader>
-                    <settings.showFilters>
+                    </settings.showCount>
+                    <settings.searchFilter>
                         <TCEforms>
                             <label>
-                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.showFilters
+                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.searchFilter
                             </label>
                             <config>
                                 <type>check</type>
                                 <default>0</default>
                             </config>
                         </TCEforms>
-                    </settings.showFilters>
+                    </settings.searchFilter>
+                    <settings.categoriesFilter>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.categoriesFilter
+                            </label>
+                            <config>
+                                <type>check</type>
+                                <default>0</default>
+                            </config>
+                        </TCEforms>
+                    </settings.categoriesFilter>
+                    <settings.showNone>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.showNone
+                            </label>
+                            <config>
+                                <type>check</type>
+                                <default>0</default>
+                            </config>
+                        </TCEforms>
+                    </settings.showNone>
+                    <settings.showOthers>
+                        <TCEforms>
+                            <label>
+                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.showOthers
+                            </label>
+                            <config>
+                                <type>check</type>
+                                <default>0</default>
+                            </config>
+                        </TCEforms>
+                    </settings.showOthers>
                     <settings.categories>
                         <TCEforms>
                             <label>
