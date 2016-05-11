@@ -38,7 +38,7 @@ plugin.tx_naturalgallery {
 				dependencies = mainCss
 			}
 			naturalGalleryThemeCss {
-				path = EXT:natural_gallery/Resources/Public/StyleSheets/natural-gallery-js/themes/natural-theme.css
+				path = EXT:natural_gallery/Resources/Public/StyleSheets/natural-gallery-js/natural-theme.css
 				type = css
 
 				# Optional key if loading assets through EXT:vhs.
