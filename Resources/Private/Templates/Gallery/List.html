@@ -1,6 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
 	  xmlns:f="http://typo3.org/ns/fluid/ViewHelpers"
-	  xmlns:gallery="http://typo3.org/ns/Fab/NaturalGallery/ViewHelpers">
+	  xmlns:gallery="http://typo3.org/ns/Fab/NaturalGallery/ViewHelpers"
+	  xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers">
 
 	<f:layout name="Default"/>
 
@@ -12,11 +13,16 @@
 
 		<f:if condition="'{settings.lightbox}' == true">
 			<f:if condition="{gallery:isPhotoswipePartialAlreadyLoaded()}">
-				<f:render section="Photoswipe" partial="Photoswipe"/>
+				<v:page.footer content="{f:render(section: 'Photoswipe', partial: 'Photoswipe')}"></v:page.footer>
 			</f:if>
 		</f:if>
 
+
+
 		<!-- The gallery -->
+		<!--  -->
+		<!--< :render section="Photoswipe" partial="Photoswipe"/ >-->
+
 		<div class="natural-gallery"></div>
 
 		<script type="text/javascript">

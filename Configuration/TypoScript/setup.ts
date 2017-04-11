@@ -45,8 +45,8 @@ plugin.tx_naturalgallery {
 				dependencies = naturalGalleryCss
 			}
 			naturalGalleryJs {
-				#path = EXT:natural_gallery/Resources/Public/JavaScript/natural-gallery.min.js
 				path = EXT:natural_gallery/Resources/Public/JavaScript/natural-gallery.min.js
+				#path = EXT:natural_gallery/Resources/Public/natural-gallery-js/dist/natural-gallery.js
 				type = js
 
 				# Optional key if loading assets through EXT:vhs.
