@@ -6,9 +6,9 @@
   version "4.14.52"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.52.tgz#de5c7ab14da1289733233c9b0ec6f9e377db90f5"
 
-natural-gallery-js@^2.1.3:
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/natural-gallery-js/-/natural-gallery-js-2.1.3.tgz#cede24286091b69a9a1b3442e6332eefd6343007"
+natural-gallery-js@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/natural-gallery-js/-/natural-gallery-js-2.2.1.tgz#f62cc4d8a4fbf581253ca32215d11015f29b8229"
   dependencies:
     "@types/lodash" "^4.14.45"
     photoswipe "^4.1.1"
