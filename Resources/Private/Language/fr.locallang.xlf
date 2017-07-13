@@ -137,6 +137,23 @@
 			<trans-unit id="none">
 				<target>Aucun résultat trouvé</target>
 			</trans-unit>
+
+			<!-- Labels -->
+			<trans-unit id="labelCategories">
+				<target>Catégories</target>
+			</trans-unit>
+			<trans-unit id="labelNone">
+				<target>Aucune</target>
+			</trans-unit>
+			<trans-unit id="labelOthers">
+				<target>Autres</target>
+			</trans-unit>
+			<trans-unit id="labelSearch">
+				<target>Rechercher</target>
+			</trans-unit>
+			<trans-unit id="labelImages">
+				<target>Images</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -140,6 +140,24 @@
 			<trans-unit id="none">
 				<source>No results</source>
 			</trans-unit>
+
+			<!-- labels -->
+			<trans-unit id="labelCategories">
+				<source>Categories</source>
+			</trans-unit>
+			<trans-unit id="labelNone">
+				<source>None</source>
+			</trans-unit>
+			<trans-unit id="labelOthers">
+				<source>Others</source>
+			</trans-unit>
+			<trans-unit id="labelSearch">
+				<source>Search</source>
+			</trans-unit>
+			<trans-unit id="labelImages">
+				<source>Images</source>
+			</trans-unit>
+
 		</body>
 	</file>
 </xliff>
