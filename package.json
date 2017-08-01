@@ -3,7 +3,7 @@
   "description": "A lazy load, infinite scroll and natural layout list gallery",
   "main": "index.js",
   "devDependencies": {
-    "natural-gallery-js": "^2.4.1"
+    "natural-gallery-js": "^2.5.0"
   },
   "dependencies": {},
   "scripts": {
