@@ -29,7 +29,7 @@
 				<target>Nombre de lignes par page (0 pour la fonction auto-scroll ou sinon un nombre pour un chargement manuel par l'utilisateur)</target>
 			</trans-unit>
 			<trans-unit id="settings.rowHeight">
-				<target>Hauteur maximale des rangées (seulement pour le format Natural)</target>
+				<target>Hauteur maximale des rangées</target>
 			</trans-unit>
 			<trans-unit id="settings.enlargedImageMaximumWidth">
 				<target>Largeur maximale des images élargies</target>

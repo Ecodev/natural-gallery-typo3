@@ -29,7 +29,7 @@
 				<source>Number of rows by page (0 for auto scroll or enter a number for manuel loading by the User)</source>
 			</trans-unit>
 			<trans-unit id="settings.rowHeight">
-				<source>Maximum row height (only for natural format)</source>
+				<source>Maximum row height</source>
 			</trans-unit>
 			<trans-unit id="settings.enlargedImageMaximumWidth">
 				<source>Maximum width of enlarged image</source>
