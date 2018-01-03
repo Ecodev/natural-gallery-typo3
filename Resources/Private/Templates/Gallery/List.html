@@ -21,14 +21,14 @@
 
 		<script type="text/javascript">
 
-            window.naturalGalleries = window.naturalGalleries || [];
-            var naturalGallery = {
-                id: 'gallery-<v:content.info field="uid"></v:content.info>'
-            };
+			window.naturalGalleries = window.naturalGalleries || [];
+			var naturalGallery = {
+			     id: 'gallery-<v:content.info field="uid"></v:content.info>'
+			};
 
-            //@off
-			naturalGallery.images = {gallery:imageStack()};
-			naturalGallery.categories = {gallery:categoryStack()};
+			//@off
+			naturalGallery.images = {gallery:imageStack() -> f:format.raw()};
+			naturalGallery.categories = {gallery:categoryStack() -> f:format.raw()};
 			//@on
 
 			naturalGallery.options = {};
@@ -46,11 +46,11 @@
 			naturalGallery.options.showNone = '{settings.showNone}' == true;
 			naturalGallery.options.showOthers = '{settings.showOthers}' == true;
 
-            naturalGallery.options.labelCategories = '<f:translate key="labelCategories" />';
-            naturalGallery.options.labelNone = '<f:translate key="labelNone" />';
-            naturalGallery.options.labelOthers = '<f:translate key="labelOthers" />';
-            naturalGallery.options.labelSearch = '<f:translate key="labelSearch" />';
-            naturalGallery.options.labelImages = '<f:translate key="labelImages" />';
+			naturalGallery.options.labelCategories = '<f:translate key="labelCategories" />';
+			naturalGallery.options.labelNone = '<f:translate key="labelNone" />';
+			naturalGallery.options.labelOthers = '<f:translate key="labelOthers" />';
+			naturalGallery.options.labelSearch = '<f:translate key="labelSearch" />';
+			naturalGallery.options.labelImages = '<f:translate key="labelImages" />';
 
 			window.naturalGalleries.push(naturalGallery);
 		</script>
