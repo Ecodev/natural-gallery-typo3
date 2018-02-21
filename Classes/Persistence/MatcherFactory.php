@@ -89,7 +89,17 @@ class MatcherFactory implements SingletonInterface
     protected function applyCriteriaFromFolders(Matcher $matcher)
     {
         if (!empty($this->settings['folders'])) {
-            $folderIdentifiers = GeneralUtility::trimExplode(',', $this->settings['folders'], true);
+            // compatibility for TYPO3 CMS 8
+            if (strpos('t3://', $this->settings['folders']) >= 0) {
+                $decodedUrl = urldecode($this->settings['folders']);
+                preg_match("/storage=([\d]+)&identifier=(.+)/", $decodedUrl, $matches);
+                if (count($matches) === 3) {
+                    $folders = $matches[1] . ':' . ltrim($matches[2], '/');
+                }
+            } else {
+                $folders = $this->settings['folders'];
+            }
+            $folderIdentifiers = GeneralUtility::trimExplode(',', $folders, true);
             $fileUids = [];
             foreach ($folderIdentifiers as $folderIdentifier) {
                 $folderIdentifier = str_replace('file:', '', $folderIdentifier);

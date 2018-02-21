@@ -27,8 +27,8 @@
             };
 
             //@off
-			naturalGallery.images = {gallery:imageStack()};
-			naturalGallery.categories = {gallery:categoryStack()};
+			naturalGallery.images = {gallery:imageStack()->f:format.raw()};
+			naturalGallery.categories = {gallery:categoryStack()->f:format.raw()};
 			//@on
 
 			naturalGallery.options = {};
