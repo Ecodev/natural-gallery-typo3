@@ -127,7 +127,7 @@ class LoadAssetsViewHelper extends AbstractViewHelper
      */
     protected function getPageRenderer()
     {
-        return $this->getFrontendObject()->getPageRenderer();
+        return\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);
     }
 
     /**
