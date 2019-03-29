@@ -31,7 +31,7 @@ class tx_naturalgallery_wizard
     function proc($wizardItems)
     {
         $wizardItems['plugins_tx_naturalgallery_pi1'] = array(
-            'icon' => ExtensionManagementUtility::extRelPath('natural_gallery') . 'Resources/Public/Images/NaturalGallery.png',
+            'icon' => 'EXT:natural_gallery/Resources/Public/Images/NaturalGallery.png',
             'title' => $this->getLanguageService()->sL('LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:wizard.title'),
             'description' => $this->getLanguageService()->sL('LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:wizard.description'),
             'params' => '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=naturalgallery_pi1'
