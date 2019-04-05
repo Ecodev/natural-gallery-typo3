@@ -46,7 +46,7 @@ class MatcherFactory implements SingletonInterface
     /**
      * Gets a singleton instance of this class.
      *
-     * @return MatcherFactory
+     * @return MatcherFactory|object
      */
     static public function getInstance()
     {
@@ -89,9 +89,14 @@ class MatcherFactory implements SingletonInterface
     protected function applyCriteriaFromFolders(Matcher $matcher)
     {
         if (!empty($this->settings['folders'])) {
-            // compatibility for TYPO3 CMS 8
-            if (strpos('t3://', $this->settings['folders']) >= 0) {
+
+            if (strpos($this->settings['folders'], 't3://') !== false) {
                 $decodedUrl = urldecode($this->settings['folders']);
+
+                // In case identifier=/ is missing.
+                if (strpos($decodedUrl, 'identifier=') === false) {
+                    $decodedUrl .= '&identifier=/';
+                }
                 preg_match("/storage=([\d]+)&identifier=(.+)/", $decodedUrl, $matches);
                 if (count($matches) === 3) {
                     $folders = $matches[1] . ':' . ltrim($matches[2], '/');
