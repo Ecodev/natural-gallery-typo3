@@ -14,10 +14,10 @@ namespace Fab\NaturalGallery\Controller;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Fab\NaturalGallery\Domain\Repository\CategoryRepository;
 use Fab\NaturalGallery\Persistence\MatcherFactory;
 use Fab\NaturalGallery\Persistence\OrderFactory;
 use Fab\Vidi\Domain\Repository\ContentRepositoryFactory;
-use Fab\Vidi\Persistence\Matcher;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
@@ -27,8 +27,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 class GalleryController extends ActionController
 {
     /**
-     * @var \Fab\NaturalGallery\Domain\Repository\CategoryRepository
-     * @inject
+     * @var CategoryRepository
      */
     protected $categoryRepository;
 
@@ -44,7 +43,7 @@ class GalleryController extends ActionController
     protected $settings = array();
 
     /**
-     * @return void
+     * @return void|string
      */
     public function listAction()
     {
@@ -69,6 +68,14 @@ class GalleryController extends ActionController
 
         $identifiers = GeneralUtility::trimExplode(',', $this->settings['categories'], TRUE);
         $this->view->assign('categories', $this->categoryRepository->findByIdentifiers($identifiers));
+    }
+
+    /**
+     * @param CategoryRepository $categoryRepository
+     */
+    public function injectCategoryRepository(CategoryRepository $categoryRepository): void
+    {
+        $this->categoryRepository = $categoryRepository;
     }
 
 }
