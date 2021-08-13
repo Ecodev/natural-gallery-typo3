@@ -15,6 +15,7 @@ namespace Fab\NaturalGallery\ViewHelpers;
  */
 
 use FluidTYPO3\Vhs\Asset;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
@@ -53,7 +54,7 @@ class LoadAssetsViewHelper extends AbstractViewHelper
     protected function loadByVhs(array $asset)
     {
 
-        if (GeneralUtility::getApplicationContext()->isDevelopment()) {
+        if (Environment::getContext()->isDevelopment()) {
             $developmentFile = $this->getDevelopmentFile($asset);
             if ($developmentFile) {
                 $asset['path'] = str_replace('.min.', '.', $asset['path']);
@@ -113,7 +114,7 @@ class LoadAssetsViewHelper extends AbstractViewHelper
         $resolvedFile = $asset['path']; // default value
 
         // check if there is a non minimized file for context Development
-        if (GeneralUtility::getApplicationContext()->isDevelopment()) {
+        if (Environment::getContext()->isDevelopment()) {
             $developmentFile = $this->getDevelopmentFile($asset);
             if ($developmentFile) {
                 $resolvedFile = $developmentFile;
