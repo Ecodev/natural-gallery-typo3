@@ -1,13 +1,1 @@
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:natural_gallery/Configuration/TypoScript/setup.ts">
-
-config.tx_extbase {
-    persistence{
-        classes {
-            Fab\NaturalGallery\Domain\Model\Category {
-                mapping {
-                    tableName = sys_category
-                }
-            }
-        }
-    }
-}
