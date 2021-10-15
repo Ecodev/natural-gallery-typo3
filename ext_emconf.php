@@ -8,13 +8,13 @@ $EM_CONF[$_EXTKEY] = [
     'author_email' => 'fabien.udriot@ecodev.ch, sylvain.tissot@ecodev.ch, samuel.baptista@ecodev.ch',
     'author_company' => 'Ecodev',
     'state' => 'stable',
-    'version' => '2.1.0-dev',
+    'version' => '2.2.0',
     'constraints' =>
         [
             'depends' =>
                 [
                     'typo3' => '10.0.0-10.4.99',
-                    'vidi' => '3.0.0-0.0.0',
+                    'vidi' => '5.0.0-0.0.0',
                     'vhs' => '0.0.0-0.0.0',
                 ],
             'conflicts' =>
