@@ -14,10 +14,10 @@ namespace Fab\NaturalGallery\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Fab\Vidi\Domain\Model\Content;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\ProcessedFile;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -37,7 +37,7 @@ class ImageStackViewHelper extends AbstractViewHelper
         foreach ($images as $image) {
 
             /** @var \TYPO3\CMS\Core\Resource\File $file */
-            $file = ResourceFactory::getInstance()->getFileObject($image->getUid());
+            $file = GeneralUtility::makeInstance(ResourceFactory::class)->getFileObject($image->getUid());
             $thumbnailFile = $this->createProcessedFile($file, 'thumbnailMaximumWidth', 'thumbnailMaximumHeight');
             $enlargedFile = $this->createProcessedFile($file, 'enlargedImageMaximumWidth', 'enlargedImageMaximumHeight');
 

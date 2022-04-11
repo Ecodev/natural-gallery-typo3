@@ -108,7 +108,7 @@ class MatcherFactory implements SingletonInterface
             $fileUids = [];
             foreach ($folderIdentifiers as $folderIdentifier) {
                 $folderIdentifier = str_replace('file:', '', $folderIdentifier);
-                $folder = ResourceFactory::getInstance()->getFolderObjectFromCombinedIdentifier($folderIdentifier);
+                $folder = GeneralUtility::makeInstance(ResourceFactory::class)->getFolderObjectFromCombinedIdentifier($folderIdentifier);
                 $files = $folder->getFiles();
                 foreach ($files as $file) {
                     $fileUids[] = $file->getUid();
