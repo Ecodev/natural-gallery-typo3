@@ -26,20 +26,10 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  */
 class GalleryController extends ActionController
 {
-    /**
-     * @var CategoryRepository
-     */
-    protected $categoryRepository;
+    protected CategoryRepository $categoryRepository;
 
-    /**
-    /**
-     * @var array
-     */
-    protected $configuration = array();
+    protected array $configuration = array();
 
-    /**
-     * @var array
-     */
     protected $settings = array();
 
     /**

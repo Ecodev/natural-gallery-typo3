@@ -1,4 +1,7 @@
 <?php
+
+use Fab\NaturalGallery\Controller\GalleryController;
+
 defined('TYPO3_MODE') or die();
 
 call_user_func(
@@ -7,13 +10,11 @@ call_user_func(
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
             'Fab.natural_gallery',
             'Pi1',
-            array(
-                'Gallery' => 'list',
-            ),
+            [
+                GalleryController::class => 'list',
+            ],
             // non-cachable actions
-            array(
-                #'Gallery' => 'list',
-            )
+            []
         );
 
         // Register icons
