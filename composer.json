@@ -3,7 +3,9 @@
   "type": "typo3-cms-extension",
   "description": "Display images as you scroll and enlarged them in a slideshow.",
   "homepage": "https://github.com/Ecodev/natural-gallery-typo3",
-  "license": ["GPL-2.0+"],
+  "license": [
+    "GPL-2.0-or-later"
+  ],
   "keywords": [
     "TYPO3 CMS",
     "Photo Gallery"
