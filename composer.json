@@ -17,7 +17,7 @@
     }
   },
   "replace": {
-    "fab/natural_gallery": "self.version",
+    "fab/natural_gallery": "self.version"
   },
   "extra": {
     "typo3/cms": {
