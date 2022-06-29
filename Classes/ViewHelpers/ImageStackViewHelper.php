@@ -49,14 +49,10 @@ class ImageStackViewHelper extends AbstractViewHelper
                 ];
             }, $image['metadata']['categories']);
 
-            /** @var \TYPO3\CMS\Core\Http\ServerRequest $request */
-            $request = $GLOBALS['TYPO3_REQUEST'];
-            $site = $request->getAttribute('site');
-
-            $baseUrl = $site->getBase()->getScheme() . '://' . $site->getBase()->getHost() . $site->getBase()->getPath();
+            $baseUrl = GeneralUtility::getIndpEnv('TYPO3_SITE_URL');
             $item = [
-                'thumbnail' => $baseUrl . '/' . $thumbnailFile->getPublicUrl(),
-                'enlarged' => $baseUrl . '/' . $enlargedFile->getPublicUrl(),
+                'thumbnail' => $baseUrl . $thumbnailFile->getPublicUrl(),
+                'enlarged' => $baseUrl . $enlargedFile->getPublicUrl(),
                 'id' => $file->getProperty('uid'),
                 'title' => $file->getProperty('title'),
                 'description' => $file->getProperty('description'),
