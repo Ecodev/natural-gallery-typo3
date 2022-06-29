@@ -1,4 +1,5 @@
 <?php
+
 namespace Fab\NaturalGallery\ViewHelpers;
 
 /**
@@ -41,16 +42,21 @@ class ImageStackViewHelper extends AbstractViewHelper
             $thumbnailFile = $this->createProcessedFile($file, 'thumbnailMaximumWidth', 'thumbnailMaximumHeight');
             $enlargedFile = $this->createProcessedFile($file, 'enlargedImageMaximumWidth', 'enlargedImageMaximumHeight');
 
-            $categories = array_map(function($cat) {
+            $categories = array_map(function ($cat) {
                 return [
                     'id' => $cat['uid'],
                     'title' => $cat['title']
                 ];
             }, $image['metadata']['categories']);
 
+            /** @var \TYPO3\CMS\Core\Http\ServerRequest $request */
+            $request = $GLOBALS['TYPO3_REQUEST'];
+            $site = $request->getAttribute('site');
+
+            $baseUrl = $site->getBase()->getScheme() . '://' . $site->getBase()->getHost() . $site->getBase()->getPath();
             $item = [
-                'thumbnail' => '/' . $thumbnailFile->getPublicUrl(true),
-                'enlarged' => '/' . $enlargedFile->getPublicUrl(true),
+                'thumbnail' => $baseUrl . '/' . $thumbnailFile->getPublicUrl(),
+                'enlarged' => $baseUrl . '/' . $enlargedFile->getPublicUrl(),
                 'id' => $file->getProperty('uid'),
                 'title' => $file->getProperty('title'),
                 'description' => $file->getProperty('description'),
