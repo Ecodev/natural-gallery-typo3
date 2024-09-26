@@ -17,7 +17,7 @@ namespace Fab\NaturalGallery\Controller;
 use Fab\NaturalGallery\Domain\Repository\CategoryRepository;
 use Fab\NaturalGallery\Persistence\MatcherFactory;
 use Fab\NaturalGallery\Persistence\OrderFactory;
-use Fab\Vidi\Domain\Repository\ContentRepositoryFactory;
+use Fab\NaturalGallery\Domain\Repository\ImageGalleryRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
@@ -46,7 +46,7 @@ class GalleryController extends ActionController
         $order = OrderFactory::getInstance()->getOrder($this->settings);
 
         // Fetch the adequate repository for a known data type.
-        $contentRepository = ContentRepositoryFactory::getInstance('sys_file');
+        $contentRepository = ImageGalleryRepository::getInstance('sys_file');
 
         // Fetch and count files
         $images = $contentRepository->findBy($matcher, $order);
