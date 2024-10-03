@@ -1,0 +1,14 @@
+# cat=directory//; type=string; label= Production redirect to: List of email addresses where to redirect all messages for "production" context. Notice, it can also be defined in $GLOBALS['TYPO3_CONF_VARS']['MAIL']['production_redirect_to'] = 'email@example.com' which will take the precedence if configured so..
+stockage_directory =
+
+# cat=directory//; type=string; label= Production redirect to: List of email addresses where to redirect all messages for "production" context. Notice, it can also be defined in $GLOBALS['TYPO3_CONF_VARS']['MAIL']['production_redirect_to'] = 'email@example.com' which will take the precedence if configured so..
+constraint =
+
+# cat=directory//; type=string; label= Production redirect to: List of email addresses where to redirect all messages for "production" context. Notice, it can also be defined in $GLOBALS['TYPO3_CONF_VARS']['MAIL']['production_redirect_to'] = 'email@example.com' which will take the precedence if configured so..
+category =
+
+# cat=directory//; type=string; label= Production redirect to: List of email addresses where to redirect all messages for "production" context. Notice, it can also be defined in $GLOBALS['TYPO3_CONF_VARS']['MAIL']['production_redirect_to'] = 'email@example.com' which will take the precedence if configured so..
+sorting = 
+
+# cat=directory//; type=string; label= Production redirect to: List of email addresses where to redirect all messages for "production" context. Notice, it can also be defined in $GLOBALS['TYPO3_CONF_VARS']['MAIL']['production_redirect_to'] = 'email@example.com' which will take the precedence if configured so..
+default_direction = 
