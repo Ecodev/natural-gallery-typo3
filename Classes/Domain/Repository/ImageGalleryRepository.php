@@ -2,14 +2,21 @@
 namespace Fab\NaturalGallery\Domain\Repository;
 
 
+use Fab\NaturalGallery\Persistence\Matcher;
+use Fab\NaturalGallery\Persistence\Order;
 use Fab\NaturalGallery\Utility\ConfigurationUtility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 
-
-class ImageGalleryRepository 
+class ImageGalleryRepository
 {
 
-    public function getDefaultData(string $field):string 
+    protected string $tableName = 'sys_file';
+    protected array $settings;
+
+    public function getDefaultData(string $field):string
     {
         return ConfigurationUtility::getInstance()->get($field);
     }
@@ -31,11 +38,65 @@ class ImageGalleryRepository
         return is_array($messages) ? $messages : [];
     }
 
-    /**
-     * @throws Exception
-     * @throws DBALException
-     */
-    public function findByDemand(array $demand = [], array $orderings = [], int $offset = 0, int $limit = 0): array
+
+    public function findByCategory(int $category): array
+    {
+        /** @var QueryBuilder $query */
+        $queryBuilder = $this->getQueryBuilder();
+        $queryBuilder->select('*')
+            ->from($this->tableName)
+            ->innerJoin(
+                'sys_file',
+                'sys_file_metadata',
+                'sys_file_metadata',
+                'sys_file.uid = sys_file_metadata.file'
+            )
+            ->innerJoin(
+                'sys_file_metadata',
+                'sys_category_record_mm',
+                'sys_category_record_mm',
+                'sys_category_record_mm.uid_foreign = sys_file_metadata.uid AND tablenames = "sys_file_metadata" AND fieldname = "categories"'
+            )
+            ->where(
+                $queryBuilder->expr()->eq('sys_category_record_mm.uid_local', $category)
+            )
+            ->addOrderBy('sys_file_metadata.year', 'DESC')
+            ->addOrderBy('sys_file_metadata.title', 'ASC');
+
+        return $queryBuilder
+            ->execute()
+            ->fetchAllAssociative();
+    }
+    public function findByCategories(array $categories): array
+    {
+        $queryBuilder = $this->getQueryBuilder();
+        $queryBuilder->select('*')
+            ->from($this->tableName)
+            ->innerJoin(
+                'sys_file',
+                'sys_file_metadata',
+                'sys_file_metadata',
+                'sys_file.uid = sys_file_metadata.file'
+            )
+            ->innerJoin(
+                'sys_file_metadata',
+                'sys_category_record_mm',
+                'sys_category_record_mm',
+                'sys_category_record_mm.uid_foreign = sys_file_metadata.uid AND tablenames = "sys_file_metadata" AND fieldname = "categories"'
+            )
+            ->where(
+                $queryBuilder->expr()->in('sys_category_record_mm.uid_local', $categories)
+            )
+            ->addOrderBy('sys_file_metadata.year', 'DESC')
+            ->addOrderBy('sys_file_metadata.title', 'ASC');
+
+        return $queryBuilder
+            ->execute()
+            ->fetchAllAssociative();
+    }
+
+
+    public function findByDemand(array|Matcher $demand = [], array $orderings = [], int $offset = 0, int $limit = 0): array
     {
         $queryBuilder = $this->getQueryBuilder();
         $queryBuilder->select('*')->from($this->tableName);
@@ -63,10 +124,7 @@ class ImageGalleryRepository
         return $queryBuilder->execute()->fetchAllAssociative();
     }
 
-    /**
-     * @throws DBALException
-     * @throws Exception
-     */
+
     public function findByUids(array $uids): array
     {
         $query = $this->getQueryBuilder();
@@ -77,5 +135,22 @@ class ImageGalleryRepository
 
         return $query->execute()->fetchAllAssociative();
     }
+
+    protected function getQueryBuilder(): QueryBuilder
+    {
+        /** @var ConnectionPool $connectionPool */
+        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+        return $connectionPool->getQueryBuilderForTable($this->tableName);
+    }
+
+
+
+
+
+
+
+
+
+
 
 }

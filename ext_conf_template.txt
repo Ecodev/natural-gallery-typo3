@@ -1,14 +1,15 @@
-# cat=directory//; type=string; label= Production redirect to: List of email addresses where to redirect all messages for "production" context. Notice, it can also be defined in $GLOBALS['TYPO3_CONF_VARS']['MAIL']['production_redirect_to'] = 'email@example.com' which will take the precedence if configured so..
-stockage_directory =
+# cat=directory//; type=string; label=Storage Directory: Define the directory where files should be stored.
+folders =
 
-# cat=directory//; type=string; label= Production redirect to: List of email addresses where to redirect all messages for "production" context. Notice, it can also be defined in $GLOBALS['TYPO3_CONF_VARS']['MAIL']['production_redirect_to'] = 'email@example.com' which will take the precedence if configured so..
-constraint =
+# cat=directory//; type=string; label=Constraint: Define any specific constraints for file storage or access.
+additionalEquals =
 
-# cat=directory//; type=string; label= Production redirect to: List of email addresses where to redirect all messages for "production" context. Notice, it can also be defined in $GLOBALS['TYPO3_CONF_VARS']['MAIL']['production_redirect_to'] = 'email@example.com' which will take the precedence if configured so..
-category =
+# cat=directory//; type=string; label=Category: Define the category to which the items belong.
+categories =
 
-# cat=directory//; type=string; label= Production redirect to: List of email addresses where to redirect all messages for "production" context. Notice, it can also be defined in $GLOBALS['TYPO3_CONF_VARS']['MAIL']['production_redirect_to'] = 'email@example.com' which will take the precedence if configured so..
-sorting = 
+# cat=directory//; type=string; label=Sorting: Specify how the items should be sorted by default.
+sorting =
 
-# cat=directory//; type=string; label= Production redirect to: List of email addresses where to redirect all messages for "production" context. Notice, it can also be defined in $GLOBALS['TYPO3_CONF_VARS']['MAIL']['production_redirect_to'] = 'email@example.com' which will take the precedence if configured so..
-default_direction = 
+# cat=directory//; type=string; label=Default Sorting Direction: Specify the default direction for sorting, e.g., ascending or descending.
+direction = 
+
