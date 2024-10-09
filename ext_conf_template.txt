@@ -1,0 +1,15 @@
+# cat=directory//; type=string; label=Storage Directory: Define the directory where files should be stored.
+folders =
+
+# cat=directory//; type=string; label=Constraint: Define any specific constraints for file storage or access.
+additionalEquals =
+
+# cat=directory//; type=string; label=Category: Define the category to which the items belong.
+categories = 12,45,78,65,433
+
+# cat=directory//; type=string; label=Sorting: Specify how the items should be sorted by default.
+sorting =
+
+# cat=directory//; type=string; label=Default Sorting Direction: Specify the default direction for sorting, e.g., ascending or descending.
+direction = 
+
