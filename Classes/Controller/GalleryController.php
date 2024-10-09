@@ -80,8 +80,7 @@ class GalleryController extends ActionController
        // Fetch and count files
        $images = $this->galleryRepository->findByDemand($matcher, $this->getOrderings());
 
-       var_dump($this->settings);
-       exit();
+       
 
         // Assign template variables
         $this->view->assign('settings', $this->settings);
@@ -94,9 +93,9 @@ class GalleryController extends ActionController
 
     protected function getOrderings(): array
     {
-        $sortBy = $this->settings['sorting'] ?? 'crdate';
+        $sortBy = $this->settings['sorting'] ?? 'tstamp';
         if (!in_array($sortBy, $this->allowedColumns)) {
-            $sortBy = 'crdate';
+            $sortBy = 'tstamp';
         }
         $defaultDirection = QueryInterface::ORDER_DESCENDING;
         $direction = $this->settings['direction'] ?? $defaultDirection;

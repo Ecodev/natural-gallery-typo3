@@ -5,7 +5,7 @@ folders =
 additionalEquals =
 
 # cat=directory//; type=string; label=Category: Define the category to which the items belong.
-categories =
+categories = 12,45,78,65,433
 
 # cat=directory//; type=string; label=Sorting: Specify how the items should be sorted by default.
 sorting =

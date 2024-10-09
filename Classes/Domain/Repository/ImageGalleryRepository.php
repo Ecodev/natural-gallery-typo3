@@ -83,16 +83,21 @@ class ImageGalleryRepository
                 'sys_category_record_mm',
                 'sys_category_record_mm',
                 'sys_category_record_mm.uid_foreign = sys_file_metadata.uid AND tablenames = "sys_file_metadata" AND fieldname = "categories"'
-            )
-            ->where(
+            );
+
+        if (!empty($categories)) {
+            $queryBuilder->where(
                 $queryBuilder->expr()->in('sys_category_record_mm.uid_local', $categories)
-            )
-            ->addOrderBy('sys_file_metadata.year', 'DESC')
+            );
+        }
+
+        $queryBuilder->addOrderBy('sys_file_metadata.year', 'DESC')
             ->addOrderBy('sys_file_metadata.title', 'ASC');
 
         return $queryBuilder
             ->execute()
             ->fetchAllAssociative();
+
     }
 
 
