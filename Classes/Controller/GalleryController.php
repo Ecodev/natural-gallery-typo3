@@ -1,4 +1,5 @@
 <?php
+
 namespace Fab\NaturalGallery\Controller;
 
 /**
@@ -21,6 +22,7 @@ use Fab\NaturalGallery\Utility\ConfigurationUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Controller
@@ -35,13 +37,13 @@ class GalleryController extends ActionController
     protected array $configuration = array();
 
     protected $settings = array(
-        'folders'=> '',
-        'additionalEquals'=> '',
-        'sorting'=> '',
-        'direction'=> '',
-        'categories'=> '',
-
+        'folders' => '',
+        'additionalEquals' => '',
+        'sorting' => '',
+        'direction' => '',
+        'categories' => '',
     );
+
     protected array $allowedColumns = [
         'crdate',
         'tstamp',
@@ -49,14 +51,12 @@ class GalleryController extends ActionController
         'uid',
     ];
 
-
     public function initializeAction(): void
     {
         $this->galleryRepository = GeneralUtility::makeInstance(ImageGalleryRepository::class);
         $this->orderFactory = GeneralUtility::makeInstance(OrderFactory::class);
         $this->matcherFactory = GeneralUtility::makeInstance(MatcherFactory::class);
     }
-
 
     /**
      * @return void|string
@@ -67,20 +67,19 @@ class GalleryController extends ActionController
             return '<strong style="color: red">Please save your plugin settings in the BE beforehand.</strong>';
         }
 
-        $this->settings['folders'] = ConfigurationUtility::getInstance()->get('folders');
-        $this->settings['additionalEquals'] = ConfigurationUtility::getInstance()->get('additionalEquals');
-        $this->settings['sorting'] = ConfigurationUtility::getInstance()->get('sorting');
-        $this->settings['direction'] = ConfigurationUtility::getInstance()->get('direction');
-        $this->settings['categories'] = ConfigurationUtility::getInstance()->get('categories');
+//        $this->settings['folders'] = ConfigurationUtility::getInstance()->get('folders');
+//        $this->settings['additionalEquals'] = ConfigurationUtility::getInstance()->get('additionalEquals');
+//        $this->settings['sorting'] = ConfigurationUtility::getInstance()->get('sorting');
+//        $this->settings['direction'] = ConfigurationUtility::getInstance()->get('direction');
+//        $this->settings['categories'] = ConfigurationUtility::getInstance()->get('categories');
 
         // Initialize some objects related to the query.
-        $matcher =  $this->matcherFactory->getMatcher($this->settings);
-//        $order = $this->orderFactory->getOrder($this->settings);
+        $matcher = $this->matcherFactory->getMatcher($this->settings);
 
-       // Fetch and count files
-       $images = $this->galleryRepository->findByDemand($matcher, $this->getOrderings());
-
-       
+        // Fetch and count files
+        DebuggerUtility::var_dump($matcher);
+        exit();
+        $images = $this->galleryRepository->findByDemand($matcher, $this->getOrderings());
 
         // Assign template variables
         $this->view->assign('settings', $this->settings);
@@ -110,7 +109,7 @@ class GalleryController extends ActionController
 //    protected function getDemand(): array
 //    {
 //        $searchTerm = $this->request->hasArgument('searchTerm') ? $this->request->getArgument('searchTerm') : '';
-//        $demand = [];
+//        $matcher = [];
 //        if (strlen($searchTerm) > 0) {
 //            foreach ($this->demandFields as $field) {
 //                $demand[$field] = $searchTerm;

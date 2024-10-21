@@ -28,23 +28,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class MatcherFactory implements SingletonInterface
 {
 
-    /**
-     * @var array
-     */
-    protected $settings = array();
+    protected array $settings = [];
 
-    /**
-     * @var array
-     */
-    protected $tableName = 'sys_file';
-
-
-    protected function getQueryBuilder(): QueryBuilder
-    {
-        /** @var ConnectionPool $connectionPool */
-        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
-        return $connectionPool->getQueryBuilderForTable($this->tableName);
-    }
+    protected string $tableName = 'sys_file';
 
     protected function applyCriteriaFromFolders(\Fab\NaturalGallery\Persistence\Matcher $matcher): \Fab\NaturalGallery\Persistence\Matcher
     {
@@ -107,7 +93,6 @@ class MatcherFactory implements SingletonInterface
 
     public function getMatcher(array $settings): Matcher
     {
-
         $this->settings = $settings;
         $matcher = GeneralUtility::makeInstance(Matcher::class);
         // We only want files of type images, consider it as a prerequisite.

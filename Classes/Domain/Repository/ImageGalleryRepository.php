@@ -67,6 +67,7 @@ class ImageGalleryRepository
             ->execute()
             ->fetchAllAssociative();
     }
+
     public function findByCategories(array $categories): array
     {
         $queryBuilder = $this->getQueryBuilder();
@@ -99,7 +100,6 @@ class ImageGalleryRepository
             ->fetchAllAssociative();
 
     }
-
 
     public function findByDemand(array|Matcher $demand = [], array $orderings = [], int $offset = 0, int $limit = 0): array
     {
