@@ -1,4 +1,5 @@
 <?php
+
 namespace Fab\NaturalGallery\Controller;
 
 /**
@@ -14,23 +15,43 @@ namespace Fab\NaturalGallery\Controller;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Fab\NaturalGallery\Domain\Repository\CategoryRepository;
-use Fab\NaturalGallery\Persistence\MatcherFactory;
+use Fab\NaturalGallery\Domain\Repository\ImageGalleryRepository;
+use Fab\NaturalGallery\Persistence\DemandFactory;
 use Fab\NaturalGallery\Persistence\OrderFactory;
-use Fab\Vidi\Domain\Repository\ContentRepositoryFactory;
+use Fab\NaturalGallery\Utility\ConfigurationUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Controller
  */
 class GalleryController extends ActionController
 {
-    protected CategoryRepository $categoryRepository;
+    protected ImageGalleryRepository $galleryRepository;
+
+    protected DemandFactory $demandFactory;
+    
+    protected OrderFactory $orderFactory;
 
     protected array $configuration = array();
 
     protected $settings = array();
+
+    protected array $allowedColumns = [
+        'crdate',
+        'tstamp',
+        'title',
+        'uid',
+    ];
+
+    public function initializeAction(): void
+    {                                                                 
+        $this->galleryRepository = GeneralUtility::makeInstance(ImageGalleryRepository::class);
+        $this->orderFactory = GeneralUtility::makeInstance(OrderFactory::class);
+        $this->demandFactory = GeneralUtility::makeInstance(DemandFactory::class);
+    }
 
     /**
      * @return void|string
@@ -42,14 +63,9 @@ class GalleryController extends ActionController
         }
 
         // Initialize some objects related to the query.
-        $matcher = MatcherFactory::getInstance()->getMatcher($this->settings);
-        $order = OrderFactory::getInstance()->getOrder($this->settings);
+        $demand = $this->demandFactory->get($this->settings);
 
-        // Fetch the adequate repository for a known data type.
-        $contentRepository = ContentRepositoryFactory::getInstance('sys_file');
-
-        // Fetch and count files
-        $images = $contentRepository->findBy($matcher, $order);
+        $images = $this->galleryRepository->findByDemand($demand, $this->getOrderings());
 
         // Assign template variables
         $this->view->assign('settings', $this->settings);
@@ -57,15 +73,24 @@ class GalleryController extends ActionController
         $this->view->assign('images', $images);
 
         $identifiers = GeneralUtility::trimExplode(',', $this->settings['categories'], TRUE);
-        $this->view->assign('categories', $this->categoryRepository->findByIdentifiers($identifiers));
+        $this->view->assign('categories', $this->galleryRepository->findByCategories($identifiers));
     }
 
-    /**
-     * @param CategoryRepository $categoryRepository
-     */
-    public function injectCategoryRepository(CategoryRepository $categoryRepository): void
+    protected function getOrderings(): array
     {
-        $this->categoryRepository = $categoryRepository;
+        $sortBy = $this->settings['sorting'] ?? 'tstamp';
+        if (!in_array($sortBy, $this->allowedColumns)) {
+            $sortBy = 'tstamp';
+        }
+        $defaultDirection = QueryInterface::ORDER_DESCENDING;
+        $direction = $this->settings['direction'] ?? $defaultDirection;
+        if ($this->settings['direction'] && strtoupper($direction) === 'DESC') {
+            $defaultDirection = QueryInterface::ORDER_ASCENDING;
+        }
+        return [
+            $sortBy => $defaultDirection,
+        ];
     }
+
 
 }

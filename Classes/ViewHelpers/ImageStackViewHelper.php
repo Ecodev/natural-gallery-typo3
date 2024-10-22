@@ -35,19 +35,24 @@ class ImageStackViewHelper extends AbstractViewHelper
         $images = $this->templateVariableContainer->get('images');
 
         $items = [];
+
         foreach ($images as $image) {
 
             /** @var \TYPO3\CMS\Core\Resource\File $file */
-            $file = GeneralUtility::makeInstance(ResourceFactory::class)->getFileObject($image->getUid());
+            $file = GeneralUtility::makeInstance(ResourceFactory::class)->getFileObject($image['uid']);
             $thumbnailFile = $this->createProcessedFile($file, 'thumbnailMaximumWidth', 'thumbnailMaximumHeight');
             $enlargedFile = $this->createProcessedFile($file, 'enlargedImageMaximumWidth', 'enlargedImageMaximumHeight');
 
-            $categories = array_map(function ($cat) {
-                return [
-                    'id' => $cat['uid'],
-                    'title' => $cat['title']
-                ];
-            }, $image['metadata']['categories']);
+            $categories = [];
+
+            if (isset($image['metadata']['categories']) && is_array($image['metadata']['categories'])) {
+                $categories = array_map(function ($cat) {
+                    return [
+                        'id' => $cat['uid'],
+                        'title' => $cat['title']
+                    ];
+                }, $image['metadata']['categories']);
+            }
 
             $baseUrl = GeneralUtility::getIndpEnv('TYPO3_SITE_URL');
             $item = [
