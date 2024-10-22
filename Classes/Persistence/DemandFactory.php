@@ -91,7 +91,7 @@ class MatcherFactory implements SingletonInterface
         return $matcher;
     }
 
-    public function getMatcher(array $settings): Matcher
+    public function get(array $settings): Matcher
     {
         $this->settings = $settings;
         $matcher = GeneralUtility::makeInstance(Matcher::class);

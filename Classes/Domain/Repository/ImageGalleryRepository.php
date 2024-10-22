@@ -14,6 +14,7 @@ class ImageGalleryRepository
 {
 
     protected string $tableName = 'sys_file';
+    
     protected array $settings;
 
     public function getDefaultData(string $field):string
@@ -38,35 +39,34 @@ class ImageGalleryRepository
         return is_array($messages) ? $messages : [];
     }
 
+    // public function findByCategory(int $category): array
+    // {
+    //     /** @var QueryBuilder $query */
+    //     $queryBuilder = $this->getQueryBuilder();
+    //     $queryBuilder->select('*')
+    //         ->from($this->tableName)
+    //         ->innerJoin(
+    //             'sys_file',
+    //             'sys_file_metadata',
+    //             'sys_file_metadata',
+    //             'sys_file.uid = sys_file_metadata.file'
+    //         )
+    //         ->innerJoin(
+    //             'sys_file_metadata',
+    //             'sys_category_record_mm',
+    //             'sys_category_record_mm',
+    //             'sys_category_record_mm.uid_foreign = sys_file_metadata.uid AND tablenames = "sys_file_metadata" AND fieldname = "categories"'
+    //         )
+    //         ->where(
+    //             $queryBuilder->expr()->eq('sys_category_record_mm.uid_local', $category)
+    //         )
+    //         ->addOrderBy('sys_file_metadata.year', 'DESC')
+    //         ->addOrderBy('sys_file_metadata.title', 'ASC');
 
-    public function findByCategory(int $category): array
-    {
-        /** @var QueryBuilder $query */
-        $queryBuilder = $this->getQueryBuilder();
-        $queryBuilder->select('*')
-            ->from($this->tableName)
-            ->innerJoin(
-                'sys_file',
-                'sys_file_metadata',
-                'sys_file_metadata',
-                'sys_file.uid = sys_file_metadata.file'
-            )
-            ->innerJoin(
-                'sys_file_metadata',
-                'sys_category_record_mm',
-                'sys_category_record_mm',
-                'sys_category_record_mm.uid_foreign = sys_file_metadata.uid AND tablenames = "sys_file_metadata" AND fieldname = "categories"'
-            )
-            ->where(
-                $queryBuilder->expr()->eq('sys_category_record_mm.uid_local', $category)
-            )
-            ->addOrderBy('sys_file_metadata.year', 'DESC')
-            ->addOrderBy('sys_file_metadata.title', 'ASC');
-
-        return $queryBuilder
-            ->execute()
-            ->fetchAllAssociative();
-    }
+    //     return $queryBuilder
+    //         ->execute()
+    //         ->fetchAllAssociative();
+    // }
 
     public function findByCategories(array $categories): array
     {
@@ -115,6 +115,8 @@ class ImageGalleryRepository
                     $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($value) . '%'),
                 );
         }
+
+        
         if ($constraints) {
             $queryBuilder->where($queryBuilder->expr()->orX(...$constraints));
         }
@@ -147,15 +149,5 @@ class ImageGalleryRepository
         $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
         return $connectionPool->getQueryBuilderForTable($this->tableName);
     }
-
-
-
-
-
-
-
-
-
-
 
 }
