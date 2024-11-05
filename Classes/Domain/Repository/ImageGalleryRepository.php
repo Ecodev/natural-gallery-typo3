@@ -104,26 +104,55 @@ class ImageGalleryRepository
     public function findByDemand(array|Matcher $demand = [], array $orderings = [], int $offset = 0, int $limit = 0): array
     {
         $queryBuilder = $this->getQueryBuilder();
-        $queryBuilder->select('*')->from($this->tableName);
-
         $constraints = [];
-        foreach ($demand as $field => $value) {
-            $constraints[] = $queryBuilder
-                ->expr()
-                ->like(
-                    $field,
-                    $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($value) . '%'),
-                );
-        }
 
+
+        if ($demand['likes']) {
+            foreach ($demand['likes'] as $field => $value) {
+                $constraints[] = $queryBuilder->select('*')->from($this->tableName)
+                    ->expr()
+                    ->like(
+                        $field,
+                        $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($value) . '%'),
+                    );
+            }
+
+            if ($constraints) {
+                $queryBuilder->where($queryBuilder->expr()->orX(...$constraints));
+            }
+    
+            # We handle the sorting
+            $queryBuilder->addOrderBy(key($orderings), current($orderings));
+    
+        }
         
-        if ($constraints) {
-            $queryBuilder->where($queryBuilder->expr()->orX(...$constraints));
+
+        if ($demand['identifiers']) {
+            $queryBuilder->select('*')
+            ->from($this->tableName)
+            ->innerJoin(
+                'sys_file',
+                'sys_file_metadata',
+                'sys_file_metadata',
+                'sys_file.uid = sys_file_metadata.file'
+            )
+            ->innerJoin(
+                'sys_file_metadata',
+                'sys_category_record_mm',
+                'sys_category_record_mm',
+                'sys_category_record_mm.uid_foreign = sys_file_metadata.uid AND tablenames = "sys_file_metadata" AND fieldname = "categories"'
+            );
+
+            if (!empty($demand['identifiers'])) {
+                $queryBuilder->where(
+                    $queryBuilder->expr()->in('sys_category_record_mm.uid_local', $demand['identifiers'])
+                );
+            }
+
+            $queryBuilder->addOrderBy('sys_file_metadata.year', 'DESC')
+                ->addOrderBy('sys_file_metadata.title', 'ASC');
         }
-
-        # We handle the sorting
-        $queryBuilder->addOrderBy(key($orderings), current($orderings));
-
+        
         if ($limit > 0) {
             $queryBuilder->setMaxResults($limit);
         }

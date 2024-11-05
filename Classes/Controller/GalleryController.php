@@ -62,10 +62,7 @@ class GalleryController extends ActionController
             return '<strong style="color: red">Please save your plugin settings in the BE beforehand.</strong>';
         }
 
-        // Initialize some objects related to the query.
-        $demand = $this->demandFactory->get($this->settings);
-
-        $images = $this->galleryRepository->findByDemand($demand, $this->getOrderings());
+        $images = $this->galleryRepository->findByDemand($this->getDemand(), $this->getOrderings());
 
         // Assign template variables
         $this->view->assign('settings', $this->settings);
@@ -78,9 +75,9 @@ class GalleryController extends ActionController
 
     protected function getOrderings(): array
     {
-        $sortBy = $this->settings['sorting'] ?? 'tstamp';
+        $sortBy = $this->settings['sorting'] ?? 'sys_file.tstamp';
         if (!in_array($sortBy, $this->allowedColumns)) {
-            $sortBy = 'tstamp';
+            $sortBy = 'sys_file.tstamp';
         }
         $defaultDirection = QueryInterface::ORDER_DESCENDING;
         $direction = $this->settings['direction'] ?? $defaultDirection;
@@ -89,6 +86,14 @@ class GalleryController extends ActionController
         }
         return [
             $sortBy => $defaultDirection,
+        ];
+    }
+
+    protected function getDemand(): array
+    {
+        return [
+            'likes' => $this->demandFactory->get($this->settings),
+            'identifiers' => GeneralUtility::trimExplode(',', $this->settings['categories'], TRUE)
         ];
     }
 

@@ -25,7 +25,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Factory class related to Matcher object.
  */
-class MatcherFactory implements SingletonInterface
+class DemandFactory implements SingletonInterface
 {
 
     protected array $settings = [];
