@@ -5,7 +5,6 @@ namespace Fab\NaturalGallery\Domain\Repository;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Driver\Exception;
 use Fab\NaturalGallery\Persistence\Matcher;
-use Fab\NaturalGallery\Persistence\Order;
 use Fab\NaturalGallery\Utility\ConfigurationUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
@@ -85,59 +84,55 @@ class ImageGalleryRepository
      */
     public function findByDemand(array|Matcher $demand = [], array $orderings = [], int $offset = 0, int $limit = 0): array
     {
-        $queryBuilder = $this->getQueryBuilder();
-        $queryBuilder->select('*')->from($this->tableName) ->groupBy('sys_file.uid');
 
-        if (!empty($demand['likes'])) {
-            $constraints = [];
-
-            foreach ($demand['likes'] as $field => $value) {
-                $constraints[] = $queryBuilder->expr()->like(
-                    $field,
-                    $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($value) . '%')
-                );
-            }
-
-            if ($constraints) {
-                $queryBuilder->where($queryBuilder->expr()->orX(...$constraints));
-            }
-
-            if (!empty($orderings)) {
-                foreach ($orderings as $field => $direction) {
-                    $queryBuilder->addOrderBy('sys_file.' . $field, $direction);
+        $matcher = $demand['likes'];
+        $inConditions = $matcher->getIn();
+        $uids = $inConditions[0]['operand'];
+        $query = $this->getQueryBuilder();
+        $query
+            ->select('*')
+            ->from($this->tableName)
+            ->where(
+                $query->expr()->in(
+                    'uid',
+                    implode(',', array_map('intval', $uids)) // safe and correct formatting
+                )
+            );
+        if ($orderings) {
+            foreach ($orderings['*orderings'] as $ordering => $direction) {
+                $query->addOrderBy($ordering, $direction);
+                if ($this->hasForeignRelationIn($ordering)) {
+                    $relationalField = $this->getForeignRelationFrom($ordering);
+                    $demand->like($relationalField . '.uid', '');
                 }
             }
         }
 
-        if (!empty($demand['identifiers'])) {
-            $queryBuilder
-                ->innerJoin(
-                    $this->tableName,
-                    'sys_file_metadata',
-                    'sys_file_metadata',
-                    'sys_file.uid = sys_file_metadata.file'
-                )
-                ->innerJoin(
-                    'sys_file_metadata',
-                    'sys_category_record_mm',
-                    'sys_category_record_mm',
-                    'sys_category_record_mm.uid_foreign = sys_file_metadata.uid AND tablenames = "sys_file_metadata" AND fieldname = "categories"'
-                )
-                ->where(
-                    $queryBuilder->expr()->in('sys_category_record_mm.uid_local', $demand['identifiers'])
-                )
-                ->addOrderBy('sys_file_metadata.year', 'DESC')
-                ->addOrderBy('sys_file_metadata.title', 'ASC');
+        if ($offset > 0) {
+            $query->setFirstResult($offset);
         }
 
         if ($limit > 0) {
-            $queryBuilder->setMaxResults($limit);
+            $query->setMaxResults($limit);
         }
 
-        return  $queryBuilder->execute()->fetchAllAssociative();
+
+        return $query->execute()->fetchAllAssociative();
 
     }
 
+
+    protected function hasForeignRelationIn($ordering): bool
+    {
+        return str_contains($ordering, '.');
+    }
+
+
+    protected function getForeignRelationFrom($ordering): string
+    {
+        $parts = explode('.', $ordering);
+        return $parts[0];
+    }
     /**
      * @throws DBALException
      * @throws Exception

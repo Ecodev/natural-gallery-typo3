@@ -65,7 +65,8 @@ class GalleryController extends ActionController
             return '<strong style="color: red">Please save your plugin settings in the BE beforehand.</strong>';
         }
 
-        $images = $this->galleryRepository->findByDemand($this->getDemand(), $this->getOrderings(),0,100);
+
+        $images = $this->galleryRepository->findByDemand($this->getDemand(), (array)$this->getOrderings(),0,0);
         // Assign template variables
         $this->view->assign('settings', $this->settings);
         $this->view->assign('data', $this->configurationManager->getcontentObject()->data);
@@ -76,23 +77,11 @@ class GalleryController extends ActionController
         $this->view->assign('categories', $this->galleryRepository->findByCategories($identifiers));
     }
 
-    protected function getOrderings(): array
+    protected function getOrderings(): \Fab\NaturalGallery\Persistence\Order
     {
-        $sortBy = $this->settings['sorting'] ?? 'tstamp';
 
-        if (!in_array($sortBy, $this->allowedColumns, true)) {
-            $sortBy = 'tstamp';
-        }
+        return OrderFactory::getInstance()->getOrder($this->settings);
 
-        $directionSetting = strtoupper(trim((string)($this->settings['direction'] ?? 'DESC')));
-
-        $direction = $directionSetting === 'ASC'
-            ? QueryInterface::ORDER_ASCENDING
-            : QueryInterface::ORDER_DESCENDING;
-
-        return [
-            $sortBy => $direction,
-        ];
     }
 
 
