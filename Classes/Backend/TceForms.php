@@ -14,9 +14,8 @@ namespace Fab\NaturalGallery\Backend;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Fab\Vidi\Domain\Model\Selection;
-use Fab\Vidi\Domain\Repository\SelectionRepository;
-use Fab\Vidi\Tca\Tca;
+use Fab\NaturalGallery\Domain\Model\Selection;
+use Fab\NaturalGallery\Domain\Repository\SelectionRepository;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;

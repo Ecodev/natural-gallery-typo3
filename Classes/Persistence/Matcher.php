@@ -105,7 +105,7 @@ class Matcher
 
     /**
      * @param string $searchTerm
-     * @return \Fab\Vidi\Persistence\Matcher
+     * @return \Fab\NaturalGallery\Persistence\Matcher
      */
     public function setSearchTerm($searchTerm): Matcher
     {
