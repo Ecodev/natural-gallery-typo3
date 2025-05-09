@@ -65,7 +65,7 @@ class GalleryController extends ActionController
             return '<strong style="color: red">Please save your plugin settings in the BE beforehand.</strong>';
         }
 
-        $images = $this->galleryRepository->findByDemand($this->getDemand(), $this->getOrderings(),0,130);
+        $images = $this->galleryRepository->findByDemand($this->getDemand(), $this->getOrderings(),0,100);
         // Assign template variables
         $this->view->assign('settings', $this->settings);
         $this->view->assign('data', $this->configurationManager->getcontentObject()->data);
