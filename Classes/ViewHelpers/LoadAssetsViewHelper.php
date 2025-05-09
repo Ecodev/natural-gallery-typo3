@@ -16,9 +16,11 @@ namespace Fab\NaturalGallery\ViewHelpers;
 
 use FluidTYPO3\Vhs\Asset;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -30,7 +32,7 @@ class LoadAssetsViewHelper extends AbstractViewHelper
     /**
      * @return void
      */
-    public function render()
+    public function render(): void
     {
         $settings = $this->templateVariableContainer->get('settings');
 
@@ -51,7 +53,7 @@ class LoadAssetsViewHelper extends AbstractViewHelper
      * @param array $asset
      * @return void
      */
-    protected function loadByVhs(array $asset)
+    protected function loadByVhs(array $asset): void
     {
 
         if (Environment::getContext()->isDevelopment()) {
@@ -67,7 +69,7 @@ class LoadAssetsViewHelper extends AbstractViewHelper
      * @param array $asset
      * @return void
      */
-    protected function loadByCorePageRender(array $asset)
+    protected function loadByCorePageRender(array $asset): void
     {
 
         $file = $this->resolveFileForApplicationContext($asset);
@@ -86,7 +88,7 @@ class LoadAssetsViewHelper extends AbstractViewHelper
      * @param array $settings
      * @return bool
      */
-    protected function shouldLoadByVhs(array $settings)
+    protected function shouldLoadByVhs(array $settings): bool
     {
         return ExtensionManagementUtility::isLoaded('vhs') && $settings['loadAssetWithVhsIfAvailable'];
     }
@@ -95,7 +97,7 @@ class LoadAssetsViewHelper extends AbstractViewHelper
      * @param array $asset
      * @return string|NULL
      */
-    protected function getDevelopmentFile(array $asset)
+    protected function getDevelopmentFile(array $asset): ?string
     {
         $possibleDevelopmentFile = str_replace('.min.', '.', $asset['path']);
         $developmentFile = GeneralUtility::getFileAbsFileName($possibleDevelopmentFile);
@@ -109,7 +111,7 @@ class LoadAssetsViewHelper extends AbstractViewHelper
      * @param array $asset
      * @return string
      */
-    protected function resolveFileForApplicationContext(array $asset)
+    protected function resolveFileForApplicationContext(array $asset): string
     {
         $resolvedFile = $asset['path']; // default value
 
@@ -124,19 +126,19 @@ class LoadAssetsViewHelper extends AbstractViewHelper
     }
 
     /**
-     * @return \TYPO3\CMS\Core\Page\PageRenderer
+     * @return PageRenderer
      */
-    protected function getPageRenderer()
+    protected function getPageRenderer(): PageRenderer
     {
-        return\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);
+        return GeneralUtility::makeInstance(PageRenderer::class);
     }
 
     /**
      * Returns an instance of the Frontend object.
      *
-     * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+     * @return TypoScriptFrontendController
      */
-    protected function getFrontendObject()
+    protected function getFrontendObject(): TypoScriptFrontendController
     {
         return $GLOBALS['TSFE'];
     }

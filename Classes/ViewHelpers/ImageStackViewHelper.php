@@ -30,13 +30,13 @@ class ImageStackViewHelper extends AbstractViewHelper
     /**
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $images = $this->templateVariableContainer->get('images');
 
         $items = [];
 
-        $processedUids = []; 
+        $processedUids = [];
         $items = [];
 
         foreach ($images as $image) {
@@ -44,7 +44,7 @@ class ImageStackViewHelper extends AbstractViewHelper
             if (!empty($image['uid']) && !in_array($image['uid'], $processedUids)) {
                 try {
                     $file = GeneralUtility::makeInstance(ResourceFactory::class)->getFileObject($image['uid']);
-                    
+
                     $thumbnailFile = $this->createProcessedFile($file, 'thumbnailMaximumWidth', 'thumbnailMaximumHeight');
                     $enlargedFile = $this->createProcessedFile($file, 'enlargedImageMaximumWidth', 'enlargedImageMaximumHeight');
                     $categories = [];
@@ -72,10 +72,10 @@ class ImageStackViewHelper extends AbstractViewHelper
                         'categories' => $categories
                     ];
 
-                    $items[] = $item; 
-                    $processedUids[] = $image['uid']; 
+                    $items[] = $item;
+                    $processedUids[] = $image['uid'];
                 } catch (\TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException $e) {
-                    
+
                 }
             }
         }
@@ -88,10 +88,10 @@ class ImageStackViewHelper extends AbstractViewHelper
      * @param File $file
      * @param $widthFormat
      * @param $heightFormat
-     * @return ProcessedFile
+     * @return File|ProcessedFile
      * @internal param Content $image
      */
-    public function createProcessedFile(File $file, $widthFormat, $heightFormat)
+    public function createProcessedFile(File $file, $widthFormat, $heightFormat): File|ProcessedFile
     {
         $configuration = [
             'maxWidth' => $this->getSettings()[$widthFormat] ? $this->getSettings()[$widthFormat] : null,
@@ -111,7 +111,6 @@ class ImageStackViewHelper extends AbstractViewHelper
      */
     public function getSettings()
     {
-        $settings = $this->templateVariableContainer->get('settings');
-        return $settings;
+        return $this->templateVariableContainer->get('settings');
     }
 }

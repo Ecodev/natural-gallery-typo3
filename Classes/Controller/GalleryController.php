@@ -23,6 +23,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\expr;
 
 /**
  * Controller
@@ -32,12 +33,12 @@ class GalleryController extends ActionController
     protected ImageGalleryRepository $galleryRepository;
 
     protected DemandFactory $demandFactory;
-    
+
     protected OrderFactory $orderFactory;
 
     protected array $configuration = array();
 
-    protected $settings = array();
+    protected $settings = [];
 
     protected array $allowedColumns = [
         'crdate',
@@ -47,7 +48,7 @@ class GalleryController extends ActionController
     ];
 
     public function initializeAction(): void
-    {                                                                 
+    {
         $this->galleryRepository = GeneralUtility::makeInstance(ImageGalleryRepository::class);
         $this->orderFactory = GeneralUtility::makeInstance(OrderFactory::class);
         $this->demandFactory = GeneralUtility::makeInstance(DemandFactory::class);
@@ -58,36 +59,42 @@ class GalleryController extends ActionController
      */
     public function listAction()
     {
+
+
         if (!isset($this->settings['imagesPerRow'])) {
             return '<strong style="color: red">Please save your plugin settings in the BE beforehand.</strong>';
         }
 
-        $images = $this->galleryRepository->findByDemand($this->getDemand(), $this->getOrderings());
-
+        $images = $this->galleryRepository->findByDemand($this->getDemand(), $this->getOrderings(),0,130);
         // Assign template variables
         $this->view->assign('settings', $this->settings);
         $this->view->assign('data', $this->configurationManager->getcontentObject()->data);
         $this->view->assign('images', $images);
 
         $identifiers = GeneralUtility::trimExplode(',', $this->settings['categories'], TRUE);
+
         $this->view->assign('categories', $this->galleryRepository->findByCategories($identifiers));
     }
 
     protected function getOrderings(): array
     {
-        $sortBy = $this->settings['sorting'] ?? 'sys_file.tstamp';
-        if (!in_array($sortBy, $this->allowedColumns)) {
-            $sortBy = 'sys_file.tstamp';
+        $sortBy = $this->settings['sorting'] ?? 'tstamp';
+
+        if (!in_array($sortBy, $this->allowedColumns, true)) {
+            $sortBy = 'tstamp';
         }
-        $defaultDirection = QueryInterface::ORDER_DESCENDING;
-        $direction = $this->settings['direction'] ?? $defaultDirection;
-        if ($this->settings['direction'] && strtoupper($direction) === 'DESC') {
-            $defaultDirection = QueryInterface::ORDER_ASCENDING;
-        }
+
+        $directionSetting = strtoupper(trim((string)($this->settings['direction'] ?? 'DESC')));
+
+        $direction = $directionSetting === 'ASC'
+            ? QueryInterface::ORDER_ASCENDING
+            : QueryInterface::ORDER_DESCENDING;
+
         return [
-            $sortBy => $defaultDirection,
+            $sortBy => $direction,
         ];
     }
+
 
     protected function getDemand(): array
     {

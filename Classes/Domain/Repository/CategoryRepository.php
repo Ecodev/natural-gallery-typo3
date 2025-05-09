@@ -14,35 +14,42 @@ namespace Fab\NaturalGallery\Domain\Repository;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
+use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * Repository for querying content element
  */
-class CategoryRepository extends \TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository {
+class CategoryRepository extends Repository {
 
-	/**
-	 * Initialize Repository
-	 */
-	public function initializeObject() {
+    /**
+     * Initialize Repository
+     */
+    public function initializeObject(): void
+    {
+        /** @var Typo3QuerySettings $querySettings */
+        $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
+        $querySettings->setRespectStoragePage(FALSE);
+        $this->setDefaultQuerySettings($querySettings);
+    }
 
-		/** @var Typo3QuerySettings $querySettings */
-		$querySettings = $this->objectManager->get(Typo3QuerySettings::class);
-		$querySettings->setRespectStoragePage(FALSE);
-		$this->setDefaultQuerySettings($querySettings);
-	}
-
-	/**
-	 * @param array $identifiers
-	 * @return \TYPO3\CMS\Extbase\Persistence\Generic\QueryResult|null
-	 */
-	public function findByIdentifiers(array $identifiers) {
-		$result = null;
-		if (!empty($identifiers)) {
-			$query = $this->createQuery();
-			$query->matching($query->in('uid', $identifiers));
-			$result = $query->execute();
-		}
-		return $result;
-	}
+    /**
+     * @param array $identifiers
+     * @return QueryResultInterface|array[]|object[]
+     * @throws InvalidQueryException
+     */
+    public function findByIdentifiers(array $identifiers): array|QueryResultInterface
+    {
+        $result = null;
+        if (!empty($identifiers)) {
+            $query = $this->createQuery();
+            $query->matching($query->in('uid', $identifiers));
+            $result = $query->execute();
+        }
+        return $result;
+    }
 }

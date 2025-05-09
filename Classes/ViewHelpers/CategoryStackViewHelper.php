@@ -25,7 +25,7 @@ class CategoryStackViewHelper extends AbstractViewHelper
     /**
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $cats = $this->templateVariableContainer->get('categories');
         $items = [];

@@ -21,7 +21,7 @@ class ConfigurationUtility implements SingletonInterface
     /**
      * @var array
      */
-    protected $configuration = [];
+    protected array $configuration = [];
 
     /**
      * Returns a class instance.
@@ -57,9 +57,9 @@ class ConfigurationUtility implements SingletonInterface
      * Returns a setting key.
      *
      * @param string $key
-     * @return mixed
+     * @return string|null
      */
-    public function get($key)
+    public function get(string $key): ?string
     {
         return isset($this->configuration[$key]) ? trim((string) $this->configuration[$key]) : null;
     }
@@ -70,7 +70,7 @@ class ConfigurationUtility implements SingletonInterface
      * @param string $key
      * @param mixed $value
      */
-    public function set($key, $value): void
+    public function set(string $key, mixed $value): void
     {
         $this->configuration[$key] = $value;
     }

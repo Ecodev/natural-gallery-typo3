@@ -2,6 +2,8 @@
 namespace Fab\NaturalGallery\Domain\Repository;
 
 
+use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Driver\Exception;
 use Fab\NaturalGallery\Persistence\Matcher;
 use Fab\NaturalGallery\Persistence\Order;
 use Fab\NaturalGallery\Utility\ConfigurationUtility;
@@ -14,7 +16,7 @@ class ImageGalleryRepository
 {
 
     protected string $tableName = 'sys_file';
-    
+
     protected array $settings;
 
     public function getDefaultData(string $field):string
@@ -39,35 +41,11 @@ class ImageGalleryRepository
         return is_array($messages) ? $messages : [];
     }
 
-    // public function findByCategory(int $category): array
-    // {
-    //     /** @var QueryBuilder $query */
-    //     $queryBuilder = $this->getQueryBuilder();
-    //     $queryBuilder->select('*')
-    //         ->from($this->tableName)
-    //         ->innerJoin(
-    //             'sys_file',
-    //             'sys_file_metadata',
-    //             'sys_file_metadata',
-    //             'sys_file.uid = sys_file_metadata.file'
-    //         )
-    //         ->innerJoin(
-    //             'sys_file_metadata',
-    //             'sys_category_record_mm',
-    //             'sys_category_record_mm',
-    //             'sys_category_record_mm.uid_foreign = sys_file_metadata.uid AND tablenames = "sys_file_metadata" AND fieldname = "categories"'
-    //         )
-    //         ->where(
-    //             $queryBuilder->expr()->eq('sys_category_record_mm.uid_local', $category)
-    //         )
-    //         ->addOrderBy('sys_file_metadata.year', 'DESC')
-    //         ->addOrderBy('sys_file_metadata.title', 'ASC');
 
-    //     return $queryBuilder
-    //         ->execute()
-    //         ->fetchAllAssociative();
-    // }
-
+    /**
+     * @throws DBALException
+     * @throws Exception
+     */
     public function findByCategories(array $categories): array
     {
         $queryBuilder = $this->getQueryBuilder();
@@ -101,66 +79,69 @@ class ImageGalleryRepository
 
     }
 
+    /**
+     * @throws Exception
+     * @throws DBALException
+     */
     public function findByDemand(array|Matcher $demand = [], array $orderings = [], int $offset = 0, int $limit = 0): array
     {
         $queryBuilder = $this->getQueryBuilder();
-        $constraints = [];
+        $queryBuilder->select('*')->from($this->tableName) ->groupBy('sys_file.uid');
 
+        if (!empty($demand['likes'])) {
+            $constraints = [];
 
-        if ($demand['likes']) {
             foreach ($demand['likes'] as $field => $value) {
-                $constraints[] = $queryBuilder->select('*')->from($this->tableName)
-                    ->expr()
-                    ->like(
-                        $field,
-                        $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($value) . '%'),
-                    );
+                $constraints[] = $queryBuilder->expr()->like(
+                    $field,
+                    $queryBuilder->createNamedParameter('%' . $queryBuilder->escapeLikeWildcards($value) . '%')
+                );
             }
 
             if ($constraints) {
                 $queryBuilder->where($queryBuilder->expr()->orX(...$constraints));
             }
-    
-            # We handle the sorting
-            $queryBuilder->addOrderBy(key($orderings), current($orderings));
-    
-        }
-        
 
-        if ($demand['identifiers']) {
-            $queryBuilder->select('*')
-            ->from($this->tableName)
-            ->innerJoin(
-                'sys_file',
-                'sys_file_metadata',
-                'sys_file_metadata',
-                'sys_file.uid = sys_file_metadata.file'
-            )
-            ->innerJoin(
-                'sys_file_metadata',
-                'sys_category_record_mm',
-                'sys_category_record_mm',
-                'sys_category_record_mm.uid_foreign = sys_file_metadata.uid AND tablenames = "sys_file_metadata" AND fieldname = "categories"'
-            );
-
-            if (!empty($demand['identifiers'])) {
-                $queryBuilder->where(
-                    $queryBuilder->expr()->in('sys_category_record_mm.uid_local', $demand['identifiers'])
-                );
+            if (!empty($orderings)) {
+                foreach ($orderings as $field => $direction) {
+                    $queryBuilder->addOrderBy($field, $direction);
+                }
             }
+        }
 
-            $queryBuilder->addOrderBy('sys_file_metadata.year', 'DESC')
+        if (!empty($demand['identifiers'])) {
+            $queryBuilder
+                ->innerJoin(
+                    $this->tableName,
+                    'sys_file_metadata',
+                    'sys_file_metadata',
+                    'sys_file.uid = sys_file_metadata.file'
+                )
+                ->innerJoin(
+                    'sys_file_metadata',
+                    'sys_category_record_mm',
+                    'sys_category_record_mm',
+                    'sys_category_record_mm.uid_foreign = sys_file_metadata.uid AND tablenames = "sys_file_metadata" AND fieldname = "categories"'
+                )
+                ->where(
+                    $queryBuilder->expr()->in('sys_category_record_mm.uid_local', $demand['identifiers'])
+                )
+                ->addOrderBy('sys_file_metadata.year', 'DESC')
                 ->addOrderBy('sys_file_metadata.title', 'ASC');
         }
-        
+
         if ($limit > 0) {
             $queryBuilder->setMaxResults($limit);
         }
 
-        return $queryBuilder->execute()->fetchAllAssociative();
+        return  $queryBuilder->execute()->fetchAllAssociative();
+
     }
 
-
+    /**
+     * @throws DBALException
+     * @throws Exception
+     */
     public function findByUids(array $uids): array
     {
         $query = $this->getQueryBuilder();

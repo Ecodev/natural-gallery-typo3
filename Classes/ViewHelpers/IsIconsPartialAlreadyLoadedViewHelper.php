@@ -26,5 +26,5 @@ use Fab\NaturalGallery\Utility\PartialLoadingRegister;
  */
 class IsIconsPartialAlreadyLoadedViewHelper extends AbstractIsPartialAlreadyLoadedViewHelper
 {
-    protected $name = 'icons';
+    protected string $name = 'icons';
 }
