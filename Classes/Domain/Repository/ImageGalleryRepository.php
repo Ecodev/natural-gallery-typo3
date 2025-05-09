@@ -104,7 +104,7 @@ class ImageGalleryRepository
 
             if (!empty($orderings)) {
                 foreach ($orderings as $field => $direction) {
-                    $queryBuilder->addOrderBy($field, $direction);
+                    $queryBuilder->addOrderBy('sys_file.' . $field, $direction);
                 }
             }
         }
