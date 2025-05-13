@@ -14,6 +14,10 @@ namespace Fab\NaturalGallery\Domain\Repository;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Driver\Exception;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
@@ -24,32 +28,38 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 /**
  * Repository for querying content element
  */
-class CategoryRepository extends Repository {
+class CategoryRepository
+{
 
     /**
      * Initialize Repository
      */
-    public function initializeObject(): void
-    {
-        /** @var Typo3QuerySettings $querySettings */
-        $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
-        $querySettings->setRespectStoragePage(FALSE);
-        $this->setDefaultQuerySettings($querySettings);
-    }
+    protected string $tableName = 'sys_category';
 
     /**
-     * @param array $identifiers
-     * @return QueryResultInterface|array[]|object[]
-     * @throws InvalidQueryException
+     * @throws Exception
+     * @throws DBALException
      */
     public function findByIdentifiers(array $identifiers): array|QueryResultInterface
     {
         $result = null;
         if (!empty($identifiers)) {
-            $query = $this->createQuery();
-            $query->matching($query->in('uid', $identifiers));
-            $result = $query->execute();
+            $queryBuilder = $this->getQueryBuilder();
+            $queryBuilder->getRestrictions()->removeAll();
+            $queryBuilder->select('*')
+                ->from($this->tableName)
+                ->where(
+                    $queryBuilder->expr()->in('uid', $identifiers)
+                );
+            $result = $queryBuilder->execute()->fetchAllAssociative();
         }
         return $result;
+    }
+
+    protected function getQueryBuilder(): QueryBuilder
+    {
+        /** @var ConnectionPool $connectionPool */
+        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+        return $connectionPool->getQueryBuilderForTable($this->tableName);
     }
 }
