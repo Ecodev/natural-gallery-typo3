@@ -80,9 +80,7 @@ class CategoryRepository
 
         }
 
-        return $results ? $results : [];
-
-
+        return $results;
     }
 
     protected function getQueryBuilder(): QueryBuilder

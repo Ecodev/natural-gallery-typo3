@@ -43,7 +43,6 @@ class ImageStackViewHelper extends AbstractViewHelper
         foreach ($images as $image) {
             /** @var \TYPO3\CMS\Core\Resource\File $file */
             if (!empty($image['uid']) && !in_array($image['uid'], $processedUids)) {
-                try {
                     $file = GeneralUtility::makeInstance(ResourceFactory::class)->getFileObject($image['uid']);
 
                     $thumbnailFile = $this->createProcessedFile($file, 'thumbnailMaximumWidth', 'thumbnailMaximumHeight');
@@ -77,10 +76,6 @@ class ImageStackViewHelper extends AbstractViewHelper
 
                     $items[] = $item;
                     $processedUids[] = $image['uid'];
-                } catch (\TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException $e) {
-
-
-                }
             }
         }
 
