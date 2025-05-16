@@ -56,6 +56,35 @@ class CategoryRepository
         return $result;
     }
 
+    public function findFileCategories($uid): array
+    {
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_file_metadata');
+        $queryBuilder->getRestrictions()->removeAll();
+        $results = [];
+        if ($uid){
+            $query = $queryBuilder
+                ->select('sys_category.uid', 'sys_category.title')
+                ->from('sys_category')
+                ->leftJoin(
+                    'sys_category',
+                    'sys_category_record_mm',
+                    'sys_category_record_mm',
+                    $queryBuilder->expr()->eq('sys_category.uid', 'sys_category_record_mm.uid_local')
+                )
+                ->where(
+                    $queryBuilder->expr()->eq('sys_category_record_mm.uid_foreign', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT)),
+                    $queryBuilder->expr()->eq('sys_category_record_mm.tablenames', $queryBuilder->createNamedParameter('sys_file_metadata', \PDO::PARAM_STR)) ,
+                    $queryBuilder->expr()->eq('sys_category_record_mm.fieldname', $queryBuilder->createNamedParameter('categories', \PDO::PARAM_STR))
+                );
+            $results = $query->execute()->fetchAllAssociative();
+
+        }
+
+        return $results ? $results : [];
+
+
+    }
+
     protected function getQueryBuilder(): QueryBuilder
     {
         /** @var ConnectionPool $connectionPool */

@@ -15,6 +15,7 @@ namespace Fab\NaturalGallery\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Fab\NaturalGallery\Domain\Repository\CategoryRepository;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\ProcessedFile;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
@@ -49,13 +50,15 @@ class ImageStackViewHelper extends AbstractViewHelper
                     $enlargedFile = $this->createProcessedFile($file, 'enlargedImageMaximumWidth', 'enlargedImageMaximumHeight');
                     $categories = [];
 
-                    if (isset($image['metadata']['categories']) && is_array($image['metadata']['categories'])) {
+                    $categoryRepository = GeneralUtility::makeInstance(CategoryRepository::class);
+                    $metadataCategories = $categoryRepository->findFileCategories($file->getMetaData()['uid']);
+                    if ($metadataCategories && is_array($metadataCategories)) {
                         $categories = array_map(function ($cat) {
                             return [
                                 'id' => $cat['uid'],
                                 'title' => $cat['title']
                             ];
-                        }, $image['metadata']['categories']);
+                        },$metadataCategories);
                     }
 
                     $baseUrl = GeneralUtility::getIndpEnv('TYPO3_SITE_URL');
@@ -75,6 +78,7 @@ class ImageStackViewHelper extends AbstractViewHelper
                     $items[] = $item;
                     $processedUids[] = $image['uid'];
                 } catch (\TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException $e) {
+
 
                 }
             }
