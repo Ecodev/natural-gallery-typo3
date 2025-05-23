@@ -23,11 +23,11 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 class PartialLoadingRegister extends AbstractViewHelper
 {
 
-    protected static $registry = [];
+    protected static array $registry = [];
 
-    protected static $_instance = null;
+    protected static ?PartialLoadingRegister $_instance = null;
 
-    public static function getInstance()
+    public static function getInstance(): ?PartialLoadingRegister
     {
         if (is_null(self::$_instance)) {
             self::$_instance = new PartialLoadingRegister();
@@ -40,7 +40,7 @@ class PartialLoadingRegister extends AbstractViewHelper
     {
     }
 
-    private function register($name)
+    private function register($name): void
     {
         self::$registry[$name] = true;
     }
@@ -49,7 +49,7 @@ class PartialLoadingRegister extends AbstractViewHelper
      * @param $name
      * @return bool
      */
-    public function usePartial($name)
+    public function usePartial($name): bool
     {
         $isUsed = isset(self::$registry[$name]);
         self::register($name);

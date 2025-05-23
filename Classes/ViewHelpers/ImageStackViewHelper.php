@@ -15,6 +15,7 @@ namespace Fab\NaturalGallery\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Fab\NaturalGallery\Domain\Repository\CategoryRepository;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\ProcessedFile;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
@@ -30,53 +31,66 @@ class ImageStackViewHelper extends AbstractViewHelper
     /**
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $images = $this->templateVariableContainer->get('images');
 
         $items = [];
+
+        $processedUids = [];
+        $items = [];
+
         foreach ($images as $image) {
-
             /** @var \TYPO3\CMS\Core\Resource\File $file */
-            $file = GeneralUtility::makeInstance(ResourceFactory::class)->getFileObject($image->getUid());
-            $thumbnailFile = $this->createProcessedFile($file, 'thumbnailMaximumWidth', 'thumbnailMaximumHeight');
-            $enlargedFile = $this->createProcessedFile($file, 'enlargedImageMaximumWidth', 'enlargedImageMaximumHeight');
+            if (!empty($image['uid']) && !in_array($image['uid'], $processedUids)) {
+                    $file = GeneralUtility::makeInstance(ResourceFactory::class)->getFileObject($image['uid']);
 
-            $categories = array_map(function ($cat) {
-                return [
-                    'id' => $cat['uid'],
-                    'title' => $cat['title']
-                ];
-            }, $image['metadata']['categories']);
+                    $thumbnailFile = $this->createProcessedFile($file, 'thumbnailMaximumWidth', 'thumbnailMaximumHeight');
+                    $enlargedFile = $this->createProcessedFile($file, 'enlargedImageMaximumWidth', 'enlargedImageMaximumHeight');
+                    $categories = [];
 
-            $baseUrl = GeneralUtility::getIndpEnv('TYPO3_SITE_URL');
-            $item = [
-                'thumbnail' => $baseUrl . $thumbnailFile->getPublicUrl(),
-                'enlarged' => $baseUrl . $enlargedFile->getPublicUrl(),
-                'id' => $file->getProperty('uid'),
-                'title' => $file->getProperty('title'),
-                'description' => $file->getProperty('description'),
-                'tWidth' => $thumbnailFile->getProperty('width'),
-                'tHeight' => $thumbnailFile->getProperty('height'),
-                'eWidth' => $enlargedFile->getProperty('width'),
-                'eHeight' => $enlargedFile->getProperty('height'),
-                'categories' => $categories
-            ];
+                    $categoryRepository = GeneralUtility::makeInstance(CategoryRepository::class);
+                    $metadataCategories = $categoryRepository->findFileCategories($file->getMetaData()['uid']);
+                    if ($metadataCategories && is_array($metadataCategories)) {
+                        $categories = array_map(function ($cat) {
+                            return [
+                                'id' => $cat['uid'],
+                                'title' => $cat['title']
+                            ];
+                        },$metadataCategories);
+                    }
 
-            $items[] = $item;
+                    $baseUrl = GeneralUtility::getIndpEnv('TYPO3_SITE_URL');
+                    $item = [
+                        'thumbnail' => $baseUrl . $thumbnailFile->getPublicUrl(),
+                        'enlarged' => $baseUrl . $enlargedFile->getPublicUrl(),
+                        'id' => $file->getProperty('uid'),
+                        'title' => $file->getProperty('title'),
+                        'description' => $file->getProperty('description'),
+                        'tWidth' => $thumbnailFile->getProperty('width'),
+                        'tHeight' => $thumbnailFile->getProperty('height'),
+                        'eWidth' => $enlargedFile->getProperty('width'),
+                        'eHeight' => $enlargedFile->getProperty('height'),
+                        'categories' => $categories
+                    ];
+
+                    $items[] = $item;
+                    $processedUids[] = $image['uid'];
+            }
         }
 
         return json_encode($items);
+
     }
 
     /**
      * @param File $file
      * @param $widthFormat
      * @param $heightFormat
-     * @return ProcessedFile
+     * @return File|ProcessedFile
      * @internal param Content $image
      */
-    public function createProcessedFile(File $file, $widthFormat, $heightFormat)
+    public function createProcessedFile(File $file, $widthFormat, $heightFormat): File|ProcessedFile
     {
         $configuration = [
             'maxWidth' => $this->getSettings()[$widthFormat] ? $this->getSettings()[$widthFormat] : null,
@@ -96,7 +110,6 @@ class ImageStackViewHelper extends AbstractViewHelper
      */
     public function getSettings()
     {
-        $settings = $this->templateVariableContainer->get('settings');
-        return $settings;
+        return $this->templateVariableContainer->get('settings');
     }
 }

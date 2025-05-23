@@ -25,7 +25,7 @@ class CategoryStackViewHelper extends AbstractViewHelper
     /**
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $cats = $this->templateVariableContainer->get('categories');
         $items = [];
@@ -34,8 +34,8 @@ class CategoryStackViewHelper extends AbstractViewHelper
             foreach ($cats as $cat) {
 
                 $item = [
-                    'id' => $cat->getUid(),
-                    'title' => $cat->getTitle()
+                    'id' => $cat['uid'],
+                    'title' => $cat['title']
                 ];
 
                 $items[] = $item;

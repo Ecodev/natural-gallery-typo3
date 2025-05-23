@@ -26,5 +26,5 @@ use Fab\NaturalGallery\Utility\PartialLoadingRegister;
  */
 class IsPhotoswipePartialAlreadyLoadedViewHelper extends AbstractIsPartialAlreadyLoadedViewHelper
 {
-    protected $name = 'photoswipe';
+    protected string $name = 'photoswipe';
 }

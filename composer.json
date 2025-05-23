@@ -27,7 +27,6 @@
     }
   },
   "require": {
-    "typo3/cms-core": "^11.5",
-    "fab/vidi": "*"
+    "typo3/cms-core": "^11.5"
   }
 }

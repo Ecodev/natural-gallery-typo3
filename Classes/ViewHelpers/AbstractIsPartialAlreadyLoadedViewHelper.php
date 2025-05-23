@@ -30,7 +30,7 @@ class AbstractIsPartialAlreadyLoadedViewHelper extends AbstractViewHelper
     /**
      * @return bool
      */
-    public function render()
+    public function render(): bool
     {
         return  !PartialLoadingRegister::getInstance()->usePartial($this->name);
     }

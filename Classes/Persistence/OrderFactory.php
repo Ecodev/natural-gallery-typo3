@@ -14,8 +14,7 @@ namespace Fab\NaturalGallery\Persistence;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Fab\Vidi\Persistence\Order;
-use Fab\Vidi\Tca\Tca;
+use Fab\Messenger\Utility\TcaFieldsUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -25,22 +24,17 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class OrderFactory implements SingletonInterface
 {
 
-    /**
-     * @var array
-     */
-    protected $settings = array();
 
-    /**
-     * @var array
-     */
-    protected $dataType = 'sys_file';
+    protected array $settings = array();
+
+    protected string|array $dataType = 'sys_file';
 
     /**
      * Gets a singleton instance of this class.
      *
      * @return OrderFactory
      */
-    static public function getInstance()
+    static public function getInstance(): OrderFactory
     {
         return GeneralUtility::makeInstance(self::class);
     }
@@ -51,12 +45,12 @@ class OrderFactory implements SingletonInterface
      * @param array $settings
      * @return Order
      */
-    public function getOrder(array $settings = [])
+    public function getOrder(array $settings = []): Order
     {
         $this->settings = $settings;
 
         // Default ordering
-        $order = Tca::table($this->dataType)->getDefaultOrderings();
+        $order = TcaFieldsUtility::getFields($this->dataType);
 
         if (!empty($this->settings['sorting'])) {
             $direction = empty($this->settings['direction']) ? 'ASC' : $this->settings['direction'];

@@ -28,11 +28,11 @@ class DynamicStyleViewHelper extends AbstractViewHelper
      * @param array $settings containing images
      * @return string
      */
-    public function render(array $settings)
+    public function render(array $settings): string
     {
 
         # Defines width and height values dynamically
-        $styles = <<<EOF
+        return <<<EOF
 <style>
 .tx-infinitscrollgallery-thumbnail {
 	width: {$settings['thumbnailMaximumWidth']}px;
@@ -40,7 +40,5 @@ class DynamicStyleViewHelper extends AbstractViewHelper
 }
 </style>
 EOF;
-
-        return $styles;
     }
 }

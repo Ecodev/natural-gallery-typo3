@@ -1,4 +1,5 @@
 <?php
+
 namespace Fab\NaturalGallery\Controller;
 
 /**
@@ -15,57 +16,85 @@ namespace Fab\NaturalGallery\Controller;
  */
 
 use Fab\NaturalGallery\Domain\Repository\CategoryRepository;
-use Fab\NaturalGallery\Persistence\MatcherFactory;
+use Fab\NaturalGallery\Domain\Repository\ImageGalleryRepository;
+use Fab\NaturalGallery\Persistence\DemandFactory;
 use Fab\NaturalGallery\Persistence\OrderFactory;
-use Fab\Vidi\Domain\Repository\ContentRepositoryFactory;
+use Fab\NaturalGallery\Utility\ConfigurationUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\expr;
 
 /**
  * Controller
  */
 class GalleryController extends ActionController
 {
-    protected CategoryRepository $categoryRepository;
+    protected ImageGalleryRepository $galleryRepository;
+
+    protected DemandFactory $demandFactory;
+
+    protected OrderFactory $orderFactory;
 
     protected array $configuration = array();
 
-    protected $settings = array();
+    protected $settings = [];
+
+    protected array $allowedColumns = [
+        'crdate',
+        'tstamp',
+        'title',
+        'uid',
+    ];
+
+    public function initializeAction(): void
+    {
+        $this->galleryRepository = GeneralUtility::makeInstance(ImageGalleryRepository::class);
+        $this->orderFactory = GeneralUtility::makeInstance(OrderFactory::class);
+        $this->demandFactory = GeneralUtility::makeInstance(DemandFactory::class);
+    }
 
     /**
      * @return void|string
      */
     public function listAction()
     {
+
+
         if (!isset($this->settings['imagesPerRow'])) {
             return '<strong style="color: red">Please save your plugin settings in the BE beforehand.</strong>';
         }
 
-        // Initialize some objects related to the query.
-        $matcher = MatcherFactory::getInstance()->getMatcher($this->settings);
-        $order = OrderFactory::getInstance()->getOrder($this->settings);
-
-        // Fetch the adequate repository for a known data type.
-        $contentRepository = ContentRepositoryFactory::getInstance('sys_file');
-
-        // Fetch and count files
-        $images = $contentRepository->findBy($matcher, $order);
-
+        $images = $this->galleryRepository->findByDemand($this->getDemand(), (array)$this->getOrderings(),0,0);
+        $identifiers = GeneralUtility::trimExplode(',', $this->settings['categories'], TRUE);
+        $categories = $this->getCategoryRepository()->findByIdentifiers($identifiers);
         // Assign template variables
         $this->view->assign('settings', $this->settings);
         $this->view->assign('data', $this->configurationManager->getcontentObject()->data);
         $this->view->assign('images', $images);
-
-        $identifiers = GeneralUtility::trimExplode(',', $this->settings['categories'], TRUE);
-        $this->view->assign('categories', $this->categoryRepository->findByIdentifiers($identifiers));
+        $this->view->assign('categories', $categories);
     }
 
-    /**
-     * @param CategoryRepository $categoryRepository
-     */
-    public function injectCategoryRepository(CategoryRepository $categoryRepository): void
+    protected function getOrderings(): \Fab\NaturalGallery\Persistence\Order
     {
-        $this->categoryRepository = $categoryRepository;
+
+        return OrderFactory::getInstance()->getOrder($this->settings);
+
     }
+
+    protected function getCategoryRepository(): CategoryRepository
+    {
+        return GeneralUtility::makeInstance(CategoryRepository::class);
+    }
+
+    protected function getDemand(): array
+    {
+        return [
+            'likes' => $this->demandFactory->get($this->settings),
+            'identifiers' => GeneralUtility::trimExplode(',', $this->settings['categories'], TRUE)
+        ];
+    }
+
 
 }

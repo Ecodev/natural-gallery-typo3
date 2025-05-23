@@ -14,13 +14,12 @@ namespace Fab\NaturalGallery\Backend;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Fab\Vidi\Domain\Model\Selection;
-use Fab\Vidi\Domain\Repository\SelectionRepository;
-use Fab\Vidi\Tca\Tca;
+use Fab\NaturalGallery\Domain\Model\Selection;
+use Fab\NaturalGallery\Domain\Repository\SelectionRepository;
+use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Service\TypoScriptService;
+
 
 /**
  * A class to interact with TCEForms.
@@ -34,13 +33,13 @@ class TceForms
      *
      * @param array $parameters
      */
-    public function getSelections(&$parameters)
+    public function getSelections(array &$parameters): void
     {
 
         $parameters['items'][] = array('', '', NULL);
 
         /** @var SelectionRepository $selectionRepository */
-        $selectionRepository = $this->getObjectManager()->get(SelectionRepository::class);
+        $selectionRepository = GeneralUtility::makeInstance(SelectionRepository::class);
         $selections = $selectionRepository->findForEveryone('sys_file');
 
         if ($selections) {
@@ -56,7 +55,7 @@ class TceForms
      * @param $parameters
      * @return string
      */
-    protected function getDataTypeFromFlexform($parameters)
+    protected function getDataTypeFromFlexform($parameters): string
     {
 
         $configuredDataType = '';
@@ -79,7 +78,7 @@ class TceForms
      *
      * @return array
      */
-    protected function getPluginConfiguration()
+    protected function getPluginConfiguration(): array
     {
         $setup = $this->getConfigurationManager()->getTypoScriptSetup();
 
@@ -96,18 +95,9 @@ class TceForms
     /**
      * @return BackendConfigurationManager
      */
-    protected function getConfigurationManager()
+    protected function getConfigurationManager(): BackendConfigurationManager
     {
-        return $this->getObjectManager()->get(BackendConfigurationManager::class);
-    }
-
-    /**
-     * @return ObjectManager
-     */
-    protected function getObjectManager()
-    {
-        /** @var ObjectManager $objectManager */
-        return GeneralUtility::makeInstance(ObjectManager::class);
+        return GeneralUtility::makeInstance(BackendConfigurationManager::class);
     }
 
 }
