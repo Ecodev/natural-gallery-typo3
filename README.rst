@@ -7,6 +7,25 @@ Under the hood it uses the Media API and relies on categories to filter images o
 
 .. image:: https://raw.github.com/Ecodev/natural_gallery/master/Documentation/Introduction-01.png
 
+Natural Gallery JS v10.0.1 Upgrade
+===================================
+
+This extension has been upgraded to use Natural Gallery JS v10.0.1, bringing significant performance improvements and new features while maintaining full backward compatibility with existing TYPO3 installations.
+
+**Key Improvements:**
+
+- **Better Performance**: Autonomous image loading and optimized infinite scroll
+- **Reduced Server Load**: Images are generated on-demand instead of all upfront
+- **Modern Architecture**: ES modules and PhotoSwipe v5.x integration
+- **Smaller Bundle**: Reduced JavaScript bundle size
+- **Enhanced Mobile**: Better touch and swipe gesture support
+
+**Backward Compatibility:**
+
+All existing templates, TypoScript, and FlexForm configurations continue to work without any changes. The upgrade includes an automatic compatibility layer.
+
+For detailed upgrade information, see ``Documentation/UPGRADE-v10.md``.
+
 
 Project info and releases
 =========================

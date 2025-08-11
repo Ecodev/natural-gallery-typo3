@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Gallery TYPO3 v10 Test</title>
+    <link rel="stylesheet" href="../Resources/Public/StyleSheets/natural-gallery.full.css">
+    <link rel="stylesheet" href="../Resources/Public/StyleSheets/natural.css">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .gallery { border: 1px solid #ddd; min-height: 400px; }
+        h1 { color: #333; }
+        .test-info { background: #f5f5f5; padding: 10px; margin-bottom: 20px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>Natural Gallery TYPO3 v10.0.1 Test</h1>
+    
+    <div class="test-info">
+        <p><strong>Test Status:</strong> <span id="test-status">Loading...</span></p>
+        <p><strong>Gallery Instances:</strong> <span id="gallery-count">0</span></p>
+        <p><strong>Console:</strong> Check browser console for initialization logs</p>
+    </div>
+
+    <!-- Gallery container (simulates TYPO3 output) -->
+    <div id="gallery-test"></div>
+
+    <!-- Load scripts in correct order -->
+    <script src="../Resources/Public/JavaScript/natural-gallery.full.js"></script>
+    <script src="../Resources/Public/JavaScript/natural-gallery-init.js"></script>
+    
+    <script>
+        // Simulate TYPO3 template output
+        window.naturalGalleries = window.naturalGalleries || [];
+        
+        // Test gallery configuration (simulates TYPO3 FlexForm data)
+        var testGalleryConfig = {
+            id: 'gallery-test',
+            options: {
+                rowHeight: 350,
+                format: 'natural',
+                round: 3,
+                margin: 3,
+                limit: 0,
+                showLabels: 'hover',
+                lightbox: true,
+                minRowsAtStart: 2
+            },
+            images: [
+                {
+                    id: 1,
+                    thumbnail: 'https://picsum.photos/400/300?random=1',
+                    enlarged: 'https://picsum.photos/1200/900?random=1',
+                    title: 'Test Image 1',
+                    tWidth: 400,
+                    tHeight: 300,
+                    eWidth: 1200,
+                    eHeight: 900
+                },
+                {
+                    id: 2,
+                    thumbnail: 'https://picsum.photos/400/250?random=2',
+                    enlarged: 'https://picsum.photos/1200/750?random=2',
+                    title: 'Test Image 2',
+                    tWidth: 400,
+                    tHeight: 250,
+                    eWidth: 1200,
+                    eHeight: 750
+                },
+                {
+                    id: 3,
+                    thumbnail: 'https://picsum.photos/400/350?random=3',
+                    enlarged: 'https://picsum.photos/1200/1050?random=3',
+                    title: 'Test Image 3',
+                    tWidth: 400,
+                    tHeight: 350,
+                    eWidth: 1200,
+                    eHeight: 1050
+                }
+            ]
+        };
+        
+        // Add to global array (simulates TYPO3 template)
+        naturalGalleries.push(testGalleryConfig);
+        
+        // Test the initialization
+        setTimeout(function() {
+            var statusElement = document.getElementById('test-status');
+            var countElement = document.getElementById('gallery-count');
+            
+            if (window.naturalGalleryInstances && window.naturalGalleryInstances['gallery-test']) {
+                statusElement.textContent = '✅ Success - Gallery initialized correctly';
+                statusElement.style.color = 'green';
+                
+                var instanceCount = Object.keys(window.naturalGalleryInstances).length;
+                countElement.textContent = instanceCount;
+                
+                console.log('✅ Test passed: Gallery instance created', window.naturalGalleryInstances['gallery-test']);
+            } else {
+                statusElement.textContent = '❌ Failed - Gallery not initialized';
+                statusElement.style.color = 'red';
+                console.error('❌ Test failed: No gallery instance found');
+            }
+        }, 1000);
+        
+        // Test error handling
+        setTimeout(function() {
+            // Try to initialize gallery with invalid config
+            var invalidConfig = {
+                id: 'non-existent-gallery',
+                options: {},
+                images: []
+            };
+            naturalGalleries.push(invalidConfig);
+        }, 2000);
+    </script>
+</body>
+</html>
