@@ -28,5 +28,8 @@
   },
   "require": {
     "typo3/cms-core": "^11.5"
+  },
+  "config": {
+    "allow-plugins": true
   }
 }
