@@ -62,16 +62,27 @@ class ImageStackViewHelper extends AbstractViewHelper
 
                     $baseUrl = GeneralUtility::getIndpEnv('TYPO3_SITE_URL');
                     $item = [
-                        'thumbnail' => $baseUrl . $thumbnailFile->getPublicUrl(),
-                        'enlarged' => $baseUrl . $enlargedFile->getPublicUrl(),
+                        // v10 format - new property names
+                        'thumbnailSrc' => $baseUrl . $thumbnailFile->getPublicUrl(),
+                        'enlargedSrc' => $baseUrl . $enlargedFile->getPublicUrl(),
+                        'enlargedWidth' => $enlargedFile->getProperty('width'),
+                        'enlargedHeight' => $enlargedFile->getProperty('height'),
+                        
+                        // Common properties
                         'id' => $file->getProperty('uid'),
                         'title' => $file->getProperty('title'),
                         'description' => $file->getProperty('description'),
+                        
+                        // Thumbnail dimensions (for internal use)
                         'tWidth' => $thumbnailFile->getProperty('width'),
                         'tHeight' => $thumbnailFile->getProperty('height'),
+                        'categories' => $categories,
+                        
+                        // Keep backward compatibility properties for now
+                        'thumbnail' => $baseUrl . $thumbnailFile->getPublicUrl(),
+                        'enlarged' => $baseUrl . $enlargedFile->getPublicUrl(),
                         'eWidth' => $enlargedFile->getProperty('width'),
-                        'eHeight' => $enlargedFile->getProperty('height'),
-                        'categories' => $categories
+                        'eHeight' => $enlargedFile->getProperty('height')
                     ];
 
                     $items[] = $item;
