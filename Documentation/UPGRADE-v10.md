@@ -1,6 +1,6 @@
-# Natural Gallery JS v10.0.1 Upgrade
+# Natural Gallery JS v10.0.1 Upgrade - Breaking Changes
 
-This update upgrades the Natural Gallery JavaScript library from v2.5.0 to v10.0.1, bringing significant improvements and new features while maintaining full backward compatibility.
+This update upgrades the Natural Gallery JavaScript library from v2.5.0 to v10.0.1, bringing significant improvements and new features. **This is a major version upgrade with breaking changes**.
 
 ## What's New in v10.0.1
 
@@ -16,37 +16,34 @@ This update upgrades the Natural Gallery JavaScript library from v2.5.0 to v10.0
 - **Better Touch Support**: Improved mobile and touch device experience
 - **Enhanced Accessibility**: Better screen reader and keyboard navigation support
 
-## Backward Compatibility
+## Breaking Changes
 
-All existing TYPO3 templates and configurations continue to work without any changes. The upgrade includes a compatibility layer that:
+This is a major version upgrade that requires changes to your TYPO3 configuration and templates.
 
-- Converts old option formats to new API
-- Handles image data format conversion
-- Maintains the global `naturalGalleries` initialization pattern
-- Preserves all layout types (Natural, Square, Masonry)
+### Required Changes
 
-## Migration Notes
+1. **Update your templates**: The gallery initialization has changed significantly
+2. **Review custom JavaScript**: Any custom code interacting with galleries needs updating
+3. **Update configuration**: Some options have changed names or behavior
 
-### For Developers
+### Migration Notes
 
-If you have custom JavaScript that interacts with galleries, note these changes:
+#### For Developers
 
 **Old (v2.5.0):**
 ```javascript
-// Global constructor
+// Old global constructor approach
 var gallery = new NaturalGallery(config);
 ```
 
 **New (v10.0.1):**
 ```javascript
-// ES module classes
-import { Natural, Masonry, Square } from 'natural-gallery-js';
+// New ES module classes - requires manual integration
+import { Natural, Masonry, Square } from '@ecodev/natural-gallery-js';
 var gallery = new Natural(element, options);
 ```
 
-The TYPO3 extension handles this automatically through the compatibility layer.
-
-### Image Loading Changes
+#### Image Loading Changes
 
 In v2.5.0, TYPO3 had to generate all thumbnails upfront, which could freeze the page. In v10.0.1:
 
@@ -54,6 +51,13 @@ In v2.5.0, TYPO3 had to generate all thumbnails upfront, which could freeze the 
 - Only visible images are loaded initially
 - Infinite scroll loads images as needed
 - Server load is distributed over time
+
+#### API Changes
+
+- Option `margin` is now `gap`
+- Gallery initialization pattern has changed
+- Image data format may need updating
+- Some configuration options have been renamed or removed
 
 ## Testing the Upgrade
 
@@ -65,18 +69,18 @@ After upgrading, verify that:
 4. Touch/swipe gestures work on mobile
 5. Keyboard navigation functions properly
 
-## Configuration Options
+## Configuration Migration
 
-All existing TypoScript and FlexForm configurations remain compatible. The options are automatically converted:
+You will need to:
 
-- `margin` → `gap`
-- `showLabels` logic preserved
-- `lightbox` functionality maintained
-- Layout selection (`format`) preserved
+1. **Update TypoScript**: Review and update gallery configurations
+2. **Update Templates**: Modify Fluid templates to work with new API
+3. **Update JavaScript**: Any custom gallery code needs updating
+4. **Test Thoroughly**: This is a breaking change requiring careful testing
 
 ## Support
 
-If you encounter any issues after the upgrade:
+This is a major version upgrade. Please thoroughly test your galleries after upgrading and:
 
 1. Check browser console for JavaScript errors
 2. Verify all required files are loaded

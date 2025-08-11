@@ -3,7 +3,7 @@
   "description": "A lazy load, infinite scroll and natural layout list gallery",
   "main": "index.js",
   "devDependencies": {
-    "@ecodev/natural-gallery-js": "github:Ecodev/natural-gallery-js#10.0.1"
+    "@ecodev/natural-gallery-js": "10.0.1"
   },
   "dependencies": {},
   "scripts": {

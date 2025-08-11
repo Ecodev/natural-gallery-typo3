@@ -14,105 +14,93 @@
     </style>
 </head>
 <body>
-    <h1>Natural Gallery TYPO3 v10.0.1 Test</h1>
+    <h1>Natural Gallery TYPO3 v10.0.1 Test - New API</h1>
     
     <div class="test-info">
         <p><strong>Test Status:</strong> <span id="test-status">Loading...</span></p>
-        <p><strong>Gallery Instances:</strong> <span id="gallery-count">0</span></p>
+        <p><strong>Gallery Type:</strong> <span id="gallery-type">Natural Layout</span></p>
         <p><strong>Console:</strong> Check browser console for initialization logs</p>
+        <p><strong>Note:</strong> This test uses the new v10 API (breaking changes)</p>
     </div>
 
-    <!-- Gallery container (simulates TYPO3 output) -->
-    <div id="gallery-test"></div>
+    <!-- Gallery container -->
+    <div id="gallery-test" class="gallery"></div>
 
-    <!-- Load scripts in correct order -->
+    <!-- Load Natural Gallery v10 -->
     <script src="../Resources/Public/JavaScript/natural-gallery.full.js"></script>
-    <script src="../Resources/Public/JavaScript/natural-gallery-init.js"></script>
     
     <script>
-        // Simulate TYPO3 template output
-        window.naturalGalleries = window.naturalGalleries || [];
-        
-        // Test gallery configuration (simulates TYPO3 FlexForm data)
-        var testGalleryConfig = {
-            id: 'gallery-test',
-            options: {
+        // Test using new v10 API directly (no backward compatibility)
+        document.addEventListener('DOMContentLoaded', function() {
+            const galleryElement = document.getElementById('gallery-test');
+            
+            // Gallery options using new v10 API
+            const options = {
+                gap: 3,
                 rowHeight: 350,
-                format: 'natural',
-                round: 3,
-                margin: 3,
-                limit: 0,
                 showLabels: 'hover',
-                lightbox: true,
-                minRowsAtStart: 2
-            },
-            images: [
+                lightbox: true
+            };
+            
+            // Test images in new v10 format
+            const images = [
                 {
                     id: 1,
-                    thumbnail: 'https://picsum.photos/400/300?random=1',
-                    enlarged: 'https://picsum.photos/1200/900?random=1',
-                    title: 'Test Image 1',
-                    tWidth: 400,
-                    tHeight: 300,
-                    eWidth: 1200,
-                    eHeight: 900
+                    thumbnailSrc: 'https://picsum.photos/400/300?random=1',
+                    enlargedSrc: 'https://picsum.photos/1200/900?random=1',
+                    enlargedWidth: 1200,
+                    enlargedHeight: 900,
+                    title: 'Test Image 1'
                 },
                 {
                     id: 2,
-                    thumbnail: 'https://picsum.photos/400/250?random=2',
-                    enlarged: 'https://picsum.photos/1200/750?random=2',
-                    title: 'Test Image 2',
-                    tWidth: 400,
-                    tHeight: 250,
-                    eWidth: 1200,
-                    eHeight: 750
+                    thumbnailSrc: 'https://picsum.photos/400/250?random=2',
+                    enlargedSrc: 'https://picsum.photos/1200/750?random=2',
+                    enlargedWidth: 1200,
+                    enlargedHeight: 750,
+                    title: 'Test Image 2'
                 },
                 {
                     id: 3,
-                    thumbnail: 'https://picsum.photos/400/350?random=3',
-                    enlarged: 'https://picsum.photos/1200/1050?random=3',
-                    title: 'Test Image 3',
-                    tWidth: 400,
-                    tHeight: 350,
-                    eWidth: 1200,
-                    eHeight: 1050
+                    thumbnailSrc: 'https://picsum.photos/400/350?random=3',
+                    enlargedSrc: 'https://picsum.photos/1200/1050?random=3',
+                    enlargedWidth: 1200,
+                    enlargedHeight: 1050,
+                    title: 'Test Image 3'
+                },
+                {
+                    id: 4,
+                    thumbnailSrc: 'https://picsum.photos/400/400?random=4',
+                    enlargedSrc: 'https://picsum.photos/1200/1200?random=4',
+                    enlargedWidth: 1200,
+                    enlargedHeight: 1200,
+                    title: 'Test Image 4'
                 }
-            ]
-        };
-        
-        // Add to global array (simulates TYPO3 template)
-        naturalGalleries.push(testGalleryConfig);
-        
-        // Test the initialization
-        setTimeout(function() {
-            var statusElement = document.getElementById('test-status');
-            var countElement = document.getElementById('gallery-count');
+            ];
             
-            if (window.naturalGalleryInstances && window.naturalGalleryInstances['gallery-test']) {
-                statusElement.textContent = '✅ Success - Gallery initialized correctly';
-                statusElement.style.color = 'green';
+            try {
+                // Create gallery using new v10 API
+                const { Natural } = window;
                 
-                var instanceCount = Object.keys(window.naturalGalleryInstances).length;
-                countElement.textContent = instanceCount;
+                if (Natural) {
+                    const gallery = new Natural(galleryElement, options);
+                    gallery.addItems(images);
+                    
+                    // Update test status
+                    document.getElementById('test-status').textContent = '✅ Success - Gallery initialized with new v10 API';
+                    document.getElementById('test-status').style.color = 'green';
+                    
+                    console.log('✅ Gallery created successfully with v10 API:', gallery);
+                } else {
+                    throw new Error('Natural Gallery classes not found');
+                }
                 
-                console.log('✅ Test passed: Gallery instance created', window.naturalGalleryInstances['gallery-test']);
-            } else {
-                statusElement.textContent = '❌ Failed - Gallery not initialized';
-                statusElement.style.color = 'red';
-                console.error('❌ Test failed: No gallery instance found');
+            } catch (error) {
+                console.error('❌ Failed to initialize gallery:', error);
+                document.getElementById('test-status').textContent = '❌ Failed - ' + error.message;
+                document.getElementById('test-status').style.color = 'red';
             }
-        }, 1000);
-        
-        // Test error handling
-        setTimeout(function() {
-            // Try to initialize gallery with invalid config
-            var invalidConfig = {
-                id: 'non-existent-gallery',
-                options: {},
-                images: []
-            };
-            naturalGalleries.push(invalidConfig);
-        }, 2000);
+        });
     </script>
 </body>
 </html>

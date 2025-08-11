@@ -37,13 +37,6 @@ plugin.tx_naturalgallery {
 				# Optional key if loading assets through EXT:vhs.
 				dependencies = mainJs
 			}
-			naturalGalleryInitJs {
-				path = EXT:natural_gallery/Resources/Public/JavaScript/natural-gallery-init.js
-				type = js
-
-				# Optional key if loading assets through EXT:vhs.
-				dependencies = naturalGalleryJs
-			}
 		}
 
 		loadAssetWithVhsIfAvailable = 1
