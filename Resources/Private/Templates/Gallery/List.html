@@ -19,41 +19,77 @@
 
 		<div id="gallery-{v:content.info(field:'uid')}"></div>
 
-		<script type="text/javascript">
+	<script>
+		// Wait for DOM to be ready and Natural Gallery v10 to be loaded
+		document.addEventListener('DOMContentLoaded', function() {
+			// Check if Natural Gallery v10 is available
+			if (typeof window.Natural === 'undefined') {
+				console.error('Natural Gallery v10 not found. Make sure natural-gallery.full.js is loaded.');
+				return;
+			}
 
-            window.naturalGalleries = window.naturalGalleries || [];
-            var naturalGallery = {
-                id: 'gallery-<v:content.info field="uid"></v:content.info>'
-            };
+			// Gallery element
+			const galleryElement = document.getElementById('gallery-<v:content.info field="uid"></v:content.info>');
+			
+			if (!galleryElement) {
+				console.error('Gallery element not found');
+				return;
+			}
+			
+			// Convert TYPO3 settings to v10 options format
+			const options = {
+				// Map old setting names to new v10 API
+				gap: Number('{settings.margin}') || 3,
+				rowHeight: Number('{settings.rowHeight}') || 350,
+				format: '{settings.thumbnailFormat}',
+				round: Number('{settings.round}') || 0,
+				imagesPerRow: Number('{settings.imagesPerRow}') || 0,
+				limit: Number('{settings.limit}') || 0,
+				showLabels: '{settings.showLabels}' || 'hover',
+				lightbox: '{settings.lightbox}' === '1' || '{settings.lightbox}' === 'true',
+				showCount: '{settings.showCount}' === '1' || '{settings.showCount}' === 'true',
+				searchFilter: '{settings.searchFilter}' === '1' || '{settings.searchFilter}' === 'true',
+				categoriesFilter: '{settings.categoriesFilter}' === '1' || '{settings.categoriesFilter}' === 'true',
+				showNone: '{settings.showNone}' === '1' || '{settings.showNone}' === 'true',
+				showOthers: '{settings.showOthers}' === '1' || '{settings.showOthers}' === 'true',
+				
+				// PhotoSwipe v5 options for v10
+				photoSwipeOptions: {
+					loop: '{settings.lightbox}' === '1' || '{settings.lightbox}' === 'true'
+				},
+				
+				// Labels for v10
+				labelCategories: '<f:translate key="labelCategories" />',
+				labelNone: '<f:translate key="labelNone" />',
+				labelOthers: '<f:translate key="labelOthers" />',
+				labelSearch: '<f:translate key="labelSearch" />',
+				labelImages: '<f:translate key="labelImages" />'
+			};
 
-            //@off
-			naturalGallery.images = {gallery:imageStack()->f:format.raw()};
-			naturalGallery.categories = {gallery:categoryStack()->f:format.raw()};
+			// Get image data in v10 format
+			//@off
+			const imagesData = {gallery:imageStack()->f:format.raw()};
 			//@on
-
-			naturalGallery.options = {};
-			naturalGallery.options.rowHeight = Number("{settings.rowHeight}");
-			naturalGallery.options.format = '{settings.thumbnailFormat}';
-			naturalGallery.options.round = Number('{settings.round}');
-			naturalGallery.options.imagesPerRow = Number('{settings.imagesPerRow}');
-			naturalGallery.options.margin = Number('{settings.margin}');
-			naturalGallery.options.limit = Number('{settings.limit}');
-			naturalGallery.options.showLabels = '{settings.showLabels}';
-			naturalGallery.options.lightbox = '{settings.lightbox}' == true;
-			naturalGallery.options.showCount = '{settings.showCount}' == true;
-			naturalGallery.options.searchFilter = '{settings.searchFilter}' == true;
-			naturalGallery.options.categoriesFilter = '{settings.categoriesFilter}' == true;
-			naturalGallery.options.showNone = '{settings.showNone}' == true;
-			naturalGallery.options.showOthers = '{settings.showOthers}' == true;
-
-            naturalGallery.options.labelCategories = '<f:translate key="labelCategories" />';
-            naturalGallery.options.labelNone = '<f:translate key="labelNone" />';
-            naturalGallery.options.labelOthers = '<f:translate key="labelOthers" />';
-            naturalGallery.options.labelSearch = '<f:translate key="labelSearch" />';
-            naturalGallery.options.labelImages = '<f:translate key="labelImages" />';
-
-			window.naturalGalleries.push(naturalGallery);
-		</script>
+			
+			// Initialize Natural Gallery v10
+			try {
+				const gallery = new window.Natural(galleryElement, options);
+				
+				// Add images if available
+				if (imagesData && imagesData.length > 0) {
+					gallery.addItems(imagesData);
+				}
+				
+				// Store gallery instance for potential external access
+				window.naturalGalleryInstance = gallery;
+				
+				console.log('Natural Gallery v10 initialized successfully');
+				
+			} catch (error) {
+				console.error('Failed to initialize Natural Gallery v10:', error);
+			}
+		});
+	</script>
 
 		<gallery:loadAssets/>
 

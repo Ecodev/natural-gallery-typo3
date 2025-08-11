@@ -30,7 +30,6 @@
     <script src="../Resources/Public/JavaScript/natural-gallery.full.js"></script>
     
     <script>
-        // Test using new v10 API directly (no backward compatibility)
         document.addEventListener('DOMContentLoaded', function() {
             const galleryElement = document.getElementById('gallery-test');
             
@@ -79,11 +78,9 @@
             ];
             
             try {
-                // Create gallery using new v10 API
-                const { Natural } = window;
-                
-                if (Natural) {
-                    const gallery = new Natural(galleryElement, options);
+                // Create gallery using new v10 API (now available globally)
+                if (typeof window.Natural !== 'undefined') {
+                    const gallery = new window.Natural(galleryElement, options);
                     gallery.addItems(images);
                     
                     // Update test status
@@ -92,7 +89,7 @@
                     
                     console.log('✅ Gallery created successfully with v10 API:', gallery);
                 } else {
-                    throw new Error('Natural Gallery classes not found');
+                    throw new Error('Natural Gallery v10 not found');
                 }
                 
             } catch (error) {
