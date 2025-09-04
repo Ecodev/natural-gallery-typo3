@@ -7,10 +7,6 @@
 
 	<f:section name="main">
 
-		<f:if condition="{gallery:isIconsPartialAlreadyLoaded()}">
-			<f:render section="Icons" partial="Icons"/>
-		</f:if>
-
 		<f:if condition="'{settings.lightbox}' == true">
 			<f:if condition="{gallery:isPhotoswipePartialAlreadyLoaded()}">
 				<v:page.footer content="{f:render(section: 'Photoswipe', partial: 'Photoswipe')}"></v:page.footer>
@@ -21,39 +17,30 @@
 
 		<script type="text/javascript">
 
-            window.naturalGalleries = window.naturalGalleries || [];
-            var naturalGallery = {
-                id: 'gallery-<v:content.info field="uid"></v:content.info>'
-            };
+			import {Natural, Square} from '<f:uri.resource path="assets/natural-gallery-js/natural-gallery.js" />';
 
+			const options = {
+				gap: Number('{settings.margin}') || 3,
+				rowHeight: Number('{settings.rowHeight}') || 400,
+				rowsPerPage: Number('{settings.limit}') || 0,
+				round: Number('{settings.round}') || 0,
+				imagesPerRow: Number('{settings.imagesPerRow}') || 0,
+				labelVisibility: '{settings.showLabels}' || 'hover',
+				lightbox: '{settings.lightbox}' === '1' || '{settings.lightbox}' === 'true',
+				ratioLimit: {
+					min: .5,
+					max: 2
+				},
+			};
+
+            const galleryElement = document.getElementById('gallery-<v:content.info field="uid"></v:content.info>')
+			const GalleryClass = '{settings.thumbnailFormat}' === 'square' ? Square : Natural;
+			const gallery = new GalleryClass(galleryElement, options);
             //@off
-			naturalGallery.images = {gallery:imageStack()->f:format.raw()};
-			naturalGallery.categories = {gallery:categoryStack()->f:format.raw()};
-			//@on
+            gallery.addItems({gallery:imageStack()->f:format.raw()});
+            //@on
 
-			naturalGallery.options = {};
-			naturalGallery.options.rowHeight = Number("{settings.rowHeight}");
-			naturalGallery.options.format = '{settings.thumbnailFormat}';
-			naturalGallery.options.round = Number('{settings.round}');
-			naturalGallery.options.imagesPerRow = Number('{settings.imagesPerRow}');
-			naturalGallery.options.margin = Number('{settings.margin}');
-			naturalGallery.options.limit = Number('{settings.limit}');
-			naturalGallery.options.showLabels = '{settings.showLabels}';
-			naturalGallery.options.lightbox = '{settings.lightbox}' == true;
-			naturalGallery.options.showCount = '{settings.showCount}' == true;
-			naturalGallery.options.searchFilter = '{settings.searchFilter}' == true;
-			naturalGallery.options.categoriesFilter = '{settings.categoriesFilter}' == true;
-			naturalGallery.options.showNone = '{settings.showNone}' == true;
-			naturalGallery.options.showOthers = '{settings.showOthers}' == true;
-
-            naturalGallery.options.labelCategories = '<f:translate key="labelCategories" />';
-            naturalGallery.options.labelNone = '<f:translate key="labelNone" />';
-            naturalGallery.options.labelOthers = '<f:translate key="labelOthers" />';
-            naturalGallery.options.labelSearch = '<f:translate key="labelSearch" />';
-            naturalGallery.options.labelImages = '<f:translate key="labelImages" />';
-
-			window.naturalGalleries.push(naturalGallery);
-		</script>
+        </script>
 
 		<gallery:loadAssets/>
 

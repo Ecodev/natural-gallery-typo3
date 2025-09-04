@@ -91,17 +91,6 @@
             </ROOT>
         </selection>
 
-        <sorting>
-            <ROOT>
-                <TCEforms>
-                    <sheetTitle>LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:flexform.tab.sorting</sheetTitle>
-                </TCEforms>
-                <type>array</type>
-                <el>
-                </el>
-            </ROOT>
-        </sorting>
-
         <imageSettings>
             <ROOT>
                 <TCEforms>
@@ -231,123 +220,8 @@
                             </config>
                         </TCEforms>
                     </settings.rowHeight>
-                    <settings.enlargedImageMaximumWidth>
-                        <TCEforms>
-                            <label>
-                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.enlargedImageMaximumWidth
-                            </label>
-                            <config>
-                                <type>input</type>
-                                <default>1600</default>
-                                <eval>trim</eval>
-                            </config>
-                        </TCEforms>
-                    </settings.enlargedImageMaximumWidth>
-                    <settings.enlargedImageMaximumHeight>
-                        <TCEforms>
-                            <label>
-                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.enlargedImageMaximumHeight
-                            </label>
-                            <config>
-                                <type>input</type>
-                                <eval>trim</eval>
-                            </config>
-                        </TCEforms>
-                    </settings.enlargedImageMaximumHeight>
                 </el>
             </ROOT>
-
         </imageSettings>
-
-        <filterBar>
-            <ROOT>
-                <TCEforms>
-                    <sheetTitle>LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:flexform.tab.filterBar</sheetTitle>
-                </TCEforms>
-                <type>array</type>
-                <el>
-                    <settings.showCount>
-                        <TCEforms>
-                            <label>
-                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.showCount
-                            </label>
-                            <config>
-                                <type>check</type>
-                                <default>0</default>
-                            </config>
-                        </TCEforms>
-                    </settings.showCount>
-                    <settings.searchFilter>
-                        <TCEforms>
-                            <label>
-                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.searchFilter
-                            </label>
-                            <config>
-                                <type>check</type>
-                                <default>0</default>
-                            </config>
-                        </TCEforms>
-                    </settings.searchFilter>
-                    <settings.categoriesFilter>
-                        <TCEforms>
-                            <label>
-                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.categoriesFilter
-                            </label>
-                            <config>
-                                <type>check</type>
-                                <default>0</default>
-                            </config>
-                        </TCEforms>
-                    </settings.categoriesFilter>
-                    <settings.showNone>
-                        <TCEforms>
-                            <label>
-                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.showNone
-                            </label>
-                            <config>
-                                <type>check</type>
-                                <default>0</default>
-                            </config>
-                        </TCEforms>
-                    </settings.showNone>
-                    <settings.showOthers>
-                        <TCEforms>
-                            <label>
-                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.showOthers
-                            </label>
-                            <config>
-                                <type>check</type>
-                                <default>0</default>
-                            </config>
-                        </TCEforms>
-                    </settings.showOthers>
-                    <settings.categories>
-                        <TCEforms>
-                            <label>
-                                LLL:EXT:natural_gallery/Resources/Private/Language/locallang.xlf:settings.categories
-                            </label>
-                            <config>
-                                <type>select</type>
-                                <renderType>selectMultipleSideBySide</renderType>
-                                <autoSizeMax>50</autoSizeMax>
-                                <foreign_table>sys_category</foreign_table>
-                                <foreign_table_where> AND sys_category.sys_language_uid IN (-1, 0) ORDER BY sys_category.sorting ASC</foreign_table_where>
-                                <maxitems>9999</maxitems>
-                                <renderMode>tree</renderMode>
-                                <size>10</size>
-                                <treeConfig>
-                                    <appearance>
-                                        <expandAll>1</expandAll>
-                                        <showHeader>1</showHeader>
-                                    </appearance>
-                                    <parentField>parent</parentField>
-                                </treeConfig>
-                            </config>
-                        </TCEforms>
-                    </settings.categories>
-                </el>
-            </ROOT>
-        </filterBar>
-
     </sheets>
 </T3DataStructure>

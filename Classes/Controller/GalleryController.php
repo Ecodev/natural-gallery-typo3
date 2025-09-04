@@ -15,7 +15,6 @@ namespace Fab\NaturalGallery\Controller;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Fab\NaturalGallery\Domain\Repository\CategoryRepository;
 use Fab\NaturalGallery\Domain\Repository\ImageGalleryRepository;
 use Fab\NaturalGallery\Persistence\DemandFactory;
 use Fab\NaturalGallery\Persistence\OrderFactory;
@@ -67,13 +66,10 @@ class GalleryController extends ActionController
         }
 
         $images = $this->galleryRepository->findByDemand($this->getDemand(), (array)$this->getOrderings(),0,0);
-        $identifiers = GeneralUtility::trimExplode(',', $this->settings['categories'], TRUE);
-        $categories = $this->getCategoryRepository()->findByIdentifiers($identifiers);
         // Assign template variables
         $this->view->assign('settings', $this->settings);
         $this->view->assign('data', $this->configurationManager->getcontentObject()->data);
         $this->view->assign('images', $images);
-        $this->view->assign('categories', $categories);
     }
 
     protected function getOrderings(): \Fab\NaturalGallery\Persistence\Order
@@ -83,16 +79,11 @@ class GalleryController extends ActionController
 
     }
 
-    protected function getCategoryRepository(): CategoryRepository
-    {
-        return GeneralUtility::makeInstance(CategoryRepository::class);
-    }
 
     protected function getDemand(): array
     {
         return [
-            'likes' => $this->demandFactory->get($this->settings),
-            'identifiers' => GeneralUtility::trimExplode(',', $this->settings['categories'], TRUE)
+            'likes' => $this->demandFactory->get($this->settings)
         ];
     }
 

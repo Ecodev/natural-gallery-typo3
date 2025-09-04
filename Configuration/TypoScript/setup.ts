@@ -17,7 +17,7 @@ plugin.tx_naturalgallery {
 		asset {
 
 			naturalGalleryCss {
-				path = EXT:natural_gallery/Resources/Public/StyleSheets/natural-gallery.full.css
+				path = EXT:natural_gallery/Resources/Public/StyleSheets/natural-gallery.css
 				type = css
 
 				# Optional key if loading assets through EXT:vhs.
@@ -31,7 +31,7 @@ plugin.tx_naturalgallery {
 				dependencies = naturalGalleryCss
 			}
 			naturalGalleryJs {
-				path = EXT:natural_gallery/Resources/Public/JavaScript/natural-gallery.full.js
+				path = EXT:natural_gallery/Resources/Public/JavaScript/natural-gallery.js
 				type = js
 
 				# Optional key if loading assets through EXT:vhs.

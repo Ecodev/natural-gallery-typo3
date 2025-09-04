@@ -93,8 +93,8 @@ Since this is a TYPO3extension, full testing requires a TYPO3 installation. Howe
 - ViewHelpers in Classes/ViewHelpers/ provide Fluid template functionality
 
 ### Frontend Assets
-- JavaScript: Resources/Public/JavaScript/natural-gallery.full.js (pre-built)
-- CSS: Resources/Public/StyleSheets/natural-gallery.full.css (pre-built)
+- JavaScript: Resources/Public/JavaScript/natural-gallery.pre-built)
+- CSS: Resources/Public/StyleSheets/natural-gallery.css (pre-built)
 - Icons and images: Resources/Public/Images/
 - Assets are served by TYPO3, not built during development
 

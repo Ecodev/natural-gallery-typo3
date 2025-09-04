@@ -15,7 +15,6 @@ namespace Fab\NaturalGallery\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Fab\NaturalGallery\Domain\Repository\CategoryRepository;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\ProcessedFile;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
@@ -34,9 +33,6 @@ class ImageStackViewHelper extends AbstractViewHelper
     public function render(): string
     {
         $images = $this->templateVariableContainer->get('images');
-
-        $items = [];
-
         $processedUids = [];
         $items = [];
 
@@ -45,33 +41,18 @@ class ImageStackViewHelper extends AbstractViewHelper
             if (!empty($image['uid']) && !in_array($image['uid'], $processedUids)) {
                     $file = GeneralUtility::makeInstance(ResourceFactory::class)->getFileObject($image['uid']);
 
-                    $thumbnailFile = $this->createProcessedFile($file, 'thumbnailMaximumWidth', 'thumbnailMaximumHeight');
-                    $enlargedFile = $this->createProcessedFile($file, 'enlargedImageMaximumWidth', 'enlargedImageMaximumHeight');
-                    $categories = [];
-
-                    $categoryRepository = GeneralUtility::makeInstance(CategoryRepository::class);
-                    $metadataCategories = $categoryRepository->findFileCategories($file->getMetaData()['uid']);
-                    if ($metadataCategories && is_array($metadataCategories)) {
-                        $categories = array_map(function ($cat) {
-                            return [
-                                'id' => $cat['uid'],
-                                'title' => $cat['title']
-                            ];
-                        },$metadataCategories);
-                    }
+                    $thumbnailFile = $this->createProcessedFile($file, null, 'rowHeight');
+                    $enlargedFile = $file;
 
                     $baseUrl = GeneralUtility::getIndpEnv('TYPO3_SITE_URL');
                     $item = [
-                        'thumbnail' => $baseUrl . $thumbnailFile->getPublicUrl(),
-                        'enlarged' => $baseUrl . $enlargedFile->getPublicUrl(),
+                        'thumbnailSrc' => $baseUrl . $thumbnailFile->getPublicUrl(),
+                        'enlargedSrc' => $baseUrl . $enlargedFile->getPublicUrl(),
                         'id' => $file->getProperty('uid'),
                         'title' => $file->getProperty('title'),
                         'description' => $file->getProperty('description'),
-                        'tWidth' => $thumbnailFile->getProperty('width'),
-                        'tHeight' => $thumbnailFile->getProperty('height'),
-                        'eWidth' => $enlargedFile->getProperty('width'),
-                        'eHeight' => $enlargedFile->getProperty('height'),
-                        'categories' => $categories
+                        'enlargedWidth' => $file->getProperty('width'),
+                        'enlargedHeight' => $file->getProperty('height'),
                     ];
 
                     $items[] = $item;
@@ -92,12 +73,13 @@ class ImageStackViewHelper extends AbstractViewHelper
      */
     public function createProcessedFile(File $file, $widthFormat, $heightFormat): File|ProcessedFile
     {
-        $configuration = [
-            'maxWidth' => $this->getSettings()[$widthFormat] ? $this->getSettings()[$widthFormat] : null,
-            'maxHeight' => $this->getSettings()[$heightFormat] ? $this->getSettings()[$heightFormat] : null,
-        ];
+        $configuration = [];
+        
+        if ($heightFormat && $this->getSettings()[$heightFormat]) {
+            $configuration['maxHeight'] = $this->getSettings()[$heightFormat];
+        }
 
-        if ($configuration['maxWidth'] || $configuration['maxHeight']) {
+        if (!empty($configuration)) {
             $file = $file->process(ProcessedFile::CONTEXT_IMAGECROPSCALEMASK, $configuration);
         }
 
