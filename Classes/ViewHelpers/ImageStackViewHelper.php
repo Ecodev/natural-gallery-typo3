@@ -20,6 +20,8 @@ use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\ProcessedFile;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -60,7 +62,7 @@ class ImageStackViewHelper extends AbstractViewHelper
                         },$metadataCategories);
                     }
 
-                    $baseUrl = GeneralUtility::getIndpEnv('TYPO3_SITE_URL');
+                    $baseUrl = $this->getSiteUrl();
                     $item = [
                         'thumbnail' => $baseUrl . $thumbnailFile->getPublicUrl(),
                         'enlarged' => $baseUrl . $enlargedFile->getPublicUrl(),
@@ -111,5 +113,21 @@ class ImageStackViewHelper extends AbstractViewHelper
     public function getSettings()
     {
         return $this->templateVariableContainer->get('settings');
+    }
+
+    /**
+     * Get the site URL
+     * @return string
+     */
+    protected function getSiteUrl(): string
+    {
+        $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
+        
+        // Get current page ID from context or fallback to 1
+        $context = GeneralUtility::makeInstance(Context::class);
+        $pageId = $context->getPropertyFromAspect('frontend.page', 'id', 1);
+        
+        $site = $siteFinder->getSiteByPageId($pageId);
+        return (string)$site->getBase();
     }
 }

@@ -28,6 +28,18 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class LoadAssetsViewHelper extends AbstractViewHelper
 {
+    /**
+     * @var PageRenderer
+     */
+    protected PageRenderer $pageRenderer;
+
+    /**
+     * @param PageRenderer $pageRenderer
+     */
+    public function __construct(PageRenderer $pageRenderer)
+    {
+        $this->pageRenderer = $pageRenderer;
+    }
 
     /**
      * @return void
@@ -78,9 +90,9 @@ class LoadAssetsViewHelper extends AbstractViewHelper
         $fileNameAndPath = PathUtility::stripPathSitePrefix($fileNameAndPath);
 
         if ($asset['type'] === 'js') {
-            $this->getPageRenderer()->addJsFooterFile($fileNameAndPath);
+            $this->pageRenderer->addJsFooterFile($fileNameAndPath);
         } elseif ($asset['type'] === 'css') {
-            $this->getPageRenderer()->addCssFile($fileNameAndPath);
+            $this->pageRenderer->addCssFile($fileNameAndPath);
         }
     }
 
@@ -123,14 +135,6 @@ class LoadAssetsViewHelper extends AbstractViewHelper
             }
         }
         return $resolvedFile;
-    }
-
-    /**
-     * @return PageRenderer
-     */
-    protected function getPageRenderer(): PageRenderer
-    {
-        return GeneralUtility::makeInstance(PageRenderer::class);
     }
 
     /**

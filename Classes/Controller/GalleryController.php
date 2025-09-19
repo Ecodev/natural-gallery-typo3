@@ -32,13 +32,11 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\expr;
 class GalleryController extends ActionController
 {
     protected ImageGalleryRepository $galleryRepository;
-
     protected DemandFactory $demandFactory;
-
     protected OrderFactory $orderFactory;
+    protected CategoryRepository $categoryRepository;
 
     protected array $configuration = array();
-
     protected $settings = [];
 
     protected array $allowedColumns = [
@@ -48,11 +46,16 @@ class GalleryController extends ActionController
         'uid',
     ];
 
-    public function initializeAction(): void
-    {
-        $this->galleryRepository = GeneralUtility::makeInstance(ImageGalleryRepository::class);
-        $this->orderFactory = GeneralUtility::makeInstance(OrderFactory::class);
-        $this->demandFactory = GeneralUtility::makeInstance(DemandFactory::class);
+    public function __construct(
+        ImageGalleryRepository $galleryRepository,
+        DemandFactory $demandFactory,
+        OrderFactory $orderFactory,
+        CategoryRepository $categoryRepository
+    ) {
+        $this->galleryRepository = $galleryRepository;
+        $this->demandFactory = $demandFactory;
+        $this->orderFactory = $orderFactory;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -68,7 +71,7 @@ class GalleryController extends ActionController
 
         $images = $this->galleryRepository->findByDemand($this->getDemand(), (array)$this->getOrderings(),0,0);
         $identifiers = GeneralUtility::trimExplode(',', $this->settings['categories'], TRUE);
-        $categories = $this->getCategoryRepository()->findByIdentifiers($identifiers);
+        $categories = $this->categoryRepository->findByIdentifiers($identifiers);
         // Assign template variables
         $this->view->assign('settings', $this->settings);
         $this->view->assign('data', $this->configurationManager->getcontentObject()->data);
@@ -83,10 +86,6 @@ class GalleryController extends ActionController
 
     }
 
-    protected function getCategoryRepository(): CategoryRepository
-    {
-        return GeneralUtility::makeInstance(CategoryRepository::class);
-    }
 
     protected function getDemand(): array
     {
