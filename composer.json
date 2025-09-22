@@ -23,7 +23,7 @@
   },
   "extra": {
     "typo3/cms": {
-      "extension-key": "natural_gallery"
+      "extension-key": "fab.natural_gallery"
     }
   },
   "require": {

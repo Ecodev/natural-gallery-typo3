@@ -8,7 +8,7 @@ call_user_func(
     function () {
 
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'Fab.natural_gallery',
+            'NaturalGallery',
             'Pi1',
             [
                 GalleryController::class => 'list',

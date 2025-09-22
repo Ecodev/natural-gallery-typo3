@@ -61,12 +61,12 @@ class GalleryController extends ActionController
     /**
      * @return void|string
      */
-    public function listAction()
+    public function listAction(): \Psr\Http\Message\ResponseInterface
     {
 
 
         if (!isset($this->settings['imagesPerRow'])) {
-            return '<strong style="color: red">Please save your plugin settings in the BE beforehand.</strong>';
+            return $this->htmlResponse('<strong style="color: red">Please save your plugin settings in the BE beforehand.</strong>');
         }
 
         $images = $this->galleryRepository->findByDemand($this->getDemand(), (array)$this->getOrderings(),0,0);
@@ -74,9 +74,10 @@ class GalleryController extends ActionController
         $categories = $this->categoryRepository->findByIdentifiers($identifiers);
         // Assign template variables
         $this->view->assign('settings', $this->settings);
-        $this->view->assign('data', $this->configurationManager->getcontentObject()->data);
+        $this->view->assign('data', $this->request->getAttribute('currentContentObject')->data);
         $this->view->assign('images', $images);
         $this->view->assign('categories', $categories);
+        return $this->htmlResponse();
     }
 
     protected function getOrderings(): \Fab\NaturalGallery\Persistence\Order

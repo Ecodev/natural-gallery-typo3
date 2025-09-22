@@ -17,6 +17,9 @@ class ImageGalleryRepository
     protected string $tableName = 'sys_file';
 
     protected array $settings;
+    public function __construct(private \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool)
+    {
+    }
 
     public function getDefaultData(string $field):string
     {
@@ -102,60 +105,28 @@ class ImageGalleryRepository
                 'sys_file',
                 'sys_file_metadata',
                 'sys_file_metadata',
-                $queryBuilder->expr()->andX(
-                    $queryBuilder->expr()->eq('sys_file.uid', 'sys_file_metadata.file'),
-                    $queryBuilder->expr()->lte('sys_file_metadata.t3ver_state', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)),
-                    $queryBuilder->expr()->eq('sys_file_metadata.t3ver_wsid', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)),
-                    $queryBuilder->expr()->orX(
-                        $queryBuilder->expr()->eq('sys_file_metadata.t3ver_oid', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)),
-                        $queryBuilder->expr()->eq('sys_file_metadata.t3ver_state', $queryBuilder->createNamedParameter(4, \PDO::PARAM_INT))
-                    ),
-                    $queryBuilder->expr()->in('sys_file_metadata.sys_language_uid', [0, -1])
-                )
+                $queryBuilder->expr()->and($queryBuilder->expr()->eq('sys_file.uid', 'sys_file_metadata.file'), $queryBuilder->expr()->lte('sys_file_metadata.t3ver_state', $queryBuilder->createNamedParameter(0, \TYPO3\CMS\Core\Database\Connection::PARAM_INT)), $queryBuilder->expr()->eq('sys_file_metadata.t3ver_wsid', $queryBuilder->createNamedParameter(0, \TYPO3\CMS\Core\Database\Connection::PARAM_INT)), $queryBuilder->expr()->or($queryBuilder->expr()->eq('sys_file_metadata.t3ver_oid', $queryBuilder->createNamedParameter(0, \TYPO3\CMS\Core\Database\Connection::PARAM_INT)), $queryBuilder->expr()->eq('sys_file_metadata.t3ver_state', $queryBuilder->createNamedParameter(4, \TYPO3\CMS\Core\Database\Connection::PARAM_INT))), $queryBuilder->expr()->in('sys_file_metadata.sys_language_uid', [0, -1]))
             )
             ->leftJoin(
                 'sys_file_metadata',
                 'sys_category_record_mm',
                 'sys_category_record_mm0',
-                $queryBuilder->expr()->andX(
-                    $queryBuilder->expr()->eq('sys_file_metadata.uid', 'sys_category_record_mm0.uid_foreign'),
-                    $queryBuilder->expr()->eq('sys_category_record_mm0.tablenames', $queryBuilder->createNamedParameter('sys_file_metadata')),
-                    $queryBuilder->expr()->eq('sys_category_record_mm0.fieldname', $queryBuilder->createNamedParameter('categories'))
-                )
+                $queryBuilder->expr()->and($queryBuilder->expr()->eq('sys_file_metadata.uid', 'sys_category_record_mm0.uid_foreign'), $queryBuilder->expr()->eq('sys_category_record_mm0.tablenames', $queryBuilder->createNamedParameter('sys_file_metadata')), $queryBuilder->expr()->eq('sys_category_record_mm0.fieldname', $queryBuilder->createNamedParameter('categories')))
             )
             ->leftJoin(
                 'sys_category_record_mm0',
                 'sys_category',
                 'sys_category0',
-                $queryBuilder->expr()->andX(
-                    $queryBuilder->expr()->eq('sys_category_record_mm0.uid_local', 'sys_category0.uid'),
-                    $queryBuilder->expr()->eq('sys_category0.deleted', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)),
-                    $queryBuilder->expr()->lte('sys_category0.t3ver_state', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)),
-                    $queryBuilder->expr()->eq('sys_category0.t3ver_wsid', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)),
-                    $queryBuilder->expr()->orX(
-                        $queryBuilder->expr()->eq('sys_category0.t3ver_oid', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)),
-                        $queryBuilder->expr()->eq('sys_category0.t3ver_state', $queryBuilder->createNamedParameter(4, \PDO::PARAM_INT))
-                    ),
-                    $queryBuilder->expr()->eq('sys_category0.hidden', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)),
-                    $queryBuilder->expr()->lte('sys_category0.starttime', $queryBuilder->createNamedParameter($timestamp, \PDO::PARAM_INT)),
-                    $queryBuilder->expr()->orX(
-                        $queryBuilder->expr()->eq('sys_category0.endtime', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)),
-                        $queryBuilder->expr()->gt('sys_category0.endtime', $queryBuilder->createNamedParameter($timestamp, \PDO::PARAM_INT))
-                    ),
-                    $queryBuilder->expr()->in('sys_category0.sys_language_uid', [0, -1])
-                )
+                $queryBuilder->expr()->and($queryBuilder->expr()->eq('sys_category_record_mm0.uid_local', 'sys_category0.uid'), $queryBuilder->expr()->eq('sys_category0.deleted', $queryBuilder->createNamedParameter(0, \TYPO3\CMS\Core\Database\Connection::PARAM_INT)), $queryBuilder->expr()->lte('sys_category0.t3ver_state', $queryBuilder->createNamedParameter(0, \TYPO3\CMS\Core\Database\Connection::PARAM_INT)), $queryBuilder->expr()->eq('sys_category0.t3ver_wsid', $queryBuilder->createNamedParameter(0, \TYPO3\CMS\Core\Database\Connection::PARAM_INT)), $queryBuilder->expr()->or($queryBuilder->expr()->eq('sys_category0.t3ver_oid', $queryBuilder->createNamedParameter(0, \TYPO3\CMS\Core\Database\Connection::PARAM_INT)), $queryBuilder->expr()->eq('sys_category0.t3ver_state', $queryBuilder->createNamedParameter(4, \TYPO3\CMS\Core\Database\Connection::PARAM_INT))), $queryBuilder->expr()->eq('sys_category0.hidden', $queryBuilder->createNamedParameter(0, \TYPO3\CMS\Core\Database\Connection::PARAM_INT)), $queryBuilder->expr()->lte('sys_category0.starttime', $queryBuilder->createNamedParameter($timestamp, \TYPO3\CMS\Core\Database\Connection::PARAM_INT)), $queryBuilder->expr()->or($queryBuilder->expr()->eq('sys_category0.endtime', $queryBuilder->createNamedParameter(0, \TYPO3\CMS\Core\Database\Connection::PARAM_INT)), $queryBuilder->expr()->gt('sys_category0.endtime', $queryBuilder->createNamedParameter($timestamp, \TYPO3\CMS\Core\Database\Connection::PARAM_INT))), $queryBuilder->expr()->in('sys_category0.sys_language_uid', [0, -1]))
             )
             ->where(
-                $queryBuilder->expr()->andX(
-                    $queryBuilder->expr()->eq('sys_file.type', $queryBuilder->createNamedParameter(2, \PDO::PARAM_INT)),
-                    $queryBuilder->expr()->in('sys_file.uid', (array)$uids)
-                )
+                $queryBuilder->expr()->and($queryBuilder->expr()->eq('sys_file.type', $queryBuilder->createNamedParameter(2, \TYPO3\CMS\Core\Database\Connection::PARAM_INT)), $queryBuilder->expr()->in('sys_file.uid', (array)$uids))
             )
 
             ->orderBy('sys_file.name', 'ASC');
         if ($categoryConditions) {
             $queryBuilder->andWhere(
-                $queryBuilder->expr()->eq('sys_category0.uid', $queryBuilder->createNamedParameter((int)$categoryConditions, \PDO::PARAM_INT))
+                $queryBuilder->expr()->eq('sys_category0.uid', $queryBuilder->createNamedParameter((int)$categoryConditions, \TYPO3\CMS\Core\Database\Connection::PARAM_INT))
             );
         }
 
@@ -215,7 +186,7 @@ class ImageGalleryRepository
     protected function getQueryBuilder(): QueryBuilder
     {
         /** @var ConnectionPool $connectionPool */
-        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+        $connectionPool = $this->connectionPool;
         return $connectionPool->getQueryBuilderForTable($this->tableName);
     }
 

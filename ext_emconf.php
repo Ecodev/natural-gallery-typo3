@@ -1,6 +1,6 @@
 <?php
 
-$_EXTKEY = 'natural_gallery';
+$_EXTKEY = 'fab.natural_gallery';
 
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Natural Gallery',

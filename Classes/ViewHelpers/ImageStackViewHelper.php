@@ -30,6 +30,9 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 class ImageStackViewHelper extends AbstractViewHelper
 {
 
+    public function __construct(private \TYPO3\CMS\Core\Context\Context $context)
+    {
+    }
     /**
      * @return string
      */
@@ -124,7 +127,7 @@ class ImageStackViewHelper extends AbstractViewHelper
         $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
         
         // Get current page ID from context or fallback to 1
-        $context = GeneralUtility::makeInstance(Context::class);
+        $context = $this->context;
         $pageId = $context->getPropertyFromAspect('frontend.page', 'id', 1);
         
         $site = $siteFinder->getSiteByPageId($pageId);

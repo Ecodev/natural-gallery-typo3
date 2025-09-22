@@ -35,6 +35,9 @@ class CategoryRepository
      * Initialize Repository
      */
     protected string $tableName = 'sys_category';
+    public function __construct(private \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool)
+    {
+    }
 
     /**
      * @throws Exception
@@ -58,7 +61,7 @@ class CategoryRepository
 
     public function findFileCategories($uid): array
     {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_file_metadata');
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_file_metadata');
         $queryBuilder->getRestrictions()->removeAll();
         $results = [];
         if ($uid){
@@ -72,9 +75,9 @@ class CategoryRepository
                     $queryBuilder->expr()->eq('sys_category.uid', 'sys_category_record_mm.uid_local')
                 )
                 ->where(
-                    $queryBuilder->expr()->eq('sys_category_record_mm.uid_foreign', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT)),
-                    $queryBuilder->expr()->eq('sys_category_record_mm.tablenames', $queryBuilder->createNamedParameter('sys_file_metadata', \PDO::PARAM_STR)) ,
-                    $queryBuilder->expr()->eq('sys_category_record_mm.fieldname', $queryBuilder->createNamedParameter('categories', \PDO::PARAM_STR))
+                    $queryBuilder->expr()->eq('sys_category_record_mm.uid_foreign', $queryBuilder->createNamedParameter($uid, \TYPO3\CMS\Core\Database\Connection::PARAM_INT)),
+                    $queryBuilder->expr()->eq('sys_category_record_mm.tablenames', $queryBuilder->createNamedParameter('sys_file_metadata', \TYPO3\CMS\Core\Database\Connection::PARAM_STR)) ,
+                    $queryBuilder->expr()->eq('sys_category_record_mm.fieldname', $queryBuilder->createNamedParameter('categories', \TYPO3\CMS\Core\Database\Connection::PARAM_STR))
                 );
             $results = $query->execute()->fetchAllAssociative();
 
@@ -86,7 +89,7 @@ class CategoryRepository
     protected function getQueryBuilder(): QueryBuilder
     {
         /** @var ConnectionPool $connectionPool */
-        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+        $connectionPool = $this->connectionPool;
         return $connectionPool->getQueryBuilderForTable($this->tableName);
     }
 }
