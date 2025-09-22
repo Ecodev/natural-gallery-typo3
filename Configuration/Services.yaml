@@ -3,3 +3,18 @@ services:
     autowire: true
     autoconfigure: true
     public: false
+
+  Fab\NaturalGallery\Controller\:
+    resource: '../Classes/Controller/'
+    tags: ['controller.service_arguments']
+
+  Fab\NaturalGallery\Domain\Repository\:
+    resource: '../Classes/Domain/Repository/'
+    tags: ['tx_extbase.persistence.repository']
+
+  Fab\NaturalGallery\Persistence\:
+    resource: '../Classes/Persistence/'
+
+  Fab\NaturalGallery\ViewHelpers\:
+    resource: '../Classes/ViewHelpers/'
+    tags: ['typo3.fluid.viewhelper']

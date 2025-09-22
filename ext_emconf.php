@@ -1,6 +1,5 @@
 <?php
 
-$_EXTKEY = 'fab.natural_gallery';
 
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Natural Gallery',
@@ -10,4 +9,3 @@ $EM_CONF[$_EXTKEY] = [
     'author_company' => 'Ecodev',
     'state' => 'stable',
 ];
-

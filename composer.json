@@ -18,12 +18,9 @@
       "Fab\\NaturalGallery\\": "Classes/"
     }
   },
-  "replace": {
-    "fab/natural-gallery": "self.version"
-  },
   "extra": {
     "typo3/cms": {
-      "extension-key": "fab.natural_gallery"
+      "extension-key": "natural_gallery"
     }
   },
   "require": {

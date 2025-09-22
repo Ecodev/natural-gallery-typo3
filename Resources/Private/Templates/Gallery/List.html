@@ -17,13 +17,13 @@
 			</f:if>
 		</f:if>
 
-		<div id="gallery-{v:content.info(field:'uid')}"></div>
+		<div id="gallery-{v:content.info(field:'uid', contentUid: data.uid)}"></div>
 
 		<script type="text/javascript">
 
             window.naturalGalleries = window.naturalGalleries || [];
             var naturalGallery = {
-                id: 'gallery-<v:content.info field="uid"></v:content.info>'
+                id: 'gallery-<v:content.info field="uid" contentUid="{data.uid}"></v:content.info>'
             };
 
             //@off
