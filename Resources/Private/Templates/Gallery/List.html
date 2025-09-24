@@ -6,6 +6,10 @@
 	<f:layout name="Default"/>
 
 	<f:section name="main">
+		<f:asset.script identifier="natural-gallery-js" src="EXT:natural_gallery/Resources/Public/JavaScript/natural-gallery.full.js"/>
+		<f:asset.css identifier="natural-gallery-main-css" src="EXT:natural_gallery/Resources/Public/StyleSheets/natural-gallery.full.css"/>
+		<f:asset.css identifier="natural-gallery-theme-css" src="EXT:natural_gallery/Resources/Public/StyleSheets/natural.css"/>
+
 
 		<f:if condition="{gallery:isIconsPartialAlreadyLoaded()}">
 			<f:render section="Icons" partial="Icons"/>
@@ -55,7 +59,6 @@
 			window.naturalGalleries.push(naturalGallery);
 		</script>
 
-		<gallery:loadAssets/>
 
 	</f:section>
 

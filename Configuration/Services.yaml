@@ -12,9 +12,25 @@ services:
     resource: '../Classes/Domain/Repository/'
     tags: ['tx_extbase.persistence.repository']
 
+  Fab\NaturalGallery\Domain\Repository\CategoryRepository:
+    arguments:
+      $connectionPool: '@TYPO3\CMS\Core\Database\ConnectionPool'
+
+  Fab\NaturalGallery\Domain\Repository\ImageGalleryRepository:
+    arguments:
+      $connectionPool: '@TYPO3\CMS\Core\Database\ConnectionPool'
+
   Fab\NaturalGallery\Persistence\:
     resource: '../Classes/Persistence/'
 
   Fab\NaturalGallery\ViewHelpers\:
     resource: '../Classes/ViewHelpers/'
     tags: ['typo3.fluid.viewhelper']
+
+  Fab\NaturalGallery\ViewHelpers\ImageStackViewHelper:
+    arguments:
+      $categoryRepository: '@Fab\NaturalGallery\Domain\Repository\CategoryRepository'
+
+  Fab\NaturalGallery\ViewHelpers\LoadAssetsViewHelper:
+    arguments:
+      $pageRenderer: '@TYPO3\CMS\Core\Page\PageRenderer'

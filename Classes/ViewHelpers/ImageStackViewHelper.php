@@ -30,8 +30,10 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 class ImageStackViewHelper extends AbstractViewHelper
 {
 
-    public function __construct(private \TYPO3\CMS\Core\Context\Context $context)
-    {
+    public function __construct(
+        private \TYPO3\CMS\Core\Context\Context $context,
+        private CategoryRepository $categoryRepository
+    ) {
     }
     /**
      * @return string
@@ -54,8 +56,7 @@ class ImageStackViewHelper extends AbstractViewHelper
                     $enlargedFile = $this->createProcessedFile($file, 'enlargedImageMaximumWidth', 'enlargedImageMaximumHeight');
                     $categories = [];
 
-                    $categoryRepository = GeneralUtility::makeInstance(CategoryRepository::class);
-                    $metadataCategories = $categoryRepository->findFileCategories($file->getMetaData()['uid']);
+                    $metadataCategories = $this->categoryRepository->findFileCategories($file->getMetaData()['uid']);
                     if ($metadataCategories && is_array($metadataCategories)) {
                         $categories = array_map(function ($cat) {
                             return [
@@ -126,11 +127,61 @@ class ImageStackViewHelper extends AbstractViewHelper
     {
         $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
         
-        // Get current page ID from context or fallback to 1
-        $context = $this->context;
-        $pageId = $context->getPropertyFromAspect('frontend.page', 'id', 1);
+        // Try to get current page ID from different sources
+        $pageId = $this->getCurrentPageId();
         
-        $site = $siteFinder->getSiteByPageId($pageId);
-        return (string)$site->getBase();
+        try {
+            $site = $siteFinder->getSiteByPageId($pageId);
+            return (string)$site->getBase();
+        } catch (\Exception $e) {
+            // Fallback to default site or root page
+            try {
+                $sites = $siteFinder->getAllSites();
+                if (!empty($sites)) {
+                    $defaultSite = reset($sites);
+                    return (string)$defaultSite->getBase();
+                }
+            } catch (\Exception $e) {
+                // Ultimate fallback
+                return '/';
+            }
+        }
+        
+        return '/';
+    }
+
+    /**
+     * Get current page ID from various sources
+     * @return int
+     */
+    protected function getCurrentPageId(): int
+    {
+        // Try to get from context first
+        try {
+            if ($this->context->hasAspect('frontend.page')) {
+                return $this->context->getPropertyFromAspect('frontend.page', 'id', 1);
+            }
+        } catch (\Exception $e) {
+            // Context aspect not available, try other methods
+        }
+
+        // Try to get from TSFE (TypoScript Frontend Controller)
+        if (isset($GLOBALS['TSFE']) && $GLOBALS['TSFE'] instanceof \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController) {
+            return $GLOBALS['TSFE']->id;
+        }
+
+        // Try to get from request
+        if (isset($GLOBALS['TYPO3_REQUEST'])) {
+            $request = $GLOBALS['TYPO3_REQUEST'];
+            if ($request->getAttribute('routing')) {
+                $pageArguments = $request->getAttribute('routing');
+                if ($pageArguments instanceof \TYPO3\CMS\Core\Routing\PageArguments) {
+                    return $pageArguments->getPageId();
+                }
+            }
+        }
+
+        // Fallback to root page
+        return 1;
     }
 }
