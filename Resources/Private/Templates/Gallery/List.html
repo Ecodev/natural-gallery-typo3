@@ -10,6 +10,9 @@
 		<f:asset.css identifier="natural-gallery-main-css" src="EXT:natural_gallery/Resources/Public/StyleSheets/natural-gallery.full.css"/>
 		<f:asset.css identifier="natural-gallery-theme-css" src="EXT:natural_gallery/Resources/Public/StyleSheets/natural.css"/>
 
+		<link rel="stylesheet" href="{f:uri.resource(path:'StyleSheets/natural-gallery.full.css', extensionName:'natural_gallery')}" type="text/css" />
+		<link rel="stylesheet" href="{f:uri.resource(path:'StyleSheets/natural.css', extensionName:'natural_gallery')}" type="text/css" />
+
 
 		<f:if condition="{gallery:isIconsPartialAlreadyLoaded()}">
 			<f:render section="Icons" partial="Icons"/>
@@ -57,6 +60,16 @@
             naturalGallery.options.labelImages = '<f:translate key="labelImages" />';
 
 			window.naturalGalleries.push(naturalGallery);
+
+			document.addEventListener('DOMContentLoaded', function() {
+				if (window.NaturalGallery && naturalGallery.images && naturalGallery.images.length > 0) {
+					new window.NaturalGallery.default(naturalGallery.options, naturalGallery.id);
+					var gallery = new window.NaturalGallery.default(naturalGallery.options, naturalGallery.id);
+					gallery.addItems(naturalGallery.images);
+				} else {
+					console.warn('NaturalGallery not found or no images to display');
+				}
+			});
 		</script>
 
 
