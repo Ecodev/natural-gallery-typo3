@@ -50,7 +50,6 @@ class CategoryRepository
         }
         
         $queryBuilder = $this->getQueryBuilder();
-        $queryBuilder->getRestrictions()->removeAll();
         $queryBuilder->select('*')
             ->from($this->tableName)
             ->where(
@@ -64,7 +63,6 @@ class CategoryRepository
     public function findFileCategories($uid): array
     {
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_file_metadata');
-        $queryBuilder->getRestrictions()->removeAll();
         $results = [];
         if ($uid){
             $query = $queryBuilder

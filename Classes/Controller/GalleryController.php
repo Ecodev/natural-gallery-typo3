@@ -72,11 +72,14 @@ class GalleryController extends ActionController
         $images = $this->galleryRepository->findByDemand($this->getDemand(), (array)$this->getOrderings(),0,0);
         $identifiers = GeneralUtility::trimExplode(',', $this->settings['categories'], TRUE);
         $categories = $this->categoryRepository->findByIdentifiers($identifiers);
-        // Assign template variables
-        $this->view->assign('settings', $this->settings);
-        $this->view->assign('data', $this->request->getAttribute('currentContentObject')->data);
-        $this->view->assign('images', $images);
-        $this->view->assign('categories', $categories);
+        $this->view->assignMultiple([
+            'settings' => $this->settings,
+            'data' => $this->request->getAttribute('currentContentObject')->data,
+            'images' => $images,
+            'categories' => $categories,
+        ]);
+
+
         return $this->htmlResponse();
     }
 
