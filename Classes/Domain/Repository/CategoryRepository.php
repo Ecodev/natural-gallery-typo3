@@ -45,18 +45,20 @@ class CategoryRepository
      */
     public function findByIdentifiers(array $identifiers): array|QueryResultInterface
     {
-        $result = null;
-        if (!empty($identifiers)) {
-            $queryBuilder = $this->getQueryBuilder();
-            $queryBuilder->getRestrictions()->removeAll();
-            $queryBuilder->select('*')
-                ->from($this->tableName)
-                ->where(
-                    $queryBuilder->expr()->in('uid', $identifiers)
-                );
-            $result = $queryBuilder->execute()->fetchAllAssociative();
+        if (empty($identifiers)) {
+            return [];
         }
-        return $result;
+        
+        $queryBuilder = $this->getQueryBuilder();
+        $queryBuilder->getRestrictions()->removeAll();
+        $queryBuilder->select('*')
+            ->from($this->tableName)
+            ->where(
+                $queryBuilder->expr()->in('uid', $identifiers)
+            );
+        $result = $queryBuilder->execute()->fetchAllAssociative();
+        
+        return $result ?? [];
     }
 
     public function findFileCategories($uid): array
