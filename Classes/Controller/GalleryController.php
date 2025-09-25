@@ -98,6 +98,4 @@ class GalleryController extends ActionController
             'identifiers' => GeneralUtility::trimExplode(',', $this->settings['categories'], TRUE)
         ];
     }
-
-
 }

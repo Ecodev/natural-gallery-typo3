@@ -25,22 +25,11 @@ class PartialLoadingRegister extends AbstractViewHelper
 
     protected static array $registry = [];
 
-    protected static ?PartialLoadingRegister $_instance = null;
-
-    public static function getInstance(): ?PartialLoadingRegister
-    {
-        if (is_null(self::$_instance)) {
-            self::$_instance = new PartialLoadingRegister();
-        }
-
-        return self::$_instance;
-    }
-
-    private function __construct()
+    public function __construct()
     {
     }
 
-    private function register($name): void
+    public function register($name): void
     {
         self::$registry[$name] = true;
     }

@@ -35,8 +35,12 @@ class CategoryRepository
      * Initialize Repository
      */
     protected string $tableName = 'sys_category';
-    public function __construct(private \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool)
+
+    protected ConnectionPool $connectionPool;
+    
+    public function __construct(ConnectionPool $connectionPool)
     {
+        $this->connectionPool = $connectionPool;
     }
 
     /**
@@ -48,7 +52,7 @@ class CategoryRepository
         if (empty($identifiers)) {
             return [];
         }
-        
+
         $queryBuilder = $this->getQueryBuilder();
         $queryBuilder->select('*')
             ->from($this->tableName)
@@ -56,7 +60,7 @@ class CategoryRepository
                 $queryBuilder->expr()->in('uid', $identifiers)
             );
         $result = $queryBuilder->execute()->fetchAllAssociative();
-        
+
         return $result ?? [];
     }
 
@@ -88,8 +92,7 @@ class CategoryRepository
 
     protected function getQueryBuilder(): QueryBuilder
     {
-        /** @var ConnectionPool $connectionPool */
-        $connectionPool = $this->connectionPool;
-        return $connectionPool->getQueryBuilderForTable($this->tableName);
+
+        return   $this->connectionPool->getQueryBuilderForTable($this->tableName);
     }
 }

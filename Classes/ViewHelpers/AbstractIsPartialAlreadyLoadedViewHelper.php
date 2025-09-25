@@ -26,13 +26,19 @@ use Fab\NaturalGallery\Utility\PartialLoadingRegister;
  */
 class AbstractIsPartialAlreadyLoadedViewHelper extends AbstractViewHelper
 {
+    protected PartialLoadingRegister $partialLoadingRegister;
+
+    public function __construct(PartialLoadingRegister $partialLoadingRegister)
+    {
+        $this->partialLoadingRegister = $partialLoadingRegister;
+    }
 
     /**
      * @return bool
      */
     public function render(): bool
     {
-        return  !PartialLoadingRegister::getInstance()->usePartial($this->name);
+        return !$this->partialLoadingRegister->usePartial($this->name);
     }
 
 }
