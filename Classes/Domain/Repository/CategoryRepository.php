@@ -59,31 +59,31 @@ class CategoryRepository
             ->where(
                 $queryBuilder->expr()->in('uid', $identifiers)
             );
-        $result = $queryBuilder->execute()->fetchAllAssociative();
+        $result = $queryBuilder->executeQuery()->fetchAllAssociative();
 
         return $result ?? [];
     }
 
     public function findFileCategories($uid): array
     {
-        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_file_metadata');
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_category');
         $results = [];
         if ($uid){
             $query = $queryBuilder
                 ->select('sys_category.uid', 'sys_category.title')
                 ->from('sys_category')
-                ->leftJoin(
+                ->join(
                     'sys_category',
                     'sys_category_record_mm',
-                    'sys_category_record_mm',
-                    $queryBuilder->expr()->eq('sys_category.uid', 'sys_category_record_mm.uid_local')
+                    'mm',
+                    'sys_category.uid = mm.uid_local'
                 )
                 ->where(
-                    $queryBuilder->expr()->eq('sys_category_record_mm.uid_foreign', $queryBuilder->createNamedParameter($uid, \TYPO3\CMS\Core\Database\Connection::PARAM_INT)),
-                    $queryBuilder->expr()->eq('sys_category_record_mm.tablenames', $queryBuilder->createNamedParameter('sys_file_metadata', \TYPO3\CMS\Core\Database\Connection::PARAM_STR)) ,
-                    $queryBuilder->expr()->eq('sys_category_record_mm.fieldname', $queryBuilder->createNamedParameter('categories', \TYPO3\CMS\Core\Database\Connection::PARAM_STR))
+                    $queryBuilder->expr()->eq('mm.uid_foreign', $queryBuilder->createNamedParameter($uid, \TYPO3\CMS\Core\Database\Connection::PARAM_INT)),
+                    $queryBuilder->expr()->eq('mm.tablenames', $queryBuilder->createNamedParameter('sys_file_metadata')),
+                    $queryBuilder->expr()->eq('mm.fieldname', $queryBuilder->createNamedParameter('categories'))
                 );
-            $results = $query->execute()->fetchAllAssociative();
+            $results = $query->executeQuery()->fetchAllAssociative();
 
         }
 
