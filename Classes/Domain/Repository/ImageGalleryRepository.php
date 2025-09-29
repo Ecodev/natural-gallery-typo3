@@ -94,10 +94,10 @@ class ImageGalleryRepository
                 $uids = array_map('intval', $inConditions[0]['operand']);
             }
         }
-        
+
         $timestamp = time();
         $queryBuilder = $this->getQueryBuilder();
-        
+
         $queryBuilder
             ->select('sys_file.*')
             ->from('sys_file')
@@ -122,21 +122,6 @@ class ImageGalleryRepository
             ->where(
                 $queryBuilder->expr()->eq('sys_file.type', 2),
                 $queryBuilder->expr()->in('sys_file.uid', (array)$uids),
-                // Metadata conditions
-                $queryBuilder->expr()->lte('metadata.t3ver_state', 0),
-                $queryBuilder->expr()->eq('metadata.t3ver_wsid', 0),
-                $queryBuilder->expr()->in('metadata.sys_language_uid', [0, -1]),
-                // Category conditions
-                $queryBuilder->expr()->eq('category.deleted', 0),
-                $queryBuilder->expr()->lte('category.t3ver_state', 0),
-                $queryBuilder->expr()->eq('category.t3ver_wsid', 0),
-                $queryBuilder->expr()->eq('category.hidden', 0),
-                $queryBuilder->expr()->lte('category.starttime', $timestamp),
-                $queryBuilder->expr()->or(
-                    $queryBuilder->expr()->eq('category.endtime', 0),
-                    $queryBuilder->expr()->gt('category.endtime', $timestamp)
-                ),
-                $queryBuilder->expr()->in('category.sys_language_uid', [0, -1])
             )
             ->orderBy('sys_file.name', 'ASC');
 
