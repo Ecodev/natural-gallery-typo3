@@ -18,15 +18,12 @@
       "Fab\\NaturalGallery\\": "Classes/"
     }
   },
-  "replace": {
-    "fab/natural_gallery": "self.version"
-  },
   "extra": {
     "typo3/cms": {
       "extension-key": "natural_gallery"
     }
   },
   "require": {
-    "typo3/cms-core": "^11.5"
+    "typo3/cms-core": "^11.5 | ^12"
   }
 }

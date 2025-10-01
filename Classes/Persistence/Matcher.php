@@ -265,13 +265,12 @@ class Matcher
     /**
      * @param $fieldNameAndPath
      * @param $operand
-     * @param bool $addWildCard
      * @return $this
      */
-    public function like($fieldNameAndPath, $operand, bool $addWildCard = true): self
+    public function like($fieldNameAndPath, $operand): self
     {
-        $wildCardSymbol = $addWildCard ? '%' : '';
-        $this->like[] = ['fieldNameAndPath' => $fieldNameAndPath, 'operand' => $wildCardSymbol . $operand . $wildCardSymbol];
+        // Add wildcards by default for LIKE queries
+        $this->like[] = ['fieldNameAndPath' => $fieldNameAndPath, 'operand' => '%' . $operand . '%'];
         return $this;
     }
 

@@ -2,13 +2,13 @@
 
 use Fab\NaturalGallery\Controller\GalleryController;
 
-defined('TYPO3_MODE') or die();
+defined('TYPO3') or die();
 
 call_user_func(
     function () {
 
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'Fab.natural_gallery',
+            'natural_gallery',
             'Pi1',
             [
                 GalleryController::class => 'list',

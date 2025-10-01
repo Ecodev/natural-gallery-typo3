@@ -20,6 +20,8 @@ use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\ProcessedFile;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -28,6 +30,11 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 class ImageStackViewHelper extends AbstractViewHelper
 {
 
+    public function __construct(
+        private \TYPO3\CMS\Core\Context\Context $context,
+        private CategoryRepository $categoryRepository
+    ) {
+    }
     /**
      * @return string
      */
@@ -49,8 +56,7 @@ class ImageStackViewHelper extends AbstractViewHelper
                     $enlargedFile = $this->createProcessedFile($file, 'enlargedImageMaximumWidth', 'enlargedImageMaximumHeight');
                     $categories = [];
 
-                    $categoryRepository = GeneralUtility::makeInstance(CategoryRepository::class);
-                    $metadataCategories = $categoryRepository->findFileCategories($file->getMetaData()['uid']);
+                    $metadataCategories = $this->categoryRepository->findFileCategories($file->getMetaData()['uid']);
                     if ($metadataCategories && is_array($metadataCategories)) {
                         $categories = array_map(function ($cat) {
                             return [
@@ -60,7 +66,7 @@ class ImageStackViewHelper extends AbstractViewHelper
                         },$metadataCategories);
                     }
 
-                    $baseUrl = GeneralUtility::getIndpEnv('TYPO3_SITE_URL');
+                    $baseUrl =   $baseUrl = GeneralUtility::getIndpEnv('TYPO3_SITE_URL');
                     $item = [
                         'thumbnail' => $baseUrl . $thumbnailFile->getPublicUrl(),
                         'enlarged' => $baseUrl . $enlargedFile->getPublicUrl(),
@@ -103,8 +109,7 @@ class ImageStackViewHelper extends AbstractViewHelper
 
         return $file;
     }
-
-
+    
     /**
      * @throws array
      */

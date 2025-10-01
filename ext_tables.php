@@ -1,13 +1,7 @@
 <?php
-if (!defined('TYPO3_MODE')) {
+if (!defined('TYPO3')) {
     die ('Access denied.');
 }
-
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-    'Fab.natural_gallery',
-    'Pi1',
-    'Natural Gallery'
-);
 
 $extensionName = \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase('natural_gallery');
 $pluginSignature = strtolower($extensionName) . '_pi1';

@@ -32,13 +32,11 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\expr;
 class GalleryController extends ActionController
 {
     protected ImageGalleryRepository $galleryRepository;
-
     protected DemandFactory $demandFactory;
-
     protected OrderFactory $orderFactory;
+    protected CategoryRepository $categoryRepository;
 
     protected array $configuration = array();
-
     protected $settings = [];
 
     protected array $allowedColumns = [
@@ -48,32 +46,41 @@ class GalleryController extends ActionController
         'uid',
     ];
 
-    public function initializeAction(): void
-    {
-        $this->galleryRepository = GeneralUtility::makeInstance(ImageGalleryRepository::class);
-        $this->orderFactory = GeneralUtility::makeInstance(OrderFactory::class);
-        $this->demandFactory = GeneralUtility::makeInstance(DemandFactory::class);
+    public function __construct(
+        ImageGalleryRepository $galleryRepository,
+        DemandFactory $demandFactory,
+        OrderFactory $orderFactory,
+        CategoryRepository $categoryRepository
+    ) {
+        $this->galleryRepository = $galleryRepository;
+        $this->demandFactory = $demandFactory;
+        $this->orderFactory = $orderFactory;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
      * @return void|string
      */
-    public function listAction()
+    public function listAction(): \Psr\Http\Message\ResponseInterface
     {
 
 
         if (!isset($this->settings['imagesPerRow'])) {
-            return '<strong style="color: red">Please save your plugin settings in the BE beforehand.</strong>';
+            return $this->htmlResponse('<strong style="color: red">Please save your plugin settings in the BE beforehand.</strong>');
         }
 
         $images = $this->galleryRepository->findByDemand($this->getDemand(), (array)$this->getOrderings(),0,0);
         $identifiers = GeneralUtility::trimExplode(',', $this->settings['categories'], TRUE);
-        $categories = $this->getCategoryRepository()->findByIdentifiers($identifiers);
-        // Assign template variables
-        $this->view->assign('settings', $this->settings);
-        $this->view->assign('data', $this->configurationManager->getcontentObject()->data);
-        $this->view->assign('images', $images);
-        $this->view->assign('categories', $categories);
+        $categories = $this->categoryRepository->findByIdentifiers($identifiers);
+        $this->view->assignMultiple([
+            'settings' => $this->settings,
+            'data' => $this->request->getAttribute('currentContentObject')->data,
+            'images' => $images,
+            'categories' => $categories,
+        ]);
+
+
+        return $this->htmlResponse();
     }
 
     protected function getOrderings(): \Fab\NaturalGallery\Persistence\Order
@@ -83,10 +90,6 @@ class GalleryController extends ActionController
 
     }
 
-    protected function getCategoryRepository(): CategoryRepository
-    {
-        return GeneralUtility::makeInstance(CategoryRepository::class);
-    }
 
     protected function getDemand(): array
     {
@@ -95,6 +98,4 @@ class GalleryController extends ActionController
             'identifiers' => GeneralUtility::trimExplode(',', $this->settings['categories'], TRUE)
         ];
     }
-
-
 }

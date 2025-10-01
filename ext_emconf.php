@@ -1,5 +1,6 @@
 <?php
 
+
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Natural Gallery',
     'description' => 'A lazy load, infinite scroll and natural layout list gallery',
@@ -8,4 +9,3 @@ $EM_CONF[$_EXTKEY] = [
     'author_company' => 'Ecodev',
     'state' => 'stable',
 ];
-

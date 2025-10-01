@@ -17,6 +17,9 @@ class ImageGalleryRepository
     protected string $tableName = 'sys_file';
 
     protected array $settings;
+    public function __construct(private \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool)
+    {
+    }
 
     public function getDefaultData(string $field):string
     {
@@ -30,12 +33,10 @@ class ImageGalleryRepository
             ->select('*')
             ->from($this->tableName)
             ->where(
-                $this->getQueryBuilder()
-                    ->expr()
-                    ->eq('uid', $this->getQueryBuilder()->expr()->literal($uid)),
+                $query->expr()->eq('uid', $uid)
             );
 
-        $messages = $query->execute()->fetchOne();
+        $messages = $query->executeQuery()->fetchOne();
 
         return is_array($messages) ? $messages : [];
     }
@@ -50,30 +51,30 @@ class ImageGalleryRepository
         $queryBuilder = $this->getQueryBuilder();
         $queryBuilder->select('*')
             ->from($this->tableName)
-            ->innerJoin(
+            ->join(
                 'sys_file',
                 'sys_file_metadata',
-                'sys_file_metadata',
-                'sys_file.uid = sys_file_metadata.file'
+                'metadata',
+                'sys_file.uid = metadata.file'
             )
-            ->innerJoin(
-                'sys_file_metadata',
+            ->join(
+                'metadata',
                 'sys_category_record_mm',
-                'sys_category_record_mm',
-                'sys_category_record_mm.uid_foreign = sys_file_metadata.uid AND tablenames = "sys_file_metadata" AND fieldname = "categories"'
+                'mm',
+                'mm.uid_foreign = metadata.uid AND mm.tablenames = "sys_file_metadata" AND mm.fieldname = "categories"'
             );
 
         if (!empty($categories)) {
             $queryBuilder->where(
-                $queryBuilder->expr()->in('sys_category_record_mm.uid_local', $categories)
+                $queryBuilder->expr()->in('mm.uid_local', $categories)
             );
         }
 
-        $queryBuilder->addOrderBy('sys_file_metadata.year', 'DESC')
-            ->addOrderBy('sys_file_metadata.title', 'ASC');
+        $queryBuilder->addOrderBy('metadata.year', 'DESC')
+            ->addOrderBy('metadata.title', 'ASC');
 
         return $queryBuilder
-            ->execute()
+            ->executeQuery()
             ->fetchAllAssociative();
 
     }
@@ -93,69 +94,40 @@ class ImageGalleryRepository
                 $uids = array_map('intval', $inConditions[0]['operand']);
             }
         }
+
         $timestamp = time();
         $queryBuilder = $this->getQueryBuilder();
+
         $queryBuilder
             ->select('sys_file.*')
             ->from('sys_file')
             ->leftJoin(
                 'sys_file',
                 'sys_file_metadata',
-                'sys_file_metadata',
-                $queryBuilder->expr()->andX(
-                    $queryBuilder->expr()->eq('sys_file.uid', 'sys_file_metadata.file'),
-                    $queryBuilder->expr()->lte('sys_file_metadata.t3ver_state', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)),
-                    $queryBuilder->expr()->eq('sys_file_metadata.t3ver_wsid', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)),
-                    $queryBuilder->expr()->orX(
-                        $queryBuilder->expr()->eq('sys_file_metadata.t3ver_oid', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)),
-                        $queryBuilder->expr()->eq('sys_file_metadata.t3ver_state', $queryBuilder->createNamedParameter(4, \PDO::PARAM_INT))
-                    ),
-                    $queryBuilder->expr()->in('sys_file_metadata.sys_language_uid', [0, -1])
-                )
+                'metadata',
+                'sys_file.uid = metadata.file'
             )
             ->leftJoin(
-                'sys_file_metadata',
+                'metadata',
                 'sys_category_record_mm',
-                'sys_category_record_mm0',
-                $queryBuilder->expr()->andX(
-                    $queryBuilder->expr()->eq('sys_file_metadata.uid', 'sys_category_record_mm0.uid_foreign'),
-                    $queryBuilder->expr()->eq('sys_category_record_mm0.tablenames', $queryBuilder->createNamedParameter('sys_file_metadata')),
-                    $queryBuilder->expr()->eq('sys_category_record_mm0.fieldname', $queryBuilder->createNamedParameter('categories'))
-                )
+                'mm',
+                'metadata.uid = mm.uid_foreign AND mm.tablenames = "sys_file_metadata" AND mm.fieldname = "categories"'
             )
             ->leftJoin(
-                'sys_category_record_mm0',
+                'mm',
                 'sys_category',
-                'sys_category0',
-                $queryBuilder->expr()->andX(
-                    $queryBuilder->expr()->eq('sys_category_record_mm0.uid_local', 'sys_category0.uid'),
-                    $queryBuilder->expr()->eq('sys_category0.deleted', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)),
-                    $queryBuilder->expr()->lte('sys_category0.t3ver_state', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)),
-                    $queryBuilder->expr()->eq('sys_category0.t3ver_wsid', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)),
-                    $queryBuilder->expr()->orX(
-                        $queryBuilder->expr()->eq('sys_category0.t3ver_oid', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)),
-                        $queryBuilder->expr()->eq('sys_category0.t3ver_state', $queryBuilder->createNamedParameter(4, \PDO::PARAM_INT))
-                    ),
-                    $queryBuilder->expr()->eq('sys_category0.hidden', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)),
-                    $queryBuilder->expr()->lte('sys_category0.starttime', $queryBuilder->createNamedParameter($timestamp, \PDO::PARAM_INT)),
-                    $queryBuilder->expr()->orX(
-                        $queryBuilder->expr()->eq('sys_category0.endtime', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)),
-                        $queryBuilder->expr()->gt('sys_category0.endtime', $queryBuilder->createNamedParameter($timestamp, \PDO::PARAM_INT))
-                    ),
-                    $queryBuilder->expr()->in('sys_category0.sys_language_uid', [0, -1])
-                )
+                'category',
+                'mm.uid_local = category.uid'
             )
             ->where(
-                $queryBuilder->expr()->andX(
-                    $queryBuilder->expr()->eq('sys_file.type', $queryBuilder->createNamedParameter(2, \PDO::PARAM_INT)),
-                    $queryBuilder->expr()->in('sys_file.uid', (array)$uids)
-                )
+                $queryBuilder->expr()->eq('sys_file.type', 2),
+                $queryBuilder->expr()->in('sys_file.uid', (array)$uids),
             )
-
             ->orderBy('sys_file.name', 'ASC');
+
         if ($categoryConditions) {
             $queryBuilder->andWhere(
-                $queryBuilder->expr()->eq('sys_category0.uid', $queryBuilder->createNamedParameter((int)$categoryConditions, \PDO::PARAM_INT))
+                $queryBuilder->expr()->eq('category.uid', (int)$categoryConditions)
             );
         }
 
@@ -207,15 +179,15 @@ class ImageGalleryRepository
         $query
             ->select('*')
             ->from($this->tableName)
-            ->where($this->getQueryBuilder()->expr()->in('uid', $uids));
+            ->where($query->expr()->in('uid', $uids));
 
-        return $query->execute()->fetchAllAssociative();
+        return $query->executeQuery()->fetchAllAssociative();
     }
 
     protected function getQueryBuilder(): QueryBuilder
     {
         /** @var ConnectionPool $connectionPool */
-        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+        $connectionPool = $this->connectionPool;
         return $connectionPool->getQueryBuilderForTable($this->tableName);
     }
 

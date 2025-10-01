@@ -2,4 +2,14 @@ services:
   _defaults:
     autowire: true
     autoconfigure: true
-    public: false
+    public: true
+
+  Fab\NaturalGallery\:
+    resource: '../Classes/*'
+    exclude: '../Classes/Domain/Model/*'
+
+  Fab\NaturalGallery\Controller\GalleryController:
+    public: true
+
+  Fab\NaturalGallery\Domain\Repository\CategoryRepository:
+    public: true
