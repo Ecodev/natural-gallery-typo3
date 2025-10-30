@@ -21,21 +21,21 @@ plugin.tx_naturalgallery {
 				type = css
 
 				# Optional key if loading assets through EXT:vhs.
-				dependencies = mainCss
+				dependencies.1 = mainCss
 			}
 			naturalGalleryThemeCss {
 				path = EXT:natural_gallery/Resources/Public/StyleSheets/natural.css
 				type = css
 
 				# Optional key if loading assets through EXT:vhs.
-				dependencies = naturalGalleryCss
+				dependencies.1 = naturalGalleryCss
 			}
 			naturalGalleryJs {
 				path = EXT:natural_gallery/Resources/Public/JavaScript/natural-gallery.full.js
 				type = js
 
 				# Optional key if loading assets through EXT:vhs.
-				dependencies = mainJs
+				dependencies.1 = mainJs
 			}
 		}
 
