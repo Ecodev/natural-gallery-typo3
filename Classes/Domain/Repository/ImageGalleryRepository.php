@@ -85,10 +85,13 @@ class ImageGalleryRepository
      */
     public function findByDemand(array|Matcher $demand = [], array $orderings = [], int $offset = 0, int $limit = 0): array
     {
+        $uids = [];
+        $categoryConditions = null;
+
         if (isset($demand['likes']) && $demand['likes'] instanceof Matcher) {
             $matcher = $demand['likes'];
             $inConditions = $matcher->getIn();
-            $categoryConditions = $matcher->getEquals()[1]['operand'];
+            $categoryConditions = $matcher->getEquals()[1]['operand'] ?? null;
 
             if (!empty($inConditions) && isset($inConditions[0]['operand']) && is_array($inConditions[0]['operand'])) {
                 $uids = array_map('intval', $inConditions[0]['operand']);
@@ -119,11 +122,24 @@ class ImageGalleryRepository
                 'category',
                 'mm.uid_local = category.uid'
             )
-            ->where(
-                $queryBuilder->expr()->eq('sys_file.type', 2),
-                $queryBuilder->expr()->in('sys_file.uid', (array)$uids),
-            )
             ->orderBy('sys_file.name', 'ASC');
+
+        // Build where conditions dynamically to avoid "IN ()" SQL syntax error
+        $whereConditions = [];
+        $whereConditions[] = $queryBuilder->expr()->eq('sys_file.type', 2);
+
+        if (!empty($uids)) {
+            $whereConditions[] = $queryBuilder->expr()->in('sys_file.uid', $uids);
+        }
+
+        // Apply where/andWhere properly
+        if (!empty($whereConditions)) {
+            $first = array_shift($whereConditions);
+            $queryBuilder->where($first);
+            foreach ($whereConditions as $wc) {
+                $queryBuilder->andWhere($wc);
+            }
+        }
 
         if ($categoryConditions) {
             $queryBuilder->andWhere(
