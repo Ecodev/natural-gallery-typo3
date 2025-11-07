@@ -21,22 +21,32 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class DynamicStyleViewHelper extends AbstractViewHelper
 {
+    public function initializeArguments(): void
+    {
+        parent::initializeArguments();
+        $this->registerArgument(
+            'settings',
+            'array',
+            'Configuration array containing thumbnail dimensions',
+            true
+        );
+    }
 
     /**
      * Generate a JSON array of images suiting xoyview
      *
-     * @param array $settings containing images
      * @return string
      */
-    public function render(array $settings): string
+    public function render(): string
     {
+        $settings = $this->arguments['settings'];
 
         # Defines width and height values dynamically
         return <<<EOF
 <style>
 .tx-infinitscrollgallery-thumbnail {
-	width: {$settings['thumbnailMaximumWidth']}px;
-	height: {$settings['thumbnailMaximumHeight']}px;
+ width: {$settings['thumbnailMaximumWidth']}px;
+ height: {$settings['thumbnailMaximumHeight']}px;
 }
 </style>
 EOF;

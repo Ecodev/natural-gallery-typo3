@@ -36,8 +36,8 @@ class GalleryController extends ActionController
     protected OrderFactory $orderFactory;
     protected CategoryRepository $categoryRepository;
 
-    protected array $configuration = array();
-    protected $settings = [];
+    protected array $configuration = [];
+    protected array $settings = [];
 
     protected array $allowedColumns = [
         'crdate',
