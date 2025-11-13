@@ -37,7 +37,6 @@ class GalleryController extends ActionController
     protected CategoryRepository $categoryRepository;
 
     protected array $configuration = [];
-    protected array $settings = [];
 
     protected array $allowedColumns = [
         'crdate',
