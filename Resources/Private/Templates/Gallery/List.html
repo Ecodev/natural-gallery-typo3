@@ -6,10 +6,13 @@
 	<f:layout name="Default"/>
 
 	<f:section name="main">
-		<f:asset.script identifier="natural-gallery-js" src="EXT:natural_gallery/Resources/Public/JavaScript/natural-gallery.full.js"/>
+		<v:asset.script name="naturalGalleryJs" standalone="true"
+		                path="EXT:natural_gallery/Resources/Public/JavaScript/natural-gallery.full.js"/>
 
-		<link rel="stylesheet" href="{f:uri.resource(path:'StyleSheets/natural-gallery.full.css', extensionName:'natural_gallery')}" type="text/css" />
-		<link rel="stylesheet" href="{f:uri.resource(path:'StyleSheets/natural.css', extensionName:'natural_gallery')}" type="text/css" />
+		<v:asset.style name="naturalGalleryCss" standalone="true" rewrite="false"
+		                path="EXT:natural_gallery/Resources/Public/StyleSheets/natural-gallery.full.css"/>
+		<v:asset.style name="naturalGalleryThemeCss" standalone="true" rewrite="false"
+		                path="EXT:natural_gallery/Resources/Public/StyleSheets/natural.css"/>
 
 
 		<f:if condition="{gallery:isIconsPartialAlreadyLoaded()}">
@@ -61,8 +64,8 @@
 
 			document.addEventListener('DOMContentLoaded', function() {
 				if (window.NaturalGallery && naturalGallery.images && naturalGallery.images.length > 0) {
-					new window.NaturalGallery.default(naturalGallery.options, naturalGallery.id);
-					var gallery = new window.NaturalGallery.default(naturalGallery.options, naturalGallery.id);
+					var GalleryClass = window.NaturalGallery.default || window.NaturalGallery;
+					var gallery = new GalleryClass(naturalGallery.options, naturalGallery.id);
 					gallery.addItems(naturalGallery.images);
 				} else {
 					console.warn('NaturalGallery not found or no images to display');
