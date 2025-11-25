@@ -96,17 +96,18 @@ class ImageStackViewHelper extends AbstractViewHelper
      * @return File|ProcessedFile
      * @internal param Content $image
      */
-    public function createProcessedFile(File $file, $widthFormat, $heightFormat): File|ProcessedFile
+     public function createProcessedFile(File $file, $widthFormat, $heightFormat): File|ProcessedFile
     {
-        $configuration = [
-            'maxWidth' => $this->getSettings()[$widthFormat] ? $this->getSettings()[$widthFormat] : null,
-            'maxHeight' => $this->getSettings()[$heightFormat] ? $this->getSettings()[$heightFormat] : null,
+        $settings = $this->getSettings();
+         $configuration = [
+            'maxWidth' => $settings[$widthFormat] ?? null,
+            'maxHeight' => $settings[$heightFormat] ?? null,
         ];
-
+    
         if ($configuration['maxWidth'] || $configuration['maxHeight']) {
             $file = $file->process(ProcessedFile::CONTEXT_IMAGECROPSCALEMASK, $configuration);
         }
-
+    
         return $file;
     }
     
