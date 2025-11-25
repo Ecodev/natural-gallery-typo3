@@ -148,12 +148,12 @@ class ImageGalleryRepository
         }
 
 
-        if (!empty($orderings['*orderings']) && is_array($orderings['*orderings'])) {
+            if (!empty($orderings['*orderings']) && is_array($orderings['*orderings'])) {
             foreach ($orderings['*orderings'] as $ordering => $direction) {
-            $queryBuilder->addOrderBy($ordering, $direction);
-            f ($this->hasForeignRelationIn($ordering)) {
-                relationalField = $this->getForeignRelationFrom($ordering);
-                if ($demand instanceof Matcher) {
+                $queryBuilder->addOrderBy($ordering, $direction);
+                if ($this->hasForeignRelationIn($ordering)) {
+                    $relationalField = $this->getForeignRelationFrom($ordering);
+                    if ($demand instanceof Matcher) {
                         $demand->like($relationalField . '.uid', '');
                     }
                 }
