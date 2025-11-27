@@ -1,3 +1,7 @@
+## 4.0.0 (2025-11-27)
+
+[TASK] TYPO3 v12 + v13 compatibility
+
 ## 3.0.3 (2022-06-29)
 
 [FIX] Base url
