@@ -6,8 +6,10 @@ use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Driver\Exception;
 use Fab\NaturalGallery\Persistence\Matcher;
 use Fab\NaturalGallery\Utility\ConfigurationUtility;
+use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 
@@ -17,8 +19,12 @@ class ImageGalleryRepository
     protected string $tableName = 'sys_file';
 
     protected array $settings;
+
+    protected LoggerInterface $logger;
+
     public function __construct(private \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool)
     {
+        $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
     }
 
     public function getDefaultData(string $field):string
@@ -169,16 +175,16 @@ class ImageGalleryRepository
                             );
                         }
                     } else {
-                        error_log('[NaturalGallery] Repository - WARNING: No valid category IDs found!');
+                        $this->logger->warning('No valid category IDs found in additionalEquals');
                     }
                 } else {
-                    error_log('[NaturalGallery] Repository - Property not handled: ' . $property);
+                    $this->logger->warning('Property not handled in additionalEquals', ['property' => $property]);
                 }
             } else {
-                error_log('[NaturalGallery] Repository - WARNING: Failed to parse additionalEquals!');
+                $this->logger->warning('Failed to parse additionalEquals', ['additionalEquals' => $additionalEqualsStr]);
             }
         } else {
-            error_log('[NaturalGallery] Repository - No additionalEquals provided');
+            $this->logger->info('No additionalEquals provided');
         }
 
         // Only apply $categoryConditions if additionalEquals is NOT handling categories
