@@ -6,8 +6,10 @@ use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Driver\Exception;
 use Fab\NaturalGallery\Persistence\Matcher;
 use Fab\NaturalGallery\Utility\ConfigurationUtility;
+use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 
@@ -17,8 +19,12 @@ class ImageGalleryRepository
     protected string $tableName = 'sys_file';
 
     protected array $settings;
+
+    protected LoggerInterface $logger;
+
     public function __construct(private \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool)
     {
+        $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
     }
 
     public function getDefaultData(string $field):string
@@ -141,7 +147,48 @@ class ImageGalleryRepository
             }
         }
 
-        if ($categoryConditions) {
+        // Handle additionalEquals from FlexForm (it's a string like "metadata.categories.uid = 203")
+        $hasAdditionalEquals = false;
+        if (isset($demand['additionalEquals']) && !empty($demand['additionalEquals'])) {
+            $additionalEqualsStr = trim($demand['additionalEquals']);
+
+            // Parse the constraint (e.g., "metadata.categories.uid = 203")
+            if (preg_match('/(.+?)\s*=\s*(.+)/', $additionalEqualsStr, $matches)) {
+                $property = trim($matches[1]);
+                $operand = trim($matches[2]);
+
+                // Handle metadata.categories.uid or category.uid
+                if ($property === 'metadata.categories.uid' || $property === 'category.uid') {
+                    // Support comma-separated category IDs (e.g., "203,204,205")
+                    $categoryIds = array_map('intval', array_filter(explode(',', $operand)));
+
+
+                    if (!empty($categoryIds)) {
+                        $hasAdditionalEquals = true;
+                        if (count($categoryIds) === 1) {
+                            $queryBuilder->andWhere(
+                                $queryBuilder->expr()->eq('category.uid', $categoryIds[0])
+                            );
+                        } else {
+                            $queryBuilder->andWhere(
+                                $queryBuilder->expr()->in('category.uid', $categoryIds)
+                            );
+                        }
+                    } else {
+                        $this->logger->warning('No valid category IDs found in additionalEquals');
+                    }
+                } else {
+                    $this->logger->warning('Property not handled in additionalEquals', ['property' => $property]);
+                }
+            } else {
+                $this->logger->warning('Failed to parse additionalEquals', ['additionalEquals' => $additionalEqualsStr]);
+            }
+        } else {
+            $this->logger->info('No additionalEquals provided');
+        }
+
+        // Only apply $categoryConditions if additionalEquals is NOT handling categories
+        if (!$hasAdditionalEquals && $categoryConditions) {
             $queryBuilder->andWhere(
                 $queryBuilder->expr()->eq('category.uid', (int)$categoryConditions)
             );
@@ -167,7 +214,10 @@ class ImageGalleryRepository
             $queryBuilder->setMaxResults($limit);
         }
 
-        return  $queryBuilder->executeQuery()->fetchAllAssociative();
+        // Debug: log the SQL query
+        $sql = $queryBuilder->getSQL();
+        $results = $queryBuilder->executeQuery()->fetchAllAssociative();
+        return $results;
 
 
     }

@@ -63,14 +63,14 @@ class GalleryController extends ActionController
     public function listAction(): \Psr\Http\Message\ResponseInterface
     {
 
-
         if (!isset($this->settings['imagesPerRow'])) {
             return $this->htmlResponse('<strong style="color: red">Please save your plugin settings in the BE beforehand.</strong>');
         }
 
         $images = $this->galleryRepository->findByDemand($this->getDemand(), (array)$this->getOrderings(),0,0);
-        $identifiers = GeneralUtility::trimExplode(',', $this->settings['categories'], TRUE);
+        $identifiers = GeneralUtility::trimExplode(',', $this->settings['categories'], TRUE) ;
         $categories = $this->categoryRepository->findByIdentifiers($identifiers);
+
         $this->view->assignMultiple([
             'settings' => $this->settings,
             'data' => $this->request->getAttribute('currentContentObject')->data,
@@ -88,13 +88,14 @@ class GalleryController extends ActionController
         return OrderFactory::getInstance()->getOrder($this->settings);
 
     }
-
-
     protected function getDemand(): array
-    {
+    {        $additionalEquals = $this->settings['additionalEquals'] ?? '';
+
+
         return [
-            'likes' => $this->demandFactory->get($this->settings),
-            'identifiers' => GeneralUtility::trimExplode(',', $this->settings['categories'], TRUE)
+        'likes' => $this->demandFactory->get($this->settings),
+        'identifiers' =>  GeneralUtility::trimExplode(',', $this->settings['categories'], TRUE) ,
+        'additionalEquals' => $additionalEquals
         ];
     }
 }
