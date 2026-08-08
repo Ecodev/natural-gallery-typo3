@@ -1,3 +1,8 @@
+## 4.0.1 (2026-08-08)
+
+[BUGFIX] Improve images list retrieval
+[DOCS] Update TYPO3 compatibility matrix
+
 ## 4.0.0 (2025-11-27)
 
 [TASK] TYPO3 v12 + v13 compatibility
